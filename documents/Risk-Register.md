@@ -1,8 +1,9 @@
-# <p align="center"> FIT2101: Software Engineering Process & Management </br> ---------------------------------------------- <br/><br/> Risk Register <br/> </p>
+FIT2101: Software Engineering Process & Management Risk Register
+---
 
-#### <p align="center"> Scum Masters <br/> Kenny Ye, Hoang Phan, Erica Son, Marc Porciuncula, Ellen Anastasia, Fenghe Shen </p>
+#### Scum Masters <br/> Kenny Ye, Hoang Phan, Erica Son, Marc Porciuncula, Ellen Anastasia, Fenghe Shen
 
-# <p align="center"> ---------------------------------------------- </p>
+---
 
 ## Summary
 This document identifies and describes several risks in the project “Drive Tracker”. The report contains the likelihood and impact of each risk, and evaluates their resulting overall priority which will inform the team in looking out for them.
@@ -85,4 +86,4 @@ Inexperience with git can cause inappropriate merges which may erase established
 - The Git Project merger/approver is to regularly backup and clone the repository in the case that an unrecoverable mistake was merged onto the master branch. This way the team could fall back to and continue on earlier functioning copies of the repository to minimise the damage.
 - Team members must debug and develop on their individual branch prior to merging. This allow errors to be found and dealt with in a contained environment.
 - Additionally, peer reviews are to be conducted to ensure the quality of the code and the project merger will carefully examine each merge request to prevent damaging git merges or sub-par code quality.
-- Team members are to commit regularly to allow sufficient recovery points in the event that a roll-back is necessary. In addition to that, members should attach a meaningful message to each git commit (local or master) to keep a detailed changelog so that pinpointing the error-causing commit is straightforward and clear. 
+- Team members are to commit regularly to allow sufficient recovery points in the event that a roll-back is necessary. In addition to that, members should attach a meaningful message to each git commit (local or master) to keep a detailed changelog so that pinpointing the error-causing commit is straightforward and clear.
