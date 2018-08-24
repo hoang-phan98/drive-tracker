@@ -92,7 +92,7 @@ This does not mean the Scrum Master cannot be assigned stories to complete, but 
 |--|--|--|--|--|
 |Hoang Phan|hpha0005@student.monash.edu|0422875000|28769430|Developer|
 |Marc Porciuncula|mpor14@student.monash.edu|0450556900|27944166|Reviewer/Developer|
-|Erica Son|eson0001@students.monash.edu|0408247308|28798929|Developer|
+|Erica Son|eson0001@students.monash.edu|0408247308|28798929|Product Owner/Developer|
 |Ellen Anastasia|elle0001@student.monash.edu|0404730116|28070259|Designer/Developer|
 |Fenghe (Dax) Shen|fshe17@student.monash.edu|0406847122|26983044|Reviewer/Develope|
 |Kenny Ye|kyee0003@student.monash.edu|0408614668|28782151|Scrum Master/Developer|
@@ -121,6 +121,9 @@ All team members are required to follow the above specified procedures under the
 #### Reviewer
 - Making sure the the master branch contains a level of security and quality: achieved by inspection and use of the checklist
 - Making sure that architectural decisions are reflected on the source code that is being merged in
+
+#### Product Owner
+- Responsible for representing interests of client, as the client will not be available for regular consultation
 
 ## Time and task management
 
