@@ -91,7 +91,7 @@ This does not mean the Scrum Master cannot be assigned stories to complete, but 
 |Marc Porciuncula|mpor14@student.monash.edu|0450556900|27944166|Reviewer/Developer|
 |Erica Son|eson0001@student.monash.edu|0408247308|28798929|Product Owner/Developer|
 |Ellen Anastasia|elle0001@student.monash.edu|0404730116|28070259|Designer/Developer|
-|Fenghe (Dax) Shen|fshe17@student.monash.edu|0406847122|26983044|Reviewer/Develope|
+|Fenghe (Dax) Shen|fshe17@student.monash.edu|0406847122|26983044|Reviewer/Developer|
 |Kenny Ye|kyee0003@student.monash.edu|0408614668|28782151|Scrum Master/Developer|
 
 All team members are required to follow the above specified procedures under the section Protocols.
