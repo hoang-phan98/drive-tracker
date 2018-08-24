@@ -1,8 +1,9 @@
-# <p align="center"> FIT2101: Software Engineering Process & Management </br> ---------------------------------------------- <br/><br/> Project Management Plan <br/> Drive Tracker </p>
+FIT2101: Software Engineering Process & Management </br> Project Management Plan <br/> Drive Tracker
+---
 
-#### <p align="center"> Scum Masters <br/> Kenny Ye, Hoang Phan, Erica Son, Marc Porciuncula, Ellen Anastasia, Fenghe Shen </p>
+#### Scum Masters <br/> Kenny Ye, Hoang Phan, Erica Son, Marc Porciuncula, Ellen Anastasia, Fenghe Shen
 
-# <p align="center"> ---------------------------------------------- </p>
+---
 
 
 
