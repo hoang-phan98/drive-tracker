@@ -5,15 +5,13 @@ FIT2101: Software Engineering Process & Management </br> Project Management Plan
 
 ---
 
-
-
 ## Summary
 
 The report discusses the techniques and procedures the team will follow in implementing the project “Drive Tracker”, a versatile tool to for assignment markers and team members  to monitor contribution in Google Drive. Drive Tracker will behave just like the “gitinspector” tool for git repositories.
 
 This report details the  roles and responsibilities of all team members currently working on this project. It describes the s process model that the team will use, protocols that must be followed,the project vision and definition of done.
 
-Attached to this report are documents  that address some key design decisions that were made in analysis of alternatives reports. These decisions concern:
+Attached to this report are documents that address some key design decisions that were made in analysis of alternatives reports. These decisions concern:
 - Target platform
 - Languages
 - Frameworks and libraries
@@ -42,7 +40,6 @@ Our version of SCRUM includes the following:
 The main modifications to SCRUM that are implemented in our version are specifically tailored to accommodate the structure of University and variable availability of each team member every week. Traditional SCRUM requires of lot of face-to-face collaboration which might not be possible with each student’s timetable, to counteract this, meetings will be scheduled and conducted online.
 
 Also due to the size and scope of this particular project, Weekly Sprint Plan Meetings which are usually timeboxed within 3-4 hours (cannot exceed this time) are impractical, rather these meetings are to be drastically shortened to be timeboxed within 30 minutes instead. This is considered to be more than sufficient for estimating and generating the Sprint Backlog for the coming week.
-
 
 ### SCRUM management tools
 The Product Backlog and Sprint Backlog are to be located on a ‘Story Board’ on Trello (https://trello.com/b/9dSUPl18/story-board)
@@ -92,9 +89,9 @@ This does not mean the Scrum Master cannot be assigned stories to complete, but 
 |--|--|--|--|--|
 |Hoang Phan|hpha0005@student.monash.edu|0422875000|28769430|Developer|
 |Marc Porciuncula|mpor14@student.monash.edu|0450556900|27944166|Reviewer/Developer|
-|Erica Son|eson0001@students.monash.edu|0408247308|28798929|Product Owner/Developer|
+|Erica Son|eson0001@student.monash.edu|0408247308|28798929|Product Owner/Developer|
 |Ellen Anastasia|elle0001@student.monash.edu|0404730116|28070259|Designer/Developer|
-|Fenghe (Dax) Shen|fshe17@student.monash.edu|0406847122|26983044|Reviewer/Develope|
+|Fenghe (Dax) Shen|fshe17@student.monash.edu|0406847122|26983044|Reviewer/Developer|
 |Kenny Ye|kyee0003@student.monash.edu|0408614668|28782151|Scrum Master/Developer|
 
 All team members are required to follow the above specified procedures under the section Protocols.
