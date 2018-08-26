@@ -14,7 +14,13 @@ Fenghe Shen fshe17
 
 #### Set up your development environment
 
-You need Node.js 10.9.0 or later. [Download](https://nodejs.org/en/) and follow the instructions to install. This will also install the npm package manager.
+##### Install Node.js
+
+You need Node.js 10.9.0 or later. Download and follow the instructions to install. This will also install the npm package manager.
+
+- [Node.js](https://nodejs.org/en/)
+
+##### Update npm
 
 Make sure your npm is up to date. Run the following in your terminal.
 
@@ -22,9 +28,9 @@ Make sure your npm is up to date. Run the following in your terminal.
 npm install -g npm
 ```
 
-It is recommended you use either the VSCode or Atom code editors, as they have the best tooling available for this project.
+##### Install an editor and extensions (Optional)
 
-##### Recommended editor extensions
+It is recommended you use either the VSCode or Atom code editors, as they have the best tooling available for this project.
 
 - VSCode
   - [Vue Language Support](https://marketplace.visualstudio.com/items?itemName=octref.vetur)
@@ -34,6 +40,12 @@ It is recommended you use either the VSCode or Atom code editors, as they have t
   - [Vue Language Support](https://atom.io/packages/language-vue)
   - [Prettier](https://atom.io/packages/prettier-atom)
   - [Eslint](https://atom.io/packages/linter-eslint)
+
+##### Install the Vue DevTools Browser Extension (Optional)
+
+Vue provides browser extensions for inspecting Vue components during development.
+
+- [Vue DevTools](https://github.com/vuejs/vue-devtools)
 
 #### Install project dependencies
 
