@@ -24,7 +24,7 @@ export default {
        * @type {Object}
        */
       googleSignInParams: {
-        client_id: '651208341504-0ekm6frf7ttj3uvo59etdb6t9p6sksq1.apps.googleusercontent.com'
+        client_id: '651208341504-ib5m22804n5cvl8ih18rimd2hu5trv7l.apps.googleusercontent.com'
       }
     }
   },
