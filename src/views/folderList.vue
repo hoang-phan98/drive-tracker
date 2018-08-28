@@ -50,9 +50,6 @@ export default {
 <!--v-bind:folder="folder" v-bind:key="folder.id-->
 
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
 .rows {
   list-style-type: none;
   margin: 2%;
@@ -69,8 +66,11 @@ h3 {
   color: darkslategrey;
   width: 100%;
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
+#app {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
 }
 </style>
