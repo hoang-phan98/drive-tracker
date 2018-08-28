@@ -10,12 +10,12 @@
 </template>
 
 <script>
-import Vue from 'vue';
-import GSignInButton from 'vue-google-signin-button';
+import Vue from "vue";
+import GSignInButton from "vue-google-signin-button";
 Vue.use(GSignInButton);
 
 export default {
-  data () {
+  data() {
     return {
       /**
        * The Auth2 parameters, as seen on
@@ -24,22 +24,23 @@ export default {
        * @type {Object}
        */
       googleSignInParams: {
-        client_id: '651208341504-ib5m22804n5cvl8ih18rimd2hu5trv7l.apps.googleusercontent.com'
+        client_id:'651208341504-ib5m22804n5cvl8ih18rimd2hu5trv7l.apps.googleusercontent.com'
       }
-    }
+    };
+
   },
   methods: {
-    onSignInSuccess (googleUser) {
+    onSignInSuccess(googleUser) {
       // `googleUser` is the GoogleUser object that represents the just-signed-in user.
       // See https://developers.google.com/identity/sign-in/web/reference#users
-      const profile = googleUser.getBasicProfile() // etc etc
+      const profile = googleUser.getBasicProfile(); // etc etc
     },
-    onSignInError (error) {
+    onSignInError(error) {
       // `error` contains any error occurred.
-      console.log('OH NOES', error)
+      console.log("OH NOES", error);
     }
-  },
-}
+  }
+};
 </script>
 
 <style>
