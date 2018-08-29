@@ -1,24 +1,24 @@
-NAVIGATION BAR
+# NAVIGATION BAR
+```
 background: #37474f
 icons: #cfd8dc
 
-WELCOME TEXT
+# WELCOME TEXT
 color: #37474f
 font-family: Raleway
 font-size: 30px, bold
 
-SEARCH ICON
+# SEARCH ICON
 color: #37474f
 
-OVERLAY
-background-color: #444
-capacity: 20% --> sorry cannot figure this out in rgba
+# OVERLAY
+background-color: rgba(68, 68, 68, 0.2);
 
-ROBOT, ADD FOLDER DIALOG BOX (bootstrap element)
+# ROBOT, ADD FOLDER DIALOG BOX (bootstrap element)
 color: #37474f
 background-color: #eceff1
 font-family: Raleway
-font-size: 22px, bold--> title
+font-size: 22px, bold /* title */
 font-size: 16px --> desc
 
 ADD FOLDER BUTTON (bootstrap element)
