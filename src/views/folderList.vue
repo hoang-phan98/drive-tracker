@@ -1,31 +1,54 @@
 <template>
   <div class="folderList">
-    <b-container> 
-      <b-row>
-        <b-col>
+    
 
-        </b-col>
-        <b-col cols="6">
-          <h1>Current Folders</h1>
+    <h1>Tracked Items</h1>
 
           <span> <br> </span>
-
+          <b-row class="rows">
+            <b-col cols="5">Name</b-col>
+            <b-col>Owner</b-col>
+            <b-col>Size</b-col>
+            <b-col>Last Edit</b-col>
+            
+          </b-row>
           <b-row class="rows" v-for="folder in folderList" :key="folder.id">
-            <b-button class="folderButton">{{ folder.name }}</b-button>
+            <b-col cols="5"><span> </span><span>{{ folder.name }}</span></b-col>
+            <b-col>{{folder.owner}}</b-col>
+            <b-col>{{folder.size}}</b-col>
+            <b-col>{{folder.lastEdit}}</b-col>
+
           </b-row>
           
           <span> <br> </span>
 
-          <b-row class="rows">
-            <b-button class="button">Add a Folder</b-button>
-          </b-row>
-        </b-col>
-        <b-col>
+          
+        <b-btn v-b-modal.modal1>+</b-btn>
 
-        </b-col>
-      </b-row>
-    </b-container>
-    
+        <!-- Modal Component -->
+        <b-modal id="modal1" title="Add Folder">
+        
+        <h2>Add Folder</h2>
+        <span><br></span>
+        <span><br></span>
+        
+        <b-form-group label="Google Drive Folder URL">
+          <b-form-input placeholder="Your Folder URL"></b-form-input>
+        </b-form-group>
+        <span><br></span>
+        <span><br></span>
+        
+          <b-row slot="modal-footer">
+            <b-col class="col">
+              <b-button class="button2">Cancel</b-button>
+            </b-col>
+            <b-col class="col">
+              <b-button class="button1">OK</b-button>
+            </b-col>
+          </b-row>
+
+        </b-modal>
+          
   </div>
 </template>
 
@@ -37,10 +60,28 @@ export default {
   data() {
     return {
       folderList: [
-        { id: 0, name: "FIT2101" },
-        { id: 1, name: "FIT1049" },
-        { id: 2, name: "Assignment 1" },
-        { id: 3, name: "Hello" }
+        {
+          id: 0,
+          name: "FIT2101",
+          owner: "me",
+          size: "5MB",
+          lastEdit: "Person"
+        },
+        {
+          id: 1,
+          name: "FIT1049",
+          owner: "me",
+          size: "5MB",
+          lastEdit: "Person"
+        },
+        {
+          id: 2,
+          name: "Assignment 1",
+          owner: "me",
+          size: "5MB",
+          lastEdit: "Person"
+        },
+        { id: 3, name: "Hello", owner: "me", size: "5MB", lastEdit: "Person" }
       ]
     };
   }
@@ -50,9 +91,18 @@ export default {
 <!--v-bind:folder="folder" v-bind:key="folder.id-->
 
 <style scoped>
+#app {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 5%;
+  color: #2c3e50;
+}
 .rows {
   list-style-type: none;
   margin: 2%;
+  border-bottom: 1mm;
+  border-bottom-color: black;
 }
 .folderButton {
   background-color: whitesmoke;
@@ -62,15 +112,32 @@ export default {
   font-size: 18pt;
 }
 .button {
-  background-color: rgb(190, 231, 163);
-  color: darkslategrey;
-  width: 100%;
+  background-color: coral;
+  align-self: flex-end;
+}
+
+.col {
+  text-align: center;
+}
+.button1 {
+  background-color: green;
+  align-self: center;
+  align-content: center;
+  font-size: 8pt;
+  width: 70px;
+}
+.button2 {
+  background-color: red;
+  align-self: center;
+  font-size: 8pt;
+  width: 70px;
 }
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  padding: 5%;
+
   color: #2c3e50;
 }
 </style>
