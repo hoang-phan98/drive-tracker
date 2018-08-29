@@ -18,12 +18,11 @@ export default {
   data() {
     return {
       /**
-       * The Auth2 parameters, as seen on
        * https://developers.google.com/identity/sign-in/web/reference#gapiauth2initparams.
-       * As the very least, a valid client_id must present.
        * @type {Object}
        */
       googleSignInParams: {
+        // This is the client_id for the Driver Tracker application
         client_id:'651208341504-ib5m22804n5cvl8ih18rimd2hu5trv7l.apps.googleusercontent.com'
       }
     };
@@ -37,7 +36,7 @@ export default {
     },
     onSignInError(error) {
       // `error` contains any error occurred.
-      console.log("OH NOES", error);
+      console.log("Error has occured during signin", error);
     }
   }
 };
