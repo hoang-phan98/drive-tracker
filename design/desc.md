@@ -34,3 +34,6 @@ background-color: #4cae4c --> green
 CANCEL BUTTON
 background-color: #e53935 --> red
 color: #fff
+
+IMAGES
+transparency: 20%
