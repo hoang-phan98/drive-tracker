@@ -30,24 +30,28 @@
       </b-col>
     </b-row>
     <!-- Modal Component -->
-    <b-modal id="modal1" title="Add Folder">
+    <b-modal id="modal1" title="Add Folder" ref="addFolderModal">
         
       <h2>Add Folder</h2>
       <span><br></span>
       <span><br></span>
         
       <b-form-group label="Google Drive Folder URL">
-        <b-form-input placeholder="Your Folder URL"></b-form-input>
+        <b-form-input 
+          placeholder="Your Folder URL" 
+          v-model="addFolder.url" 
+          :state="addFolder.dirty ? (addFolderMatch ? 'valid' : 'invalid') : null">
+        </b-form-input>
       </b-form-group>
       <span><br></span>
       <span><br></span>
         
       <b-row slot="modal-footer">
         <b-col class="col">
-          <b-button class="button2">Cancel</b-button>
+          <b-button class="button2" @click="closeAddFolder()">Cancel</b-button>
         </b-col>
         <b-col class="col">
-          <b-button class="button1">OK</b-button>
+          <b-button class="button1" @click="submitAddFolder()">OK</b-button>
         </b-col>
       </b-row>
 
@@ -63,6 +67,10 @@ export default {
   name: "folderList",
   data() {
     return {
+      addFolder: {
+        url: "",
+        dirty: false
+      },
       folderList: [
         {
           id: 0,
@@ -88,11 +96,40 @@ export default {
         { id: 3, name: "Hello", owner: "me", size: "5MB", lastEdit: "Person" }
       ]
     };
+  },
+  computed: {
+    addFolderMatch: function() {
+      return this.addFolder.url.match(
+        /^https?:\/\/drive.google.com\/drive.*?\/folders\/(\w+)/
+      );
+    }
+  },
+  watch: {
+    "addFolder.url": function() {
+      this.addFolder.dirty = true;
+    }
+  },
+  methods: {
+    submitAddFolder() {
+      if (!this.addFolderMatch) {
+        return;
+      }
+
+      // Express that we're loading
+      // Verify the existence of the folder
+
+      // eslint-disable-next-line
+      console.log("Add folder", this.addFolderMatch[1]);
+
+      // Close the modal
+      this.$refs.addFolderModal.hide();
+    },
+    closeAddFolder() {
+      this.$refs.addFolderModal.hide();
+    }
   }
 };
 </script>
-
-<!--v-bind:folder="folder" v-bind:key="folder.id-->
 
 <style scoped>
 .rows {
