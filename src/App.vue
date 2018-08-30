@@ -4,7 +4,10 @@
 
           <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
-          <b-navbar-brand href="#">Drive Tracker</b-navbar-brand>
+            <b-navbar-brand href="#">
+              <img src="https://placekitten.com/g/30/30" class="d-inline-block align-top" alt="BV">
+              Drive Tracker
+            </b-navbar-brand>
 
           <b-collapse is-nav id="nav_collapse">
 
