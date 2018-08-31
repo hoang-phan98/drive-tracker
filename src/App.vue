@@ -1,11 +1,23 @@
 <template>
   <div id="app">
-    <router-view/>
+      <MenuBar></MenuBar>
+      <router-view/>
   </div>
+  
 </template>
 
+<script>
+import MenuBar from "@/views/MenuBar.vue";
+
+export default {
+  components: {
+    MenuBar
+  }
+};
+</script>
+
 <style>
-#app {
+<style > #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
