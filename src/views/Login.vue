@@ -2,12 +2,12 @@
   <div class="login">
     <div class="login-box">
       <img src="../assets/monash.png">
-      <br></br></br></br>
+      <br/><br/><br/>
       <font size="4">
         "As we look ahead into the next century, leaders will be those who
-        empower others."</br>--Bill Gates
+        empower others."<br/>--Bill Gates
       </font>
-      </br></br></br>
+      <br/><br/><br/>
       <g-signin-button
         :params="googleSignInParams"
         @success="onSignInSuccess"
@@ -44,11 +44,12 @@ export default {
     onSignInSuccess(googleUser) {
       // `googleUser` is the GoogleUser object that represents the just-signed-in user.
       // See https://developers.google.com/identity/sign-in/web/reference#users
+      // eslint-disable-next-line
       const profile = googleUser.getBasicProfile(); // etc etc
     },
-    onSignInError(error) {
+    onSignInError(/* error */) {
       // `error` contains any error occurred.
-      console.log("Error has occured during signin", error);
+      // console.log("Error has occured during signin", error);
     }
   }
 };
