@@ -33,6 +33,7 @@ export default {
       // See https://developers.google.com/identity/sign-in/web/reference#users
       // eslint-disable-next-line
       const profile = googleUser.getBasicProfile(); // etc etc
+      this.$router.push("/");
     },
     onSignInError(/* error */) {
       // `error` contains any error occurred.
