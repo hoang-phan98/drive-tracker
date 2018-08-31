@@ -28,16 +28,13 @@ export default {
     GSigninButton
   },
   methods: {
-    onSignInSuccess(googleUser) {
-      // `googleUser` is the GoogleUser object that represents the just-signed-in user.
-      // See https://developers.google.com/identity/sign-in/web/reference#users
-      // eslint-disable-next-line
-      const profile = googleUser.getBasicProfile(); // etc etc
+    onSignInSuccess() {
       this.$router.push("/");
     },
     onSignInError(/* error */) {
       // `error` contains any error occurred.
-      // console.log("Error has occured during signin", error);
+      // eslint-disable-next-line
+      console.log("Error has occured during signin", error);
     }
   }
 };
