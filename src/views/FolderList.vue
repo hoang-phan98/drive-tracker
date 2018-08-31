@@ -19,7 +19,6 @@
       <b-col>{{folder.owner}}</b-col>
       <b-col>{{folder.size}}</b-col>
       <b-col>{{folder.lastEdit}}</b-col>
-      
     </b-row>
           
     <span> <br> </span>
@@ -28,39 +27,20 @@
       <b-col class="col2" style="text-align: flex-end">      
         <b-btn v-b-modal.modal1 class="button">+</b-btn>
       </b-col>
-    </b-row>
-    <!-- Modal Component -->
-    <b-modal id="modal1" title="Add Folder">
-        
-      <h2>Add Folder</h2>
-      <span><br></span>
-      <span><br></span>
-        
-      <b-form-group label="Google Drive Folder URL">
-        <b-form-input placeholder="Your Folder URL"></b-form-input>
-      </b-form-group>
-      <span><br></span>
-      <span><br></span>
-        
-      <b-row slot="modal-footer">
-        <b-col class="col">
-          <b-button class="button2">Cancel</b-button>
-        </b-col>
-        <b-col class="col">
-          <b-button class="button1">OK</b-button>
-        </b-col>
-      </b-row>
+    </b-row>  
 
-    </b-modal>
-          
+    <AddFolderModal id="modal1" />   
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
+import AddFolderModal from "./AddFolderModal.vue";
 
 export default {
-  name: "folderList",
+  name: "FolderList",
+  components: {
+    AddFolderModal
+  },
   data() {
     return {
       folderList: [
@@ -85,14 +65,18 @@ export default {
           size: "5MB",
           lastEdit: "Person"
         },
-        { id: 3, name: "Hello", owner: "me", size: "5MB", lastEdit: "Person" }
+        {
+          id: 3,
+          name: "Hello",
+          owner: "me",
+          size: "5MB",
+          lastEdit: "Person"
+        }
       ]
     };
   }
 };
 </script>
-
-<!--v-bind:folder="folder" v-bind:key="folder.id-->
 
 <style scoped>
 .rows {
@@ -118,19 +102,5 @@ export default {
 .col2 {
   text-align: end;
   margin-right: 50px;
-}
-
-.button1 {
-  background-color: green;
-  align-self: center;
-  align-content: center;
-  font-size: 8pt;
-  width: 70px;
-}
-.button2 {
-  background-color: red;
-  align-self: center;
-  font-size: 8pt;
-  width: 70px;
 }
 </style>
