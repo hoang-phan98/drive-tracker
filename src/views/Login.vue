@@ -2,8 +2,11 @@
   <div class="login">
     <div class="login-box">
       <img src="../assets/monash.png">
-      </br></br></br>
-      <font size="6">"As we look ahead into the next century, leaders will be those who empower others."</br>--Bill Gates</font>
+      <br></br></br></br>
+      <font size="4">
+        "As we look ahead into the next century, leaders will be those who
+        empower others."</br>--Bill Gates
+      </font>
       </br></br></br>
       <g-signin-button
         :params="googleSignInParams"
@@ -32,10 +35,10 @@ export default {
        */
       googleSignInParams: {
         // This is the client_id for the Driver Tracker application
-        client_id:'651208341504-ib5m22804n5cvl8ih18rimd2hu5trv7l.apps.googleusercontent.com'
+        client_id:
+          "651208341504-ib5m22804n5cvl8ih18rimd2hu5trv7l.apps.googleusercontent.com"
       }
     };
-
   },
   methods: {
     onSignInSuccess(googleUser) {
@@ -66,12 +69,12 @@ export default {
 
 .login-box {
   background: rgba(256, 256, 256, 1); /*can be anything, of course*/
-  margin-right: 550px;
-  margin-left: 550px;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
   padding: 50px;
-  box-shadow: 0px 0px 46px -5px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);
   border-radius: 25px;
-
 }
 
 .g-signin-button {
@@ -91,22 +94,20 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
-  z-index:-2;
+  z-index: -2;
   background-size: 250px;
   background-repeat: repeat;
-  background-image:
-    url(../assets/background.jpg);
+  background-image: url(../assets/background.jpg);
 }
 
 .tint {
-    z-index: -1;
-    height: 100%;
-    width: 100%;
-    position: fixed;
-    overflow: auto;
-    top: 0px;
-    left: 0px;
-    background: rgba(68, 68, 68, 0.2); /*can be anything, of course*/
+  z-index: -1;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  overflow: auto;
+  top: 0px;
+  left: 0px;
+  background: rgba(68, 68, 68, 0.2); /*can be anything, of course*/
 }
-
 </style>
