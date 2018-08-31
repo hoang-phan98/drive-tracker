@@ -1,7 +1,9 @@
 <template>
   <div id="app">
-        <MenuBar></MenuBar>
+      <MenuBar></MenuBar>
+      <router-view/>
   </div>
+  
 </template>
 
 <script>
