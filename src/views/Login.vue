@@ -9,7 +9,6 @@
       </font>
       <br/><br/><br/>
       <g-signin-button
-        :params="googleSignInParams"
         @success="onSignInSuccess"
         @error="onSignInError">
         <img id="google-logo" src="../assets/google-logo.png">
@@ -27,19 +26,6 @@ import GSigninButton from "../components/GSigninButton.vue";
 export default {
   components: {
     GSigninButton
-  },
-  data() {
-    return {
-      /**
-       * https://developers.google.com/identity/sign-in/web/reference#gapiauth2initparams.
-       * @type {Object}
-       */
-      googleSignInParams: {
-        // This is the client_id for the Driver Tracker application
-        client_id:
-          "651208341504-ib5m22804n5cvl8ih18rimd2hu5trv7l.apps.googleusercontent.com"
-      }
-    };
   },
   methods: {
     onSignInSuccess(googleUser) {
