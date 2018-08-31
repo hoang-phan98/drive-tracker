@@ -73,6 +73,7 @@ export default {
   width: 50%;
   margin-left: auto;
   margin-right: auto;
+  text-align: center;
   padding: 50px;
   box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);
   border-radius: 25px;
