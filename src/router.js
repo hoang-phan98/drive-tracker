@@ -1,8 +1,15 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Home from "./views/AddFolder.vue";
+import FolderList from "./views/FolderList.vue";
+import Login from "./views/Login.vue";
+import googleapis from "./googleapis";
 
 Vue.use(Router);
+
+async function isSignedIn() {
+  const auth2 = googleapis.auth2.getAuthInstance();
+  return auth2.isSignedIn.get();
+}
 
 export default new Router({
   mode: "history",
@@ -10,23 +17,29 @@ export default new Router({
     {
       path: "/",
       name: "home",
-      component: Home
-    },
-    {
-      path: "/about",
-      name: "about",
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () =>
-        import(/* webpackChunkName: "about" */ "./views/FolderList.vue")
+      component: {
+        render: h => h(FolderList),
+        async beforeRouteEnter(to, from, next) {
+          next((await isSignedIn()) ? undefined : "/login");
+        }
+      }
     },
     {
       path: "/login",
       name: "login",
-      // this is login lmao
-      component: () =>
-        import(/* webpackChunkName: "login" */ "./views/Login.vue")
+      component: {
+        render: h => h(Login),
+        async beforeRouteEnter(to, from, next) {
+          next((await isSignedIn()) ? "/" : undefined);
+        }
+      }
+    },
+    {
+      path: "/*",
+      name: "404",
+      component: {
+        render: h => h("div", {}, "404 not found")
+      }
     }
   ]
 });

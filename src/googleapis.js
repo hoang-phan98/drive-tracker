@@ -6,20 +6,7 @@ const DISCOVERY_DOCS = [
 ];
 const SCOPES = "https://www.googleapis.com/auth/drive.metadata.readonly";
 
-window.gapi = window.gapi || {};
-
 async function init() {
-  if (!window.gapi) {
-    const script = document.getElementById("gapi-js");
-    await new Promise(resolve => {
-      const handler = () => {
-        script.removeEventListener("onload", handler);
-        resolve();
-      };
-      script.addEventListener("onload", handler);
-    });
-  }
-
   await new Promise(resolve => window.gapi.load("client:auth2", resolve));
 
   await window.gapi.client.init({
@@ -28,6 +15,9 @@ async function init() {
     discoveryDocs: DISCOVERY_DOCS,
     scope: SCOPES
   });
+
+  // eslint-disable-next-line
+  console.log('Google APIs initialised');
 
   return window.gapi;
 }
