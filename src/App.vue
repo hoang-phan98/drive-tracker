@@ -3,6 +3,7 @@
     <div id="nav">
       <router-link to="/">Add a Folder</router-link> |
       <router-link to="/about">Folder List</router-link>
+      <router-link to="/login">Login</router-link>
     </div>
     <router-view/>
   </div>
