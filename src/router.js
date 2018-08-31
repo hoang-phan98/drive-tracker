@@ -27,6 +27,13 @@ export default new Router({
       // this is login lmao
       component: () =>
         import(/* webpackChunkName: "login" */ "./views/Login.vue")
+    },
+    {
+      path: "/folderpage",
+      name: "folderpage",
+      // this is folder page lmao
+      component: () =>
+        import(/* webpackChunkName: "folderpage" */ "./views/FolderPage.vue")
     }
   ]
 });
