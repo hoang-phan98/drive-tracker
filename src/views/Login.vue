@@ -9,7 +9,6 @@
       </font>
       <br/><br/><br/>
       <g-signin-button
-        :params="googleSignInParams"
         @success="onSignInSuccess"
         @error="onSignInError">
         <img id="google-logo" src="../assets/google-logo.png">
@@ -22,34 +21,20 @@
 </template>
 
 <script>
-import Vue from "vue";
-import GSignInButton from "vue-google-signin-button";
-Vue.use(GSignInButton);
+import GSigninButton from "../components/GSigninButton.vue";
 
 export default {
-  data() {
-    return {
-      /**
-       * https://developers.google.com/identity/sign-in/web/reference#gapiauth2initparams.
-       * @type {Object}
-       */
-      googleSignInParams: {
-        // This is the client_id for the Driver Tracker application
-        client_id:
-          "651208341504-ib5m22804n5cvl8ih18rimd2hu5trv7l.apps.googleusercontent.com"
-      }
-    };
+  components: {
+    GSigninButton
   },
   methods: {
-    onSignInSuccess(googleUser) {
-      // `googleUser` is the GoogleUser object that represents the just-signed-in user.
-      // See https://developers.google.com/identity/sign-in/web/reference#users
-      // eslint-disable-next-line
-      const profile = googleUser.getBasicProfile(); // etc etc
+    onSignInSuccess() {
+      this.$router.push("/");
     },
     onSignInError(/* error */) {
       // `error` contains any error occurred.
-      // console.log("Error has occured during signin", error);
+      // eslint-disable-next-line
+      console.log("Error has occured during signin", error);
     }
   }
 };

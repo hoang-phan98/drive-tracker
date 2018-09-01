@@ -1,29 +1,45 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Index from "./views/Index.vue";
 import FolderList from "./views/FolderList.vue";
+import Login from "./views/Login.vue";
+import googleapis from "./googleapis";
 
 Vue.use(Router);
+
+async function isSignedIn() {
+  const auth2 = googleapis.auth2.getAuthInstance();
+  return auth2.isSignedIn.get();
+}
 
 export default new Router({
   mode: "history",
   routes: [
     {
       path: "/",
-      name: "index",
-      component: Index
-    },
-    {
-      path: "/folders",
-      name: "folders",
-      component: FolderList
+      name: "home",
+      component: {
+        render: h => h(FolderList),
+        async beforeRouteEnter(to, from, next) {
+          next((await isSignedIn()) ? undefined : "/login");
+        }
+      }
     },
     {
       path: "/login",
       name: "login",
-      // this is login lmao
-      component: () =>
-        import(/* webpackChunkName: "login" */ "./views/Login.vue")
+      component: {
+        render: h => h(Login),
+        async beforeRouteEnter(to, from, next) {
+          next((await isSignedIn()) ? "/" : undefined);
+        }
+      }
+    },
+    {
+      path: "/*",
+      name: "404",
+      component: {
+        render: h => h("div", {}, "404 not found")
+      }
     }
   ]
 });
