@@ -1,8 +1,10 @@
 <template>
   <div id="app">
+    <div v-if="$route.name !='login'">
       <MenuBar></MenuBar>
-      <SpaceBackground></SpaceBackground>
-      <router-view/>
+    </div>
+    <SpaceBackground></SpaceBackground>
+    <router-view/>
   </div>
 
 </template>
