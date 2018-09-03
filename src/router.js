@@ -3,6 +3,7 @@ import Router from "vue-router";
 import FolderList from "./views/FolderList.vue";
 import Login from "./views/Login.vue";
 import googleapis from "./googleapis";
+import Logout from "./views/logout-temp";
 
 Vue.use(Router);
 
@@ -31,6 +32,16 @@ export default new Router({
         render: h => h(Login),
         async beforeRouteEnter(to, from, next) {
           next((await isSignedIn()) ? "/" : undefined);
+        }
+      }
+    },
+    {
+      path: "/logout",
+      name: "logout",
+      component: {
+        render: h => h(Logout),
+        async beforeRouteEnter(to, from, next) {
+          next((await isSignedIn()) ? undefined : "/login");
         }
       }
     },
