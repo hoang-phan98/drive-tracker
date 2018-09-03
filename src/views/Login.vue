@@ -52,10 +52,11 @@ export default {
 }
 
 .login-box {
-  background: rgba(256, 256, 256, 1); /*can be anything, of course*/
+  background: rgba(256, 256, 256, 1);
   width: 50%;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 5%;
   text-align: center;
   padding: 50px;
   box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);
