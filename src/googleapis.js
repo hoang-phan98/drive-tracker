@@ -5,19 +5,20 @@ const DISCOVERY_DOCS = [
   "https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"
 ];
 const SCOPES = "https://www.googleapis.com/auth/drive.metadata.readonly";
+const API_KEY = "AIzaSyDx7z6UyW6W4ZtO4cQpcGx-9Ks8VEAp9Lo";
 
 async function init() {
   await new Promise(resolve => window.gapi.load("client:auth2", resolve));
 
   await window.gapi.client.init({
-    // apiKey: API_KEY,
+    apiKey: API_KEY,
     clientId: CLIENT_ID,
     discoveryDocs: DISCOVERY_DOCS,
     scope: SCOPES
   });
 
   // eslint-disable-next-line
-  console.log('Google APIs initialised');
+  console.log("Google APIs initialised");
 
   return window.gapi;
 }
