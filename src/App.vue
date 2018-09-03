@@ -1,17 +1,22 @@
 <template>
   <div id="app">
+    <div v-if="$route.name !='login'">
       <MenuBar></MenuBar>
-      <router-view/>
+    </div>
+    <SpaceBackground></SpaceBackground>
+    <router-view/>
   </div>
-  
+
 </template>
 
 <script>
 import MenuBar from "@/views/MenuBar.vue";
+import SpaceBackground from "@/components/SpaceBackground.vue"
 
 export default {
   components: {
-    MenuBar
+    MenuBar,
+    SpaceBackground
   }
 };
 </script>

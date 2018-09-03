@@ -15,8 +15,6 @@
         <strong>Sign in with Google</strong>
       </g-signin-button>
     </div>
-    <div class=tint></div>
-    <div class=background></div>
   </div>
 </template>
 
@@ -54,10 +52,11 @@ export default {
 }
 
 .login-box {
-  background: rgba(256, 256, 256, 1); /*can be anything, of course*/
+  background: rgba(256, 256, 256, 1);
   width: 50%;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 5%;
   text-align: center;
   padding: 50px;
   box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);
@@ -73,28 +72,5 @@ export default {
   background-color: #3c82f7;
   color: #fff;
   box-shadow: 0 3px 0 #0f69ff;
-}
-
-.background {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: -2;
-  background-size: 250px;
-  background-repeat: repeat;
-  background-image: url(../assets/background.jpg);
-}
-
-.tint {
-  z-index: -1;
-  height: 100%;
-  width: 100%;
-  position: fixed;
-  overflow: auto;
-  top: 0px;
-  left: 0px;
-  background: rgba(68, 68, 68, 0.2); /*can be anything, of course*/
 }
 </style>
