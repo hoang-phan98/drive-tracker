@@ -48,6 +48,9 @@ export default {
         // Load the googleAuth instance (the user) and sign them out
         const auth2 = googleapis.auth2.getAuthInstance();
         auth2.signOut();
+        /* return the user back to the homescreen: which should be the Login
+        screen because the user is now logged out :) */
+        this.$router.go("/");
       }
     }
 }
