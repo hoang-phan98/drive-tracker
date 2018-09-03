@@ -1,6 +1,6 @@
 <template>
   <div class="folderList">
-    
+
     <b-row class="rows">
       <h1>Tracked Items</h1>
     </b-row>
@@ -20,16 +20,16 @@
       <b-col>{{folder.size}}</b-col>
       <b-col>{{folder.lastEdit}}</b-col>
     </b-row>
-          
+
     <span> <br> </span>
 
     <b-row>
-      <b-col class="col2" style="text-align: flex-end">      
+      <b-col class="col2" style="text-align: flex-end">
         <b-btn v-b-modal.modal1 class="button">+</b-btn>
       </b-col>
-    </b-row>  
+    </b-row>
 
-    <AddFolderModal id="modal1" />   
+    <AddFolderModal id="modal1" />
   </div>
 </template>
 
@@ -79,6 +79,10 @@ export default {
 </script>
 
 <style scoped>
+.folderList {
+  background: rgba(255, 255, 255, 0.9);
+  margin: 40px;
+}
 .rows {
   list-style-type: none;
   margin: 2%;
