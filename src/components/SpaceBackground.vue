@@ -13,6 +13,7 @@
   left: 0;
   right: 0;
   z-index: -2;
+  opacity: 0.1;
   background-size: 250px;
   background-repeat: repeat;
   background-image: url(../assets/background.jpg);
