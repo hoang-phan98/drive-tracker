@@ -1,17 +1,20 @@
 <template>
   <div id="app">
       <MenuBar></MenuBar>
+      <SpaceBackground></SpaceBackground>
       <router-view/>
   </div>
-  
+
 </template>
 
 <script>
 import MenuBar from "@/views/MenuBar.vue";
+import SpaceBackground from "@/components/SpaceBackground.vue"
 
 export default {
   components: {
-    MenuBar
+    MenuBar,
+    SpaceBackground
   }
 };
 </script>
