@@ -30,7 +30,7 @@
                   <em>User</em>
                 </template>
                 <b-dropdown-item href="#">Profile</b-dropdown-item>
-                <b-dropdown-item href="#">Log out</b-dropdown-item>
+                <b-dropdown-item v-on:click="logout" href="#">Log out</b-dropdown-item>
               </b-nav-item-dropdown>
             </b-navbar-nav>
 
@@ -38,3 +38,17 @@
         </b-navbar>
     </div>
 </template>
+
+<script>
+import googleapis from "../googleapis";
+
+export default {
+  methods: {
+      logout: function () {
+        // Load the googleAuth instance (the user) and sign them out
+        const auth2 = googleapis.auth2.getAuthInstance();
+        auth2.signOut();
+      }
+    }
+}
+</script>
