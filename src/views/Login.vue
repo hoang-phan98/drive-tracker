@@ -2,7 +2,8 @@
   <div class="login">
     <div class="login-box">
       <img src="../assets/monash.png">
-      <br/><br/><br/>
+      <div class = "login-logo"><img src="../assets/logo.png"></div>
+      <br/>
       <font size="4">
         "As we look ahead into the next century, leaders will be those who
         empower others."<br/>--Bill Gates
@@ -42,6 +43,11 @@ export default {
 .login img {
   width: 50%;
   height: auto;
+}
+
+.login-logo img {
+  width: 25%;
+  height: 25%;
 }
 
 #google-logo {
