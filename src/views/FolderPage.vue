@@ -2,6 +2,11 @@
   <div class="folderpage">
     <div class="grid-container">
       <div class="users">
+        <b-row v-for="user in userList" :key="user.id">
+            <!-- user name  -->
+            {{user}}
+            <span><br></span>
+        </b-row>
         <GChart
           type="BarChart"
           :data="userData"
@@ -48,101 +53,147 @@
           </b-tabs>
         </b-card>
       </div>
+
+      <div class="filecontribution">
+        <b-card no-body>
+          <b-row v-for="file in fileList" :key="file.id">
+            <!-- filename -->
+            <b-col> {{ file.name }} </b-col>
+            
+            <span><br></span>
+          </b-row>
+        </b-card>
+      </div>
     </div>
-  </div>
+
 </template>
 
 <script>
-import Vue from 'vue'
-import VueGoogleCharts from 'vue-google-charts';
+import gapi from "../googleapis.js";
+import Vue from "vue";
+import VueGoogleCharts from "vue-google-charts";
 
-Vue.use(VueGoogleCharts)
+Vue.use(VueGoogleCharts);
 
 export default {
-  data () {
+  // fileList is an object with the file's id and permissions
+  // permissions has the user's id and display name that we can use for the displaying of data
+  async mounted() {
+    this.fileList = (await gapi.client.drive.files.list({
+      fields: "files(id, name, permissions)",
+      //q: starred != true
+      q: "'1m0Mq_RHMpXJXfVzEISPySwPheg9PUSqy' in parents" // file id goes here
+    })).result.files;
+
+    for (var i = 0; i < this.fileList.length; i++) {
+      //in this.fileList
+      //console.log(file); // why does this print a number
+      for (var j = 0; j < this.fileList[i].permissions.length; j++) {
+        if (
+          !this.userList.includes(this.fileList[i].permissions[j].displayName)
+        ) {
+          this.userList.push(this.fileList[i].permissions[j].displayName);
+        }
+      }
+    }
+  },
+
+  data() {
     return {
+      userList: [],
+      fileList: [],
       userData: [
-        ['Contributers', 'Colour', { role: 'style' } ],
-        ['Kenny', 10, '#FF0000'],
-        ['Hoang', 16, '#00FF00	'],
-        ['Erica', 28, '#0000FF	'],
-        ['Dax', 16, '#FFFF00	'],
-        ['Marc', 28, '#808080']
+        ["Contributers", "Colour", { role: "style" }],
+        ["Kenny", 10, "#FF0000"],
+        ["Hoang", 16, "#00FF00	"],
+        ["Erica", 28, "#0000FF	"],
+        ["Dax", 16, "#FFFF00	"],
+        ["Marc", 28, "#808080"]
       ],
       userOptions: {
         width: 600,
         height: 500,
-        title: 'Contributers',
-        legend: 'none',
-        bar: { groupWidth: '75%' },
-        isStacked: 'percent',
+        title: "Contributers",
+        legend: "none",
+        bar: { groupWidth: "75%" },
+        isStacked: "percent"
       },
       pieData: [
-        ['Task', 'Hours per Day'],
-        ['Kenny',     11],
-        ['Hoang',      2],
-        ['Erica',  2],
-        ['Dax', 2],
-        ['Marc',    7]
+        ["Task", "Hours per Day"],
+        ["Kenny", 11],
+        ["Hoang", 2],
+        ["Erica", 2],
+        ["Dax", 2],
+        ["Marc", 7]
       ],
       pieOptions: {
         width: 600,
         height: 600,
-        title: 'All Time Contribution',
+        title: "All Time Contribution",
         pieHole: 0.4,
-        legend: 'none'
+        legend: "none"
       },
       histogramData: [
-        ['Contributers', 'Add Files', 'Delete Files', 'File Revisions', { role: 'annotation' } ],
-        ['01/01/2018', 10, 24, 20, ''],
-        ['02/01/2018', 16, 22, 23, ''],
-        ['03/01/2018', 28, 19, 29, ''],
-        ['04/01/2018', 16, 22, 23, ''],
-        ['05/01/2018', 28, 19, 29, ''],
-        ['06/01/2018', 10, 24, 20, ''],
-        ['07/01/2018', 16, 22, 23, ''],
-        ['08/01/2018', 28, 19, 29, ''],
-        ['09/01/2018', 16, 22, 23, ''],
-        ['10/01/2018', 10, 24, 20, ''],
-        ['11/01/2018', 16, 22, 23, ''],
-        ['12/01/2018', 28, 19, 29, ''],
-        ['13/01/2018', 16, 22, 23, ''],
+        [
+          "Contributers",
+          "Add Files",
+          "Delete Files",
+          "File Revisions",
+          { role: "annotation" }
+        ],
+        ["01/01/2018", 10, 24, 20, ""],
+        ["02/01/2018", 16, 22, 23, ""],
+        ["03/01/2018", 28, 19, 29, ""],
+        ["04/01/2018", 16, 22, 23, ""],
+        ["05/01/2018", 28, 19, 29, ""],
+        ["06/01/2018", 10, 24, 20, ""],
+        ["07/01/2018", 16, 22, 23, ""],
+        ["08/01/2018", 28, 19, 29, ""],
+        ["09/01/2018", 16, 22, 23, ""],
+        ["10/01/2018", 10, 24, 20, ""],
+        ["11/01/2018", 16, 22, 23, ""],
+        ["12/01/2018", 28, 19, 29, ""],
+        ["13/01/2018", 16, 22, 23, ""]
       ],
       histogramOptions: {
         width: 1700,
         height: 500,
-        title: 'File contrution over time',
-        legend: { position: 'top', maxLines: 3 },
-        bar: { groupWidth: '75%' },
+        title: "File contrution over time",
+        legend: { position: "top", maxLines: 3 },
+        bar: { groupWidth: "75%" },
         isStacked: true
       },
       barData: [
-        ['Contributers', 'Add Files', 'Delete Files', 'File Revisions', { role: 'annotation' } ],
-        ['Kenny', 10, 24, 20, ''],
-        ['Hoang', 16, 22, 23, ''],
-        ['Erica', 28, 19, 29, ''],
-        ['Dax', 16, 22, 23, ''],
-        ['Marc', 28, 19, 29, '']
+        [
+          "Contributers",
+          "Add Files",
+          "Delete Files",
+          "File Revisions",
+          { role: "annotation" }
+        ],
+        ["Kenny", 10, 24, 20, ""],
+        ["Hoang", 16, 22, 23, ""],
+        ["Erica", 28, 19, 29, ""],
+        ["Dax", 16, 22, 23, ""],
+        ["Marc", 28, 19, 29, ""]
       ],
       barOptions: {
         width: 1700,
         height: 500,
-        title: 'User contributions',
-        legend: { position: 'top', maxLines: 3 },
-        bar: { groupWidth: '75%' },
+        title: "User contributions",
+        legend: { position: "top", maxLines: 3 },
+        bar: { groupWidth: "75%" },
         isStacked: true
-      },
-    }
+      }
+    };
   }
-}
-
+};
 </script>
 
 <style>
 .grid-container {
   display: grid;
   grid-gap: 30000px 30px;
-
 }
 
 .users {
