@@ -35,11 +35,11 @@ export default new Router({
       }
     },
     {
-      path: "/*",
-      name: "404",
-      component: {
-        render: h => h("div", {}, "404 not found")
-      }
+      path: "/folderpage",
+      name: "folderpage",
+      // this is folder page lmao
+      component: () =>
+        import(/* webpackChunkName: "folderpage" */ "./views/FolderPage.vue")
     }
   ]
 });
