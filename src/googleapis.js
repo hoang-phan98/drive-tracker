@@ -18,7 +18,7 @@ async function init() {
   });
 
   // eslint-disable-next-line
-  console.log('Google APIs initialised');
+  console.log("Google APIs initialised");
 
   return window.gapi;
 }
