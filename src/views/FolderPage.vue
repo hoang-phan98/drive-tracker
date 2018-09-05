@@ -56,7 +56,7 @@
 
       <div class="filecontribution">
         <b-card no-body>
-          <b-row v-for="file in fileList" :key="file.id">
+          <b-row class = "fileHolder" v-for="file in fileList" :key="file.id">
             <!-- filename -->
             <b-col> {{ file.name }} </b-col>
             
@@ -164,18 +164,12 @@ export default {
         isStacked: true
       },
       barData: [
-        [
-          "Contributers",
-          "Add Files",
-          "Delete Files",
-          "File Revisions",
-          { role: "annotation" }
-        ],
-        ["Kenny", 10, 24, 20, ""],
-        ["Hoang", 16, 22, 23, ""],
-        ["Erica", 28, 19, 29, ""],
-        ["Dax", 16, 22, 23, ""],
-        ["Marc", 28, 19, 29, ""]
+        ["Contributers", "Dax", "Kenny", "Hoang", { role: "annotation" }],
+        ["File1", 10, 24, 20, ""],
+        ["File2", 16, 22, 23, ""],
+        ["File3", 28, 19, 29, ""],
+        ["File4", 16, 22, 23, ""],
+        ["File5", 28, 19, 29, ""]
       ],
       barOptions: {
         width: 1700,
@@ -249,5 +243,9 @@ export default {
 }
 .indent {
   margin-left: 30px;
+}
+.fileHolder {
+  align-self: flex-start;
+  margin: 30px;
 }
 </style>
