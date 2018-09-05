@@ -11,7 +11,7 @@
 
 <script>
 import MenuBar from "@/views/MenuBar.vue";
-import SpaceBackground from "@/components/SpaceBackground.vue"
+import SpaceBackground from "@/components/SpaceBackground.vue";
 
 export default {
   components: {
@@ -22,7 +22,7 @@ export default {
 </script>
 
 <style>
-<style > #app {
+#app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
