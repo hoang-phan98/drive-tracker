@@ -193,6 +193,7 @@ export default {
   position: fixed;
   overflow-y: scroll;
   height: 100%;
+  border-left: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .pieChart {
