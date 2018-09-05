@@ -26,21 +26,44 @@
     </b-container>
 
     <div class="sideBar">
-      <GChart
-        type="PieChart"
-        :data="pieData"
-        :options="pieOptions"
-      />
-      <GChart
-        type="ColumnChart"
-        :data="histogramData"
-        :options="histogramOptions"
-      />
-      <GChart
-        type="BarChart"
-        :data="barData"
-        :options="barOptions"
-      />
+
+      <div class="PieChart">
+        <h3>All-time</h3>
+        <h3>Contribution</h3>
+        <GChart
+          type="PieChart"
+          :data="pieData"
+          :options="pieOptions"
+        />
+      </div>
+
+      <div class="histogramChart">
+        <h3>Folder Histogram</h3>
+        <GChart
+          type="ColumnChart"
+          :data="histogramData"
+          :options="histogramOptions"
+        />
+      </div>
+
+      <div class="fileContribution">
+        <h3>File Contribution</h3>
+        <GChart
+          type="BarChart"
+          :data="barData"
+          :options="barOptions"
+        />
+      </div>
+
+      <div class="fileContribution">
+        <h3>I am here to demonstrate scrolley</h3>
+        <GChart
+          type="BarChart"
+          :data="barData"
+          :options="barOptions"
+        />
+      </div>
+
     </div>
   </div>
 </template>
@@ -79,7 +102,7 @@ export default {
         ['Marc',    7]
       ],
       pieOptions: {
-        title: 'All Time Contribution',
+        chartArea: {width: 800, height: 800},
         pieHole: 0.4,
         legend: 'none',
         backgroundColor: { fill:'transparent' }
@@ -157,7 +180,7 @@ export default {
 .trackedItems {
   background: rgba(255, 255, 255, 0.4);
   padding: 40px;
-  width: 60%;
+  width: 75%;
   left: 0;
   position: fixed;
 }
@@ -165,9 +188,15 @@ export default {
 .sideBar {
   background: rgba(255, 255, 255, 0.4);
   padding: 40px;
-  width: 40%;
+  width: 25%;
   right: 0;
   position: fixed;
+  overflow-y: scroll;
+  height: 100%;
+}
+
+.pieChart {
+  margin: 10px;
 }
 
 .button {
