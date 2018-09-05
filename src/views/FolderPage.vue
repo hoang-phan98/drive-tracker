@@ -4,7 +4,7 @@
       <div class="users">
         <b-row v-for="user in userList" :key="user.id">
             <!-- user name  -->
-            {{user}}
+            <b-col class="legend">{{user}}</b-col>
             <span><br></span>
         </b-row>
         <GChart
@@ -14,6 +14,12 @@
         />
       </div>
       <div class="pichart">
+        <b-row>
+        <b-col v-for="user in userList" :key="user.id">
+            <!-- user name  -->
+            {{user}}
+        </b-col>
+        </b-row>
         <GChart
           type="PieChart"
           :data="pieData"
@@ -202,7 +208,7 @@ export default {
   padding: 10px;
   grid-column: 1 / 2;
   grid-row: 1 / 2;
-  text-align: center;
+  text-align: left;
   box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);
   border-radius: 25px;
 }
@@ -236,5 +242,8 @@ export default {
   text-align: center;
   box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);
   border-radius: 25px;
+}
+.legend {
+  align-content: flex-start;
 }
 </style>
