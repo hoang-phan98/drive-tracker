@@ -4,22 +4,16 @@
       <div class="users">
         <b-row v-for="user in userList" :key="user.id">
             <!-- user name  -->
-            <b-col class="legend">{{user}}</b-col>
+            <b-col class="legend"><span class = "box"></span><span class="indent">{{user}}</span></b-col>
             <span><br></span>
         </b-row>
-        <GChart
+        <!--<GChart
           type="BarChart"
           :data="userData"
           :options="userOptions"
-        />
+        />-->
       </div>
       <div class="pichart">
-        <b-row>
-        <b-col v-for="user in userList" :key="user.id">
-            <!-- user name  -->
-            {{user}}
-        </b-col>
-        </b-row>
         <GChart
           type="PieChart"
           :data="pieData"
@@ -245,5 +239,15 @@ export default {
 }
 .legend {
   align-content: flex-start;
+}
+.box {
+  background-color: aqua;
+  position: absolute;
+  height: 10px;
+  width: 10px;
+  top: 35%;
+}
+.indent {
+  margin-left: 30px;
 }
 </style>
