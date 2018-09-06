@@ -21,13 +21,16 @@ import gapi from "../googleapis.js";
 
 export default {
   name: "folderList",
+  props: {
+    id: String
+  },
   // fileList is an object with the file's id and permissions
   // permissions has the user's id and display name that we can use for the displaying of data
   async mounted() {
     this.fileList = (await gapi.client.drive.files.list({
       fields: "files(id, name, permissions)",
       //q: starred != true
-      q: "'1m0Mq_RHMpXJXfVzEISPySwPheg9PUSqy' in parents" // file id goes here
+      q: `'${this.id}' in parents`
     })).result.files;
   },
   data() {
