@@ -84,7 +84,7 @@ export default {
             fields: "kind, id, name, mimeType"
           });
 
-          // Kind should be drive#file for a folder
+          // Check that the resource is actually a folder
           if (res.result.mimeType === "application/vnd.google-apps.folder") {
             this.folder = res.result;
             this.error = null;

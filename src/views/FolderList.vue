@@ -66,8 +66,7 @@ export default {
     },
     open(item) {
       // Add code to open folder analysis here
-      // eslint-disable-next-line
-      console.log("Folder clicked", JSON.stringify(item, 2));
+      this.$router.push("/folder/" + item.id);
     }
   }
 };

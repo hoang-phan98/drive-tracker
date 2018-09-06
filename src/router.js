@@ -2,7 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import FolderList from "./views/FolderList.vue";
 import Login from "./views/Login.vue";
-import FileNameUser from "./components/FileNameUser.vue";
+import Folder from "./views/Folder.vue";
 import googleapis from "./googleapis";
 
 Vue.use(Router);
@@ -36,10 +36,13 @@ export default new Router({
       }
     },
     {
-      path: "/data",
-      name: "data",
+      path: "/folder/:id",
+      name: "folder",
       component: {
-        render: h => h(FileNameUser),
+        render(h) {
+          // Pass on the id of the folder to the component
+          return h(Folder, { props: { id: this.$route.params.id } });
+        },
         async beforeRouteEnter(to, from, next) {
           next((await isSignedIn()) ? undefined : "/login");
         }
