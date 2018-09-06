@@ -20,7 +20,6 @@
           :options="pieOptions"
         />
       </div>
-      </div>
       <div class="histogram">
         <GChart
           type="ColumnChart"
@@ -164,12 +163,18 @@ export default {
         isStacked: true
       },
       barData: [
-        ["Contributers", "Dax", "Kenny", "Hoang", { role: "annotation" }],
-        ["File1", 10, 24, 20, ""],
-        ["File2", 16, 22, 23, ""],
-        ["File3", 28, 19, 29, ""],
-        ["File4", 16, 22, 23, ""],
-        ["File5", 28, 19, 29, ""]
+        [
+          "Contributers",
+          "Add Files",
+          "Delete Files",
+          "File Revisions",
+          { role: "annotation" }
+        ],
+        ["Kenny", 10, 24, 20, ""],
+        ["Hoang", 16, 22, 23, ""],
+        ["Erica", 28, 19, 29, ""],
+        ["Dax", 16, 22, 23, ""],
+        ["Marc", 28, 19, 29, ""]
       ],
       barOptions: {
         width: 1700,

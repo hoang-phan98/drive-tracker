@@ -1,31 +1,52 @@
 <template>
   <b-modal :id="id" title="Add Folder" ref="modal">
-    <h2>Add Folder</h2>
-    <span><br></span>
-    <span><br></span>
+    <b-list-group flush>
+      <b-list-group-item>
+        Open Google Drive in your browser.
+      </b-list-group-item>
+      <b-list-group-item>
+        Navigate to the folder you want to add.
+      </b-list-group-item>
+      <b-list-group-item>
+        Copy the URL from the address bar.
+      </b-list-group-item>
+      <b-list-group-item>
+        Paste it below.
+      </b-list-group-item>
+    </b-list-group>
 
-    <b-form-group label="Google Drive Folder URL">
-      <b-form-input 
-        placeholder="Your Folder URL" 
-        v-model="url"
-        :state="dirty ? (match ? 'valid' : 'invalid') : null">
-      </b-form-input>
-    </b-form-group>
-    <span><br></span>
-    <span><br></span>
+    <div class="form">
+      <b-form-group
+        id="fieldset1"
+        description="Copy the URL of your folder after navigating to it in Google Drive."
+        label="Google Drive Folder URL"
+        label-for="input1"
+        :invalid-feedback="error || 'Invalid folder URL.'"
+        :valid-feedback="folder ? folder.name : 'Loading...'"
+        :state="state"
+        >
+        <b-form-input 
+          id="url" :state="state" 
+          v-model.trim="url"
+          placeholder="https://drive.google.com/folders/_________________________" 
+          />
+      </b-form-group>
+    </div>
 
     <b-row slot="modal-footer">
       <b-col class="col">
         <b-button class="button2" @click="cancel()">Cancel</b-button>
       </b-col>
       <b-col class="col">
-        <b-button class="button1" @click="submit()">OK</b-button>
+        <b-button class="button1" @click="submit()" :disabled="!(folder && folder.name)">OK</b-button>
       </b-col>
     </b-row>
   </b-modal>
 </template>
 
 <script>
+import googleapis from "../googleapis";
+
 export default {
   props: {
     id: String
@@ -33,31 +54,54 @@ export default {
   data() {
     return {
       url: "",
-      dirty: false
+      dirty: false,
+      folder: null,
+      error: null
     };
   },
   computed: {
     match: function() {
-      const re = /^https?:\/\/drive.google.com\/drive.*?\/folders\/(\w+)/;
+      const re = /^https?:\/\/drive.google.com\/drive.*?\/folders\/([\w-]+)/;
       return this.url.match(re);
+    },
+    state: function() {
+      return this.dirty ? !!this.match && !this.error : null;
     }
   },
   watch: {
     url: function() {
       this.dirty = true;
+    },
+    match: async function(match) {
+      this.folder = null;
+      this.error = null;
+      if (match) {
+        const id = match[1];
+        try {
+          // Get folder data
+          const res = await googleapis.client.drive.files.get({
+            fileId: id,
+            fields: "kind, id, name, mimeType"
+          });
+
+          // Check that the resource is actually a folder
+          if (res.result.mimeType === "application/vnd.google-apps.folder") {
+            this.folder = res.result;
+            this.error = null;
+          } else {
+            this.error = "The URL does not match a folder.";
+          }
+        } catch (err) {
+          this.error = err.result.error.message;
+        }
+      }
     }
   },
   methods: {
     submit() {
-      if (!this.match) {
-        return;
-      }
+      if (!this.folder) return;
 
-      // Express that we're loading
-      // Verify the existence of the folder
-
-      // eslint-disable-next-line
-      console.log("Add folder", this.match[1]);
+      this.$emit("add-folder", this.folder);
 
       // Close the modal
       this.$refs.modal.hide();
@@ -70,6 +114,10 @@ export default {
 </script>
 
 <style scoped>
+.form {
+  margin-top: 16px;
+}
+
 .button1 {
   background-color: green;
   align-self: center;
