@@ -2,11 +2,16 @@
   <div class="folderpage">
     <div class="grid-container">
       <div class="users">
-        <GChart
+        <b-row v-for="user in userList" :key="user.id">
+            <!-- user name  -->
+            <b-col class="legend"><span class = "box"></span><span class="indent">{{user}}</span></b-col>
+            <span><br></span>
+        </b-row>
+        <!--<GChart
           type="BarChart"
           :data="userData"
           :options="userOptions"
-        />
+        />-->
       </div>
       <div class="pichart">
         <GChart
@@ -47,19 +52,55 @@
           </b-tabs>
         </b-card>
       </div>
+
+      <div class="filecontribution">
+        <b-card no-body>
+          <b-row class = "fileHolder" v-for="file in fileList" :key="file.id">
+            <!-- filename -->
+            <b-col> {{ file.name }} </b-col>
+            
+            <span><br></span>
+          </b-row>
+        </b-card>
+      </div>
     </div>
-  </div>
+
 </template>
 
 <script>
+import gapi from "../googleapis.js";
 import Vue from "vue";
 import VueGoogleCharts from "vue-google-charts";
 
 Vue.use(VueGoogleCharts);
 
 export default {
+  // fileList is an object with the file's id and permissions
+  // permissions has the user's id and display name that we can use for the displaying of data
+  async mounted() {
+    this.fileList = (await gapi.client.drive.files.list({
+      fields: "files(id, name, permissions)",
+      //q: starred != true
+      q: "'1m0Mq_RHMpXJXfVzEISPySwPheg9PUSqy' in parents" // file id goes here
+    })).result.files;
+
+    for (var i = 0; i < this.fileList.length; i++) {
+      //in this.fileList
+      //console.log(file); // why does this print a number
+      for (var j = 0; j < this.fileList[i].permissions.length; j++) {
+        if (
+          !this.userList.includes(this.fileList[i].permissions[j].displayName)
+        ) {
+          this.userList.push(this.fileList[i].permissions[j].displayName);
+        }
+      }
+    }
+  },
+
   data() {
     return {
+      userList: [],
+      fileList: [],
       userData: [
         ["Contributers", "Colour", { role: "style" }],
         ["Kenny", 10, "#FF0000"],
@@ -160,7 +201,7 @@ export default {
   padding: 10px;
   grid-column: 1 / 2;
   grid-row: 1 / 2;
-  text-align: center;
+  text-align: left;
   box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);
   border-radius: 25px;
 }
@@ -194,5 +235,22 @@ export default {
   text-align: center;
   box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);
   border-radius: 25px;
+}
+.legend {
+  align-content: flex-start;
+}
+.box {
+  background-color: aqua;
+  position: absolute;
+  height: 10px;
+  width: 10px;
+  top: 35%;
+}
+.indent {
+  margin-left: 30px;
+}
+.fileHolder {
+  align-self: flex-start;
+  margin: 30px;
 }
 </style>
