@@ -34,7 +34,7 @@ Our version of SCRUM includes the following:
 - Sprint Backlog: stories that are planned to be done in the current sprint are put in this artefact.
 - Sprint: A period of 7 days where certain amount of pre-determined stories are to be completed.
 - Daily Standups: A 15 minute meeting every day online to allow each team member to briefly state the current status of what they are working on and if anything/anyone is blocking them.
-- Weekly Sprint Planning/Estimations: Every Sunday, stories from the product backlog are assessed by priority and difficulty to determine which stories will be part of the next sprint starting Monday.
+- Weekly Sprint Planning/Estimations: Every Friday, stories from the product backlog are assessed by priority and difficulty to determine which stories will be part of the next sprint starting Monday.
 - Client Meetings: During the tutorial on Friday 1:00pm - 4:00pm the current build will be shown to the client and clarifications and extensions to  the project can be made.
 
 The main modifications to SCRUM that are implemented in our version are specifically tailored to accommodate the structure of University and variable availability of each team member every week. Traditional SCRUM requires of lot of face-to-face collaboration which might not be possible with each student’s timetable, to counteract this, meetings will be scheduled and conducted online.
