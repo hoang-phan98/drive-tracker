@@ -57,13 +57,12 @@ Weekly Sprint Planning/Estimations are also done through Facebook Messenger alth
 - When working on a specific feature, developers are to NEVER work on the master branch, they have to always create a feature branch.
 - Written code should be well-documented ,easy to read and follow specified style guide.
 - All code committed must first be formatted by the prettier code formatter.
-- Developers are to write their own unit tests for code they have written/are responsible for.
 - When a story is deemed complete by a developer, they are to request a pull request.
 - A pull request can only be merged by one of the designated reviewers.
 - A developer is NEVER to review/accept their own pull requests.
 
 #### Quality Assurance
-- Before a pull request can be made, the program must compile and all unit tests must pass.
+- Before a pull request can be made, the program must compile and run.
 - Each developer has another developer who is the sole reviewer that reviews/accepts that one persons’ pull requests.
 - A comprehensive test plan is NOT required due to the size and nature of the project. But quick sanity checks before and after a branch is merged in is critical.
 
@@ -144,7 +143,6 @@ A feature can be considered to be “done” and ready to ship when the below ch
 
 ### Checklist
 #### When feature is completed in feature branch
-- [ ] Unit tests created and passed, validating all elements that require it
 - [ ] The code compiles and runs
 - [ ] Developer that is responsible has  run a quick sanity check on the implemented feature to make sure that it is working as intended according to the requirements.
 
