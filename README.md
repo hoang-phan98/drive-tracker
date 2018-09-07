@@ -10,6 +10,24 @@ Kenny Ye kyee0003,
 Marc Porciuncula mpor14,
 Fenghe Shen fshe17
 
+### How to view the project.
+
+#### Visit production site
+
+See the latest deployment live at [https://drive-tracker.now.sh](). The master branch is deployed at the end of every sprint.
+
+#### Run the webserver locally
+
+Complete the following:
+- Project setup
+  - Set up your developement environment
+    - Install Node.js
+    - Update npm
+- Install project dependencies
+- Run the development server 
+
+Read below for instructions.
+
 ### Project setup
 
 #### Set up your development environment
@@ -83,4 +101,23 @@ npm run build
 
 ### Deploy
 
-> Deployments have not been set up yet.
+#### Install Now CLI
+
+```
+npm install -g now
+```
+
+#### Create a deployment
+
+```
+now
+```
+
+#### Alias the deployment 
+
+> Note only the owner of a given url can alias to it.
+
+```
+now alias drive-tracker.now.sh
+```
+
