@@ -10,6 +10,10 @@ Kenny Ye kyee0003,
 Marc Porciuncula mpor14,
 Fenghe Shen fshe17
 
+### Instructions for client review
+
+Read the file `documents/Client-Review.md` for instructions.
+
 ### How to view the project.
 
 #### Visit production site
