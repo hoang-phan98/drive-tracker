@@ -3,9 +3,12 @@
     <div class="grid-container">
       <div class = "pichart">
         <div class="legend">
-          <div v-for="user in userList" :key="user.id" class="legend-entry">
+          <!--<div v-for="user in userList" :key="user.id" class="legend-entry">
+            <div style= {{getUserColourAttr(user)}} class="legend-box"></div><span class="legend-name">{{user}}</span>
+          </div> -->
+          <div v-for="index in userList.length" :key="index" class="legend-entry">
             <!-- user name  -->
-            <div class="legend-box"></div><span class="legend-name">{{user}}</span>
+            <div  class="legend-box"></div><span class="legend-name">{{userList[index]}}</span> <!--style= "background-colour:"+{{colourList[index]}}-->
           </div>
         </div>
 
@@ -69,10 +72,16 @@
 import gapi from "../googleapis.js";
 import Vue from "vue";
 import VueGoogleCharts from "vue-google-charts";
+import Colours from "./ColourGeneration.vue";
+//import randomColour from "./ColourGeneration.vue";
 
 Vue.use(VueGoogleCharts);
 
 export default {
+  //name: "FolderPage",
+  //components: {
+  //  Colours //???
+  //},
   // fileList is an object with the file's id and permissions
   // permissions has the user's id and display name that we can use for the displaying of data
   async mounted() {
@@ -93,20 +102,36 @@ export default {
         }
       }
     }
+    //console.log(Colours);
+    this.colourList = Colours.generateColours(this.userList.length);
+    //console.log("hi");
+    //console.log(this.colourList);
+    // call generate colours function while passing in the number of users from userList.length
+    //this.populatePieData();
   },
-
+  methods: {
+    getUserColour(user) {
+      return this.colourList[this.userList.indexOf(user)];
+    },
+    getUserColourAttr(user) {
+      return (
+        "background-colour:" + this.colourList[this.userList.indexOf(user)]
+      );
+    }
+  },
   data() {
     return {
       userList: [],
       fileList: [],
-      userData: [
+      colourList: [], // need this? make the instance global?
+      /*userData: [
         ["Contributers", "Colour", { role: "style" }],
         ["Kenny", 10, "#FF0000"],
         ["Hoang", 16, "#00FF00	"],
         ["Erica", 28, "#0000FF	"],
         ["Dax", 16, "#FFFF00	"],
         ["Marc", 28, "#808080"]
-      ],
+      ],*/
       userOptions: {
         //width: 600,
         //height: 500,
@@ -116,12 +141,12 @@ export default {
         isStacked: "percent"
       },
       pieData: [
-        ["Task", "Hours per Day"],
-        ["Kenny", 11],
-        ["Hoang", 2],
-        ["Erica", 2],
-        ["Dax", 2],
-        ["Marc", 7]
+        ["Task", "Hours per Day"]
+        // ["Kenny", 11],
+        // ["Hoang", 2],
+        // ["Erica", 2],
+        // ["Dax", 2],
+        // ["Marc", 7]
       ],
       pieOptions: {
         //width: 600,
@@ -239,7 +264,7 @@ export default {
   align-items: center;
 }
 .legend-box {
-  background-color: aqua;
+  //background-color: aqua;
   height: 10px;
   width: 10px;
   margin-left: 20px;

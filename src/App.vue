@@ -12,6 +12,7 @@
 <script>
 import MenuBar from "@/views/MenuBar.vue";
 import SpaceBackground from "@/components/SpaceBackground.vue";
+//import Colours from "@/components/ColourGeneration.vue";
 
 export default {
   components: {
