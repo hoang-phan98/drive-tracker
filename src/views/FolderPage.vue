@@ -7,7 +7,7 @@
           <h1>Users</h1>
           <span><br></span>
           <div v-for="user in userList" :key="user.id" class="legend-entry">
-            <div style="background-color:aqua" class="legend-box"></div><span class="legend-name">{{user}}</span>
+            <div :style="'background-color:'+getUserColour(user)" class="legend-box"></div><span class="legend-name">{{user}}</span>
           </div> 
           <!--style= {{getUserColourAttr(user)}}-->
           <!--style= "background-colour:"+{{colourList[index]}}-->
