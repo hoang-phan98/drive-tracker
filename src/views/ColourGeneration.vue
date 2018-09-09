@@ -12,7 +12,7 @@ export default {
     "#FF0000",
     "#FF8C00",
     "#FFCC00",
-    "90EE90",
+    "#90EE90",
     "#AFEEEE",
     "#00BFFF",
     "#6A5ACD",
