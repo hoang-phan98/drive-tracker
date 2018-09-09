@@ -10,14 +10,14 @@ export default {
   name: "Colours",
   defaultColours: [
     "#FF0000",
-    "#FF8C00"
-    // "#FFFFE0",
-    // "90EE90",
-    // "#AFEEEE",
-    // "#00BFFF",
-    // "#6A5ACD",
-    // "#8A2BE2",
-    // "#FF69B4"
+    "#FF8C00",
+    "#FFCC00",
+    "90EE90",
+    "#AFEEEE",
+    "#00BFFF",
+    "#6A5ACD",
+    "#8A2BE2",
+    "#FF69B4"
   ],
   data() {
     return {
