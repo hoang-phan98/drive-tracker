@@ -8,26 +8,26 @@
           <span><br></span>
           <div v-for="user in userList" :key="user.id" class="legend-entry">
             <div :style="'background-color:'+getUserColour(user)" class="legend-box"></div><span class="legend-name">{{user}}</span>
-          </div> 
+          </div>
           <!--style= {{getUserColourAttr(user)}}-->
           <!--style= "background-colour:"+{{colourList[index]}}-->
           <!--<div v-for="index in userList.length" :key="index" class="legend-entry">
-            
-            <div  class="legend-box"></div><span class="legend-name">{{userList[index]}}</span> 
+
+            <div  class="legend-box"></div><span class="legend-name">{{userList[index]}}</span>
           </div> -->
         <!-- </div> -->
       </div>
       <div class = "pichart">
-        
+
 
         <GChart
           type="PieChart"
           :data="pieData"
           :options="pieOptions"
         />
-    
+
       </div>
- 
+
       <div class="histogram">
         <GChart
           type="ColumnChart"
@@ -39,7 +39,7 @@
         <b-card no-body>
           <b-tabs card>
             <b-tab title="Day" active>
-              <GChart
+              <GChart v-for="n in fileList"
                 type="BarChart"
                 :data="barData"
                 :options="barOptions"
@@ -64,11 +64,11 @@
               <b-row class = "fileHolder" v-for="file in fileList" :key="file.id">
                 <!-- filename -->
                 <div> {{ file.name }} </div>
-                
+
                 <span><br></span>
               </b-row>
             </b-card>
-          </div>  
+          </div>
 
         </b-card>
       </div>
