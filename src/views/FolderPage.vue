@@ -39,9 +39,10 @@
         <b-card no-body>
           <b-tabs card>
             <b-tab title="Day" active>
-              <GChart v-for="n in fileList"
+              <GChart
+                v-for="data in barDatas"
                 type="BarChart"
-                :data="barData"
+                v-bind:data="data"
                 :options="barOptions"
               />
             </b-tab>
@@ -109,6 +110,22 @@ export default {
         }
       }
     }
+
+    // need to create a new data array for every item in the file list - now that there are separate graphs
+    for (var i = 0; i < this.fileList.length; i++) {
+      this.singularBarData = [];
+      this.singularBarData.push(
+        ["Contributers"].concat(this.userList).concat({
+          role: "annotation"
+        })
+      );
+      this.singularBarData.push(
+        [this.fileList[i].name].concat(this.barStats[i]).concat("")
+      );
+      this.barDatas.push(this.singularBarData)
+      console.log(this.barDatas)
+    }
+
     //console.log(Colours);
     this.colourList = Colours.generateColours(this.userList.length);
 
@@ -232,6 +249,8 @@ export default {
         isStacked: true
       },
       barData: [],
+      barDatas: [],
+      singularBarData: [],
       barOptions: {
         //width: 1700,
         height: 400,
