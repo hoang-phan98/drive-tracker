@@ -1,6 +1,6 @@
 <template>
   <div class="folderList">
-    <b-container fluid class="trackedItems" v-sticky="{ top: 15, zIndex: 0 }">
+    <b-container fluid class="trackedItems">
 
       <b-row>
         <h1>Tracked Items</h1>
@@ -77,8 +77,8 @@ import VueSticky from "vue-sticky";
 Vue.use(VueSticky);
 
 // This is to display the google charts
-import VueGoogleCharts from 'vue-google-charts';
-Vue.use(VueGoogleCharts)
+import VueGoogleCharts from "vue-google-charts";
+Vue.use(VueGoogleCharts);
 
 export default {
   name: "FolderList",
@@ -94,57 +94,69 @@ export default {
       ],
       folders: [],
       pieData: [
-        ['Task', 'Hours per Day'],
-        ['Kenny',     11],
-        ['Hoang',      2],
-        ['Erica',  2],
-        ['Dax', 2],
-        ['Marc',    7]
+        ["Task", "Hours per Day"],
+        ["Kenny", 11],
+        ["Hoang", 2],
+        ["Erica", 2],
+        ["Dax", 2],
+        ["Marc", 7]
       ],
       pieOptions: {
-        chartArea: {width: 800, height: 800},
+        chartArea: { width: 800, height: 800 },
         pieHole: 0.4,
-        legend: 'none',
-        backgroundColor: { fill:'transparent' }
+        legend: "none",
+        backgroundColor: { fill: "transparent" }
       },
       histogramData: [
-        ['Contributers', 'Add Files', 'Delete Files', 'File Revisions', { role: 'annotation' } ],
-        ['01/01/2018', 10, 24, 20, ''],
-        ['02/01/2018', 16, 22, 23, ''],
-        ['03/01/2018', 28, 19, 29, ''],
-        ['04/01/2018', 16, 22, 23, ''],
-        ['05/01/2018', 28, 19, 29, ''],
-        ['06/01/2018', 10, 24, 20, ''],
-        ['07/01/2018', 16, 22, 23, ''],
-        ['08/01/2018', 28, 19, 29, ''],
-        ['09/01/2018', 16, 22, 23, ''],
-        ['10/01/2018', 10, 24, 20, ''],
-        ['11/01/2018', 16, 22, 23, ''],
-        ['12/01/2018', 28, 19, 29, ''],
-        ['13/01/2018', 16, 22, 23, ''],
+        [
+          "Contributers",
+          "Add Files",
+          "Delete Files",
+          "File Revisions",
+          { role: "annotation" }
+        ],
+        ["01/01/2018", 10, 24, 20, ""],
+        ["02/01/2018", 16, 22, 23, ""],
+        ["03/01/2018", 28, 19, 29, ""],
+        ["04/01/2018", 16, 22, 23, ""],
+        ["05/01/2018", 28, 19, 29, ""],
+        ["06/01/2018", 10, 24, 20, ""],
+        ["07/01/2018", 16, 22, 23, ""],
+        ["08/01/2018", 28, 19, 29, ""],
+        ["09/01/2018", 16, 22, 23, ""],
+        ["10/01/2018", 10, 24, 20, ""],
+        ["11/01/2018", 16, 22, 23, ""],
+        ["12/01/2018", 28, 19, 29, ""],
+        ["13/01/2018", 16, 22, 23, ""]
       ],
       histogramOptions: {
-        title: 'File contrution over time',
-        legend: { position: 'top', maxLines: 3 },
-        bar: { groupWidth: '75%' },
+        title: "File contrution over time",
+        legend: { position: "top", maxLines: 3 },
+        bar: { groupWidth: "75%" },
         isStacked: true,
-        backgroundColor: { fill:'transparent' }
+        backgroundColor: { fill: "transparent" }
       },
       barData: [
-        ['Contributers', 'Add Files', 'Delete Files', 'File Revisions', { role: 'annotation' } ],
-        ['Kenny', 10, 24, 20, ''],
-        ['Hoang', 16, 22, 23, ''],
-        ['Erica', 28, 19, 29, ''],
-        ['Dax', 16, 22, 23, ''],
-        ['Marc', 28, 19, 29, '']
+        [
+          "Contributers",
+          "Add Files",
+          "Delete Files",
+          "File Revisions",
+          { role: "annotation" }
+        ],
+        ["Kenny", 10, 24, 20, ""],
+        ["Hoang", 16, 22, 23, ""],
+        ["Erica", 28, 19, 29, ""],
+        ["Dax", 16, 22, 23, ""],
+        ["Marc", 28, 19, 29, ""]
       ],
       barOptions: {
-        title: 'User contributions',
-        legend: { position: 'top', maxLines: 3 },
-        bar: { groupWidth: '75%' },
+        title: "User contributions",
+        legend: { position: "top", maxLines: 3 },
+        bar: { groupWidth: "75%" },
         isStacked: true,
-        backgroundColor: { fill:'transparent' }
-      },
+        backgroundColor: { fill: "transparent" }
+      }
     };
   },
   methods: {
@@ -180,8 +192,6 @@ export default {
   background: rgba(255, 255, 255, 0.4);
   padding: 40px;
   width: 75%;
-  left: 0;
-  position: fixed;
 }
 
 .sideBar {
