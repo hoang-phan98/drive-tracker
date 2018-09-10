@@ -32,6 +32,7 @@ export default {
 
 <style scoped>
 .sidebar {
+  width: 150px;
   background-color: white;
   color: #868e91;
   display: grid;

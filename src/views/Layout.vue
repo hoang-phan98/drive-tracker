@@ -23,7 +23,7 @@ export default {
 <style scoped>
 .layout {
   display: grid;
-  grid-template-columns: 140px 1fr;
+  grid-template-columns: auto 1fr;
   grid-template-rows: 100px 1fr;
   grid-template-areas:
     "side top"
