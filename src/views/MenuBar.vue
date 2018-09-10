@@ -11,6 +11,9 @@
           Logout
         </b-dropdown-item>
       </b-dropdown>
+      <span v-if="name" class="account-name">
+        {{ name }}
+      </span>
     </div>
   </div>
 </template>
@@ -23,10 +26,22 @@ export default {
   components: { MaterialIcon },
   data: function() {
     return {
-      query: ""
+      query: "",
+      user: null
     };
   },
+  mounted() {
+    const auth2 = googleapis.auth2.getAuthInstance();
+    this.user = auth2.currentUser.get();
+    this.subscription = auth2.currentUser.listen(this.handleUserChanged);
+  },
+  beforeDestroy() {
+    this.subscription.remove();
+  },
   methods: {
+    handleUserChanged(user) {
+      this.user = user;
+    },
     logout: function() {
       // Load the googleAuth instance (the user) and sign them out
       const auth2 = googleapis.auth2.getAuthInstance();
@@ -36,6 +51,14 @@ export default {
         // send the user back to the login screen
         this.$router.push("/login");
       });
+    }
+  },
+  computed: {
+    name: function() {
+      if (this.user) {
+        return this.user.getBasicProfile().getGivenName();
+      }
+      return null;
     }
   }
 };
@@ -63,6 +86,18 @@ export default {
   padding: 0 1rem;
   margin-left: 1rem;
   min-width: 34rem;
+}
+
+.account {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+.account-name {
+  font-size: 1.25rem;
+  display: inline-block;
+  margin-right: 0.5rem;
 }
 
 .account-dropdown :global(button) {
