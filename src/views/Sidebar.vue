@@ -37,6 +37,8 @@ export default {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto 1fr auto;
+  box-shadow: 2px 0 2px 1px hsla(0, 0%, 50%, 0.3),
+    2px 0 10px 5px hsla(0, 0%, 50%, 0.1);
 }
 
 .sidebar-menu {

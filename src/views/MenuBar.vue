@@ -47,6 +47,7 @@ export default {
   align-items: center;
   justify-content: space-between;
   padding: 0 2rem;
+  border-bottom: 3px solid hsla(196, 5%, 25%, 0.1);
 }
 
 .search {
