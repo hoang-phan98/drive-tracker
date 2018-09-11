@@ -39,6 +39,7 @@
         <b-card no-body>
           <b-tabs card>
             <b-tab title="Day" active>
+              <h1>File Contribution</h1>
               <GChart
                 v-for="fileData in barData"
                 type="BarChart"
