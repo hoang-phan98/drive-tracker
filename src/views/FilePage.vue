@@ -39,9 +39,11 @@
         <b-card no-body>
           <b-tabs card>
             <b-tab title="Day" active>
+              <h1>File Revision History</h1>
               <GChart
+                v-for="fileData in barData"
                 type="BarChart"
-                :data="barData"
+                v-bind:data="fileData"
                 :options="barOptions"
               />
             </b-tab>
@@ -109,6 +111,7 @@ export default {
         }
       }
     }
+
     //console.log(Colours);
     this.colourList = Colours.generateColours(this.userList.length);
 
@@ -133,16 +136,21 @@ export default {
         this.barStats.push(data);
       } // NOTE the bar stats will add up to 100 when populated with data (percentaegs)
 
-      this.barData.push(
-        ["Contributers"].concat(this.userList).concat({
-          role: "annotation"
-        })
-      );
       for (let i = 0; i < this.fileList.length; i++) {
-        this.barData.push(
+        let fileData = [];
+        fileData.push(
+          ["Contributers"].concat(this.userList).concat({
+            role: "annotation"
+          })
+        );
+        fileData.push(
           [this.fileList[i].name].concat(this.barStats[i]).concat("")
         );
+        this.barData.push(fileData);
       }
+
+
+
       this.barOptions.colors = this.colourList;
     },
     populatePieData() {
@@ -232,11 +240,12 @@ export default {
         isStacked: true
       },
       barData: [],
+      barDatas: [],
+      singularBarData: [],
       barOptions: {
         //width: 1700,
-        height: 400,
-        title: "User contributions",
-        legend: { position: "top", maxLines: 3 },
+        height: 100,
+        legend: { position: "none" },
         bar: { groupWidth: "75%" },
         isStacked: true
       }
