@@ -40,9 +40,9 @@
           <b-tabs card>
             <b-tab title="Day" active>
               <GChart
-                v-for="file in fileList"
+                v-for="fileData in barData"
                 type="BarChart"
-                :data="barData[0]"
+                v-bind:data="fileData"
                 :options="barOptions"
               />
             </b-tab>
