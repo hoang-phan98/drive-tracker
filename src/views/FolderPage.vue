@@ -40,9 +40,9 @@
           <b-tabs card>
             <b-tab title="Day" active>
               <GChart
-                v-for="data in barDatas"
+                v-for="file in fileList"
                 type="BarChart"
-                v-bind:data="data"
+                :data="barData[0]"
                 :options="barOptions"
               />
             </b-tab>
@@ -111,21 +111,6 @@ export default {
       }
     }
 
-    // need to create a new data array for every item in the file list - now that there are separate graphs
-    for (var i = 0; i < this.fileList.length; i++) {
-      this.singularBarData = [];
-      this.singularBarData.push(
-        ["Contributers"].concat(this.userList).concat({
-          role: "annotation"
-        })
-      );
-      this.singularBarData.push(
-        [this.fileList[i].name].concat(this.barStats[i]).concat("")
-      );
-      this.barDatas.push(this.singularBarData)
-      console.log(this.barDatas)
-    }
-
     //console.log(Colours);
     this.colourList = Colours.generateColours(this.userList.length);
 
@@ -150,16 +135,21 @@ export default {
         this.barStats.push(data);
       } // NOTE the bar stats will add up to 100 when populated with data (percentaegs)
 
-      this.barData.push(
-        ["Contributers"].concat(this.userList).concat({
-          role: "annotation"
-        })
-      );
       for (let i = 0; i < this.fileList.length; i++) {
-        this.barData.push(
+        let fileData = [];
+        fileData.push(
+          ["Contributers"].concat(this.userList).concat({
+            role: "annotation"
+          })
+        );
+        fileData.push(
           [this.fileList[i].name].concat(this.barStats[i]).concat("")
         );
+        this.barData.push(fileData);
       }
+
+
+
       this.barOptions.colors = this.colourList;
     },
     populatePieData() {
