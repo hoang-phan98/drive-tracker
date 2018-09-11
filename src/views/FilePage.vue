@@ -40,12 +40,15 @@
           <b-tabs card>
             <b-tab title="Day" active>
               <h1>File Revision History</h1>
-              <GChart
-                v-for="fileData in barData"
-                type="BarChart"
-                v-bind:data="fileData"
-                :options="barOptions"
-              />
+              <b-row>
+                <b-table
+                  :items="revisions"
+                  :fields="fields"
+                  @row-clicked="open($event)"
+                  hover
+                  >
+                </b-table>
+              </b-row>
             </b-tab>
             <b-tab title="Week">
               File Contribution bar graph for week goes here
@@ -149,8 +152,6 @@ export default {
         this.barData.push(fileData);
       }
 
-
-
       this.barOptions.colors = this.colourList;
     },
     populatePieData() {
@@ -174,6 +175,39 @@ export default {
     return {
       userList: [],
       fileList: [],
+      fields: [
+        { key: "revID", sortable: true, label: "Revision ID" },
+        { key: "user", sortable: true, label: "User" },
+        { key: "date", sortable: true, label: "Date" }
+      ],
+      // some random hard coded data for revisions. I made it up and it has no merit
+      revisions: [
+        {
+          revID: "34252323",
+          user: "Kenny",
+          date: "34/23/3249"
+        },
+        {
+          revID: "34252323",
+          user: "Kenny",
+          date: "34/23/3249"
+        },
+        {
+          revID: "34252323",
+          user: "Kenny",
+          date: "34/23/3249"
+        },
+        {
+          revID: "34252323",
+          user: "Kenny",
+          date: "34/23/3249"
+        },
+        {
+          revID: "34252323",
+          user: "Kenny",
+          date: "34/23/3249"
+        }
+      ],
       colourList: [], // need this? make the instance global?
       /*userData: [
         ["Contributers", "Colour", { role: "style" }],
