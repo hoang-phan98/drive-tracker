@@ -243,9 +243,8 @@ export default {
       singularBarData: [],
       barOptions: {
         //width: 1700,
-        height: 400,
-        title: "User contributions",
-        legend: { position: "top", maxLines: 3 },
+        height: 100,
+        legend: { position: "none" },
         bar: { groupWidth: "75%" },
         isStacked: true
       }
