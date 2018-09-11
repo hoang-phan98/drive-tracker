@@ -64,17 +64,6 @@
             </b-tab>
           </b-tabs>
 
-          <div>
-            <b-card>
-              <b-row class = "fileHolder" v-for="file in fileList" :key="file.id">
-                <!-- filename -->
-                <div> {{ file.name }} </div>
-
-                <span><br></span>
-              </b-row>
-            </b-card>
-          </div>
-
         </b-card>
       </div>
 
