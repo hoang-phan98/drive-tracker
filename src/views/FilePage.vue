@@ -18,8 +18,6 @@
         <!-- </div> -->
       </div>
       <div class = "pichart">
-
-
         <GChart
           type="PieChart"
           :data="pieData"
@@ -30,7 +28,7 @@
 
       <div class="histogram">
         <GChart
-          type="ColumnChart"
+          type="LineChart"
           :data="histogramData"
           :options="histogramOptions"
         />
@@ -158,7 +156,7 @@ export default {
         ]);
         this.pieOptions.colors = this.colourList;
       }
-    }
+    },
   },
   data() {
     return {
