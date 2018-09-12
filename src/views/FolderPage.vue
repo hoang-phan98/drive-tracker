@@ -42,6 +42,7 @@
               <h1>File Contribution</h1>
               <GChart
                 v-for="fileData in barData"
+                v-bind:key='fileData'
                 type="BarChart"
                 v-bind:data="fileData"
                 :options="barOptions"
@@ -148,8 +149,6 @@ export default {
         );
         this.barData.push(fileData);
       }
-
-
 
       this.barOptions.colors = this.colourList;
     },
