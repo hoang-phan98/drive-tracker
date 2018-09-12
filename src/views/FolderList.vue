@@ -188,18 +188,21 @@ export default {
 </script>
 
 <style scoped>
+.folderList {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  background-color: white;
+}
+
 .trackedItems {
   background: rgba(255, 255, 255, 0.4);
   padding: 40px;
-  width: 75%;
 }
 
 .sideBar {
   background: rgba(255, 255, 255, 0.4);
   padding: 40px;
-  width: 25%;
   right: 0;
-  position: fixed;
   overflow-y: scroll;
   height: 100%;
   border-left: 1px solid rgba(0, 0, 0, 0.2);

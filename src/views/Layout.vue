@@ -29,11 +29,12 @@ export default {
     "side top"
     "side content";
   min-height: 100vh;
-  height: 100%;
+  height: 100vh;
 }
 
 .sidebar {
   grid-area: side;
+  z-index: 10;
 }
 
 .menu-bar {
@@ -42,5 +43,6 @@ export default {
 
 .content {
   grid-area: content;
+  overflow-y: auto;
 }
 </style>
