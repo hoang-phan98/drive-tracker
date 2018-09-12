@@ -156,7 +156,7 @@ export default {
         ]);
         this.pieOptions.colors = this.colourList;
       }
-    },
+    }
   },
   data() {
     return {
