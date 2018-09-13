@@ -42,8 +42,8 @@
             <b-tab title="Day" active>
               <ContributionBars 
                 v-if="folder"
-                :files="Array.from(folder.files.values())" 
-                :contributors="Array.from(folder.contributors.values())" 
+                :files="Object.values(folder.files)" 
+                :contributors="Object.values(folder.contributors)" 
                 :colors="colors"
                 />
             </b-tab>
@@ -63,7 +63,7 @@
           <div>
             <b-card>
               <template v-if="folder">
-                <b-row class="fileHolder" v-for="file in Array.from(folder.files.values())" :key="file.id">
+                <b-row class="fileHolder" v-for="file in Object.values(folder.files)" :key="file.id">
                   <!-- filename -->
                   <div> {{ file.name }} </div>
                   <span><br></span>
@@ -113,10 +113,6 @@ export default {
       return;
     }
 
-    if (folder) {
-      this.folder = folder;
-    }
-
     this.fileList = (await gapi.client.drive.files.list({
       fields: "files(id, name, permissions)",
       //q: starred != true
@@ -135,9 +131,11 @@ export default {
 
     //console.log(Colours);
     this.colourList = Colours.generateColours(this.userList.length);
-    Array.from(this.folder.contributors.values()).forEach((user, i) => {
+    Object.values(folder.contributors).forEach((user, i) => {
       this.colors[user.emailAddress] = this.colourList[i];
     });
+
+    this.folder = folder;
 
     // call generate colours function while passing in the number of users from userList.length
     this.populatePieData();

@@ -31,7 +31,7 @@ class FileContributions {
     this.data = data;
     this.revisions = [];
     this.contributions = [];
-    this.contributors = new Map();
+    this.contributors = {};
   }
 
   static async create(data) {
@@ -87,10 +87,10 @@ class FileContributions {
   }
 
   getContributors() {
-    const contributors = new Map();
+    const contributors = {};
     for (const contribution of this.contributions) {
-      if (!contributors.get(contribution.user.emailAddress)) {
-        contributors.set(contribution.user.emailAddress, contribution.user);
+      if (!contributors[contribution.user.emailAddress]) {
+        contributors[contribution.user.emailAddress] = contribution.user;
       }
     }
     this.contributors = contributors;
@@ -107,8 +107,8 @@ class FolderContributions {
 
   constructor(data) {
     this.data = data;
-    this.files = new Map();
-    this.contributors = new Map();
+    this.files = {};
+    this.contributors = {};
   }
 
   static async create(data) {
@@ -149,29 +149,18 @@ class FolderContributions {
 
     await a.map(data2, 4, async data3 => {
       const file = await FileContributions.create(data3);
-      this.files.set(file.id, file);
+      this.files[file.id] = file;
     });
   }
 
   getContributors() {
-    const contributors = new Map();
-    for (const file of this.files.values()) {
-      for (const contributor of file.contributors.values()) {
-        if (!contributors.get(contributor.emailAddress)) {
-          contributors.set(contributor.emailAddress, contributor);
+    for (const file of Object.values(this.files)) {
+      for (const contributor of Object.values(file.contributors)) {
+        if (!this.contributors[contributor.emailAddress]) {
+          this.contributors[contributor.emailAddress] = contributor;
         }
       }
     }
-    this.contributors = contributors;
-  }
-
-  /**
-   * Get a given file by its id
-   * @param {string} id
-   * @returns FileContributions or null
-   */
-  getFile(id) {
-    return this.files.get(id);
   }
 }
 

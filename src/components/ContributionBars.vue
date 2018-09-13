@@ -42,6 +42,7 @@ export default {
           }),
           ""
         ];
+
         return {
           data: [labels, values],
           options: {
@@ -58,9 +59,6 @@ export default {
             colors: this.contributors.map(
               user => this.colors[user.emailAddress]
             )
-
-            // TODO
-            // colors: []
           }
         };
       });
