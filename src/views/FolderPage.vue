@@ -43,7 +43,9 @@
               <ContributionBars 
                 v-if="folder"
                 :files="Array.from(folder.files.values())" 
-                :contributors="Array.from(folder.contributors.values())" />
+                :contributors="Array.from(folder.contributors.values())" 
+                :colors="colors"
+                />
             </b-tab>
             <b-tab title="Week">
               File Contribution bar graph for week goes here
@@ -133,10 +135,12 @@ export default {
 
     //console.log(Colours);
     this.colourList = Colours.generateColours(this.userList.length);
+    Array.from(this.folder.contributors.values()).forEach((user, i) => {
+      this.colors[user.emailAddress] = this.colourList[i];
+    });
 
     // call generate colours function while passing in the number of users from userList.length
     this.populatePieData();
-    this.populateBarData();
   },
   methods: {
     getUserColour(user) {
@@ -162,6 +166,7 @@ export default {
   data() {
     return {
       folder: null,
+      colors: {},
       userList: [],
       fileList: [],
       colourList: [], // need this? make the instance global?

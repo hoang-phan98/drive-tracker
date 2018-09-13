@@ -19,7 +19,8 @@ Vue.use(VueGoogleCharts);
 export default {
   name: "ContributionBars",
   props: {
-    files: {},
+    files: Array,
+    colors: Object,
     contributors: Array
   },
   computed: {
@@ -27,16 +28,16 @@ export default {
       return this.files.map(file => {
         const labels = [
           "Contributor",
-          ...this.contributors.map(contributor => contributor.displayName),
+          ...this.contributors.map(user => user.displayName),
           { role: "annotation" }
         ];
 
         const values = [
           file.name,
-          ...this.contributors.map(contributor => {
+          ...this.contributors.map(user => {
             return file.contributions.filter(
               contribution =>
-                contribution.user.emailAddress === contributor.emailAddress
+                contribution.user.emailAddress === user.emailAddress
             ).length;
           }),
           ""
@@ -53,7 +54,11 @@ export default {
               viewWindow: {
                 max: file.contributions.length
               }
-            }
+            },
+            colors: this.contributors.map(
+              user => this.colors[user.emailAddress]
+            )
+
             // TODO
             // colors: []
           }
