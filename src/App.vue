@@ -16,9 +16,21 @@
 <script>
 import Layout from "@/views/Layout.vue";
 import SpaceBackground from "@/components/SpaceBackground.vue";
+import FolderContributionsService from "./folder-contributions-service.js";
 //import Colours from "@/components/ColourGeneration.vue";
 
 export default {
+  data() {
+    return { contributions: new FolderContributionsService() };
+  },
+  provide() {
+    const context = {};
+    Object.defineProperty(context, "contributions", {
+      enumerable: true,
+      get: () => this.contributions
+    });
+    return context;
+  },
   components: {
     Layout,
     SpaceBackground
