@@ -38,15 +38,12 @@
       <div class="filecontribution">
         <b-card no-body>
           <b-tabs card>
+            <h1>Files</h1>
             <b-tab title="Day" active>
-              <h1>File Contribution</h1>
-              <GChart
-                v-for="fileData in barData"
-                v-bind:key='fileData'
-                type="BarChart"
-                v-bind:data="fileData"
-                :options="barOptions"
-              />
+              <ContributionBars 
+                v-if="folder"
+                :files="Array.from(folder.files.values())" 
+                :contributors="Array.from(folder.contributors.values())" />
             </b-tab>
             <b-tab title="Week">
               File Contribution bar graph for week goes here
@@ -61,18 +58,17 @@
               File Contribution bar graph for alltime goes here
             </b-tab>
           </b-tabs>
-
           <div>
             <b-card>
-              <b-row class = "fileHolder" v-for="file in fileList" :key="file.id">
-                <!-- filename -->
-                <div> {{ file.name }} </div>
-
-                <span><br></span>
-              </b-row>
+              <template v-if="folder">
+                <b-row class="fileHolder" v-for="file in Array.from(folder.files.values())" :key="file.id">
+                  <!-- filename -->
+                  <div> {{ file.name }} </div>
+                  <span><br></span>
+                </b-row>
+              </template>
             </b-card>
           </div>
-
         </b-card>
       </div>
 
@@ -85,18 +81,40 @@ import gapi from "../googleapis.js";
 import Vue from "vue";
 import VueGoogleCharts from "vue-google-charts";
 import Colours from "./ColourGeneration.vue";
+import ContributionBars from "../components/ContributionBars.vue";
 //import randomColour from "./ColourGeneration.vue";
 
 Vue.use(VueGoogleCharts);
 
 export default {
-  //name: "FolderPage",
+  name: "FolderPage",
+  components: {
+    ContributionBars
+  },
+  props: {
+    id: String
+  },
+  inject: ["contributions"],
   //components: {
   //  Colours //???
   //},
   // fileList is an object with the file's id and permissions
   // permissions has the user's id and display name that we can use for the displaying of data
   async mounted() {
+    let folder;
+    try {
+      folder = await this.contributions.fetchFolderContributionData(this.id);
+    } catch (err) {
+      // TODO show the user an error
+      // eslint-disable-next-line
+      console.error(err);
+      return;
+    }
+
+    if (folder) {
+      this.folder = folder;
+    }
+
     this.fileList = (await gapi.client.drive.files.list({
       fields: "files(id, name, permissions)",
       //q: starred != true
@@ -124,34 +142,6 @@ export default {
     getUserColour(user) {
       return this.colourList[this.userList.indexOf(user)];
     },
-    populateBarData() {
-      for (let i = 0; i < this.fileList.length; i++) {
-        let data = [];
-        let sum = 0;
-        for (let j = 0; j < this.userList.length - 1; j++) {
-          let num = Math.floor(Math.random() * 20);
-          data.push(num);
-          sum += num;
-        }
-        data.push(100 - sum);
-        this.barStats.push(data);
-      } // NOTE the bar stats will add up to 100 when populated with data (percentaegs)
-
-      for (let i = 0; i < this.fileList.length; i++) {
-        let fileData = [];
-        fileData.push(
-          ["Contributers"].concat(this.userList).concat({
-            role: "annotation"
-          })
-        );
-        fileData.push(
-          [this.fileList[i].name].concat(this.barStats[i]).concat("")
-        );
-        this.barData.push(fileData);
-      }
-
-      this.barOptions.colors = this.colourList;
-    },
     populatePieData() {
       for (let i = 0; i < this.userList.length; i++) {
         let data = [];
@@ -171,6 +161,7 @@ export default {
   },
   data() {
     return {
+      folder: null,
       userList: [],
       fileList: [],
       colourList: [], // need this? make the instance global?
@@ -240,14 +231,7 @@ export default {
       },
       barData: [],
       barDatas: [],
-      singularBarData: [],
-      barOptions: {
-        //width: 1700,
-        height: 100,
-        legend: { position: "none" },
-        bar: { groupWidth: "75%" },
-        isStacked: true
-      }
+      singularBarData: []
     };
   }
 };

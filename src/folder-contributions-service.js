@@ -2,6 +2,14 @@ import * as a from "awaiting";
 import googleapis from "./googleapis";
 
 const GOOGLE_DRIVE_FOLDER_MIME_TYPE = "application/vnd.google-apps.folder";
+const USER_FIELDS = ["kind", "displayName", "emailAddress"].join(", ");
+const REVISION_FIELDS = [
+  "kind",
+  "mimeType",
+  "modifiedTime",
+  "id",
+  `lastModifyingUser(${USER_FIELDS})`
+].join(", ");
 
 /**
  * Represents contribution data for a single file
@@ -14,17 +22,8 @@ class FileContributions {
       "name",
       "mimeType",
       "createdTime",
-      "headRevisionId"
-    ].join(", ");
-  }
-
-  static get revisionFields() {
-    return [
-      "kind",
-      "mimeType",
-      "modifiedTime",
-      "id",
-      `lastModifyingUser(${["kind", "displayName", "emailAddress"].join(", ")})`
+      "headRevisionId",
+      `permissions(${USER_FIELDS})`
     ].join(", ");
   }
 
@@ -32,6 +31,15 @@ class FileContributions {
     this.data = data;
     this.revisions = [];
     this.contributions = [];
+    this.contributors = new Map();
+  }
+
+  static async create(data) {
+    const file = new FileContributions(data);
+    await file.fetchRevisionData();
+    file.getContributions();
+    file.getContributors();
+    return file;
   }
 
   get id() {
@@ -49,10 +57,7 @@ class FileContributions {
     const options1 = {
       fileId: this.id,
       pageSize: 200,
-      fields: [
-        "nextPageToken",
-        `revisions(${FileContributions.revisionFields})`
-      ].join(", ")
+      fields: ["nextPageToken", `revisions(${REVISION_FIELDS})`].join(", ")
     };
     const data1 = await depaginate(
       options => googleapis.client.drive.revisions.list(options),
@@ -61,7 +66,6 @@ class FileContributions {
     );
 
     this.revisions = data1.revisions;
-    this.contributions = this.getContributions();
 
     return this.revisions;
   }
@@ -71,7 +75,7 @@ class FileContributions {
    * @returns an Array containing Objects with fields { type, user, revision, time }
    */
   getContributions() {
-    return this.revisions.map((revision, i) => {
+    this.contributions = this.revisions.map((revision, i) => {
       const creation = i === 0;
       return {
         type: creation ? "CREATE" : "EDIT",
@@ -80,6 +84,16 @@ class FileContributions {
         time: creation ? this.data.createdTime : revision.modifiedTime
       };
     });
+  }
+
+  getContributors() {
+    const contributors = new Map();
+    for (const contribution of this.contributions) {
+      if (!contributors.get(contribution.user.emailAddress)) {
+        contributors.set(contribution.user.emailAddress, contribution.user);
+      }
+    }
+    this.contributors = contributors;
   }
 }
 
@@ -94,6 +108,14 @@ class FolderContributions {
   constructor(data) {
     this.data = data;
     this.files = new Map();
+    this.contributors = new Map();
+  }
+
+  static async create(data) {
+    const folder = new FolderContributions(data);
+    await folder.fetchChildFilesContributionData();
+    folder.getContributors();
+    return folder;
   }
 
   get id() {
@@ -121,16 +143,26 @@ class FolderContributions {
       options1
     );
 
-    for (const data2 of data1.files) {
-      if (data2.mimeType !== GOOGLE_DRIVE_FOLDER_MIME_TYPE) {
-        const file = new FileContributions(data2);
-        this.files.set(file.id, file);
+    const data2 = data1.files.filter(
+      file => file.mimeType !== GOOGLE_DRIVE_FOLDER_MIME_TYPE
+    );
+
+    await a.map(data2, 4, async data3 => {
+      const file = await FileContributions.create(data3);
+      this.files.set(file.id, file);
+    });
+  }
+
+  getContributors() {
+    const contributors = new Map();
+    for (const file of this.files.values()) {
+      for (const contributor of file.contributors.values()) {
+        if (!contributors.get(contributor.emailAddress)) {
+          contributors.set(contributor.emailAddress, contributor);
+        }
       }
     }
-
-    await a.map([...this.files.values()], 4, file => file.fetchRevisionData());
-
-    return this.files;
+    this.contributors = contributors;
   }
 
   /**
@@ -179,9 +211,7 @@ class FolderContributionsService {
       throw err;
     }
 
-    folder = new FolderContributions(data1);
-    await folder.fetchChildFilesContributionData();
-
+    folder = await FolderContributions.create(data1);
     this.cache.set(folder.id, folder);
 
     return folder;
