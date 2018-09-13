@@ -31,16 +31,20 @@ class FileContributions {
   constructor(data) {
     this.data = data;
     this.revisions = [];
+    this.contributions = [];
   }
 
   get id() {
-    return this.id;
+    return this.data.id;
   }
 
   get name() {
-    return this.name;
+    return this.data.name;
   }
 
+  /**
+   * Get revision data for this file and populate contributions
+   */
   async fetchRevisionData() {
     const options1 = {
       fileId: this.id,
@@ -62,6 +66,10 @@ class FileContributions {
     return this.revisions;
   }
 
+  /**
+   * Get an array of contribution events for this file (based on revisions)
+   * @returns an Array containing Objects with fields { type, user, revision, time }
+   */
   getContributions() {
     return this.revisions.map((revision, i) => {
       const creation = i === 0;
@@ -96,6 +104,11 @@ class FolderContributions {
     return this.data.name;
   }
 
+  /**
+   * Populate this folder's files with instances of FileContributions
+   * @returns a Promise resolving to a Map containing FileContributions for each
+   *  file keyed by its id
+   */
   async fetchChildFilesContributionData() {
     const options1 = {
       q: `'${this.id}' in parents`,
@@ -120,6 +133,11 @@ class FolderContributions {
     return this.files;
   }
 
+  /**
+   * Get a given file by its id
+   * @param {string} id
+   * @returns FileContributions or null
+   */
   getFile(id) {
     return this.files.get(id);
   }
@@ -133,6 +151,11 @@ class FolderContributionsService {
     this.cache = new Map();
   }
 
+  /**
+   * Get contribution data for a google drive folder
+   * @param {string} id the id of the folder
+   * @returns a Promise resolving to an instance of FolderContributions
+   */
   async fetchFolderContributionData(id) {
     // Check the cache first
     let folder;
@@ -143,12 +166,12 @@ class FolderContributionsService {
     // Verify the folder actually exists
     let data1;
     try {
-      data1 = await this.googleapis.client.drive.files.get({
+      ({ result: data1 } = await googleapis.client.drive.files.get({
         fileId: id,
         fields: FolderContributions.fields
-      });
+      }));
 
-      if (data1.folder.mimeType !== GOOGLE_DRIVE_FOLDER_MIME_TYPE) {
+      if (data1.mimeType !== GOOGLE_DRIVE_FOLDER_MIME_TYPE) {
         throw new Error("The specified resource is not a folder.");
       }
     } catch (err) {
@@ -156,7 +179,7 @@ class FolderContributionsService {
       throw err;
     }
 
-    folder = new FolderContributions(data1.folder);
+    folder = new FolderContributions(data1);
     await folder.fetchChildFilesContributionData();
 
     this.cache.set(folder.id, folder);
@@ -176,7 +199,7 @@ async function depaginate(fetch, field, options) {
 
   let acc = {};
   do {
-    const result = await fetch(
+    const { result } = await fetch(
       Object.assign({}, options, { pageToken: acc.nextPageToken })
     );
     Object.assign(acc, result, {
