@@ -1,21 +1,26 @@
 <template>
   <div id="app">
-    <div v-if="$route.name !='login'">
-      <MenuBar></MenuBar>
-    </div>
+    <template v-if="$route.name !='login'">
+      <Layout>
+        <router-view></router-view>
+      </Layout>
+    </template>
+    <template v-else>
+      <router-view/>
+    </template>
     <SpaceBackground></SpaceBackground>
-    <router-view/>
   </div>
 
 </template>
 
 <script>
-import MenuBar from "@/views/MenuBar.vue";
+import Layout from "@/views/Layout.vue";
 import SpaceBackground from "@/components/SpaceBackground.vue";
+//import Colours from "@/components/ColourGeneration.vue";
 
 export default {
   components: {
-    MenuBar,
+    Layout,
     SpaceBackground
   }
 };
@@ -23,7 +28,8 @@ export default {
 
 <style>
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;

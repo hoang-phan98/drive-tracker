@@ -14,7 +14,7 @@
   right: 0;
   z-index: -2;
   opacity: 0.1;
-  background-size: 250px;
+  background-size: 300px;
   background-repeat: repeat;
   background-image: url(../assets/background.jpg);
 }
@@ -27,6 +27,6 @@
   overflow: auto;
   top: 0px;
   left: 0px;
-  background: rgba(68, 68, 68, 0.2); /*can be anything, of course*/
+  background: rgba(184, 184, 184, 0.2); /*can be anything, of course*/
 }
 </style>

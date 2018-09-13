@@ -34,7 +34,7 @@ Our version of SCRUM includes the following:
 - Sprint Backlog: stories that are planned to be done in the current sprint are put in this artefact.
 - Sprint: A period of 7 days where certain amount of pre-determined stories are to be completed.
 - Daily Standups: A 15 minute meeting every day online to allow each team member to briefly state the current status of what they are working on and if anything/anyone is blocking them.
-- Weekly Sprint Planning/Estimations: Every Sunday, stories from the product backlog are assessed by priority and difficulty to determine which stories will be part of the next sprint starting Monday.
+- Weekly Sprint Planning/Estimations: Every Friday, stories from the product backlog are assessed by priority and difficulty to determine which stories will be part of the next sprint starting Monday.
 - Client Meetings: During the tutorial on Friday 1:00pm - 4:00pm the current build will be shown to the client and clarifications and extensions to  the project can be made.
 
 The main modifications to SCRUM that are implemented in our version are specifically tailored to accommodate the structure of University and variable availability of each team member every week. Traditional SCRUM requires of lot of face-to-face collaboration which might not be possible with each student’s timetable, to counteract this, meetings will be scheduled and conducted online.
@@ -57,14 +57,13 @@ Weekly Sprint Planning/Estimations are also done through Facebook Messenger alth
 - When working on a specific feature, developers are to NEVER work on the master branch, they have to always create a feature branch.
 - Written code should be well-documented ,easy to read and follow specified style guide.
 - All code committed must first be formatted by the prettier code formatter.
-- Developers are to write their own unit tests for code they have written/are responsible for.
 - When a story is deemed complete by a developer, they are to request a pull request.
 - A pull request can only be merged by one of the designated reviewers.
 - A developer is NEVER to review/accept their own pull requests.
 
 #### Quality Assurance
-- Before a pull request can be made, the program must compile and all unit tests must pass.
-- Each developer has another developer who is the sole reviewer that reviews/accepts that one persons’ pull requests.
+- Before a pull request can be made, the program must compile and run.
+- The pull request will have to reviewed by the team member that is conducting the pull request.
 - A comprehensive test plan is NOT required due to the size and nature of the project. But quick sanity checks before and after a branch is merged in is critical.
 
 #### Designs
@@ -72,6 +71,10 @@ Weekly Sprint Planning/Estimations are also done through Facebook Messenger alth
 - Designs should be updated immediately after project requirements change or if a clarification is made.
 - All project UI and functionalities should be based on the designs
 - Ambiguities in the designs are to be brought up immediately and resolved in-house through Facebook Messenger, if complications persists, resolve with client.
+
+#### Other
+- If a team member finds that they have finished their allocated stories for the sprint earlier than expected (over estimation) then they are to report to the Scrum Master who will decide if more stories can be allocated to the team member, or if stories can be deloaded form other members.
+- If a team member finds that they have they are unable to finish their allocated stories for the sprint (under estimation) then they are to report to the Scrum Master who will decide if their story can be broken up and re-estimated or if it is acceptable for the story to remain in its current state and for it to "leak" into the next weeks sprint.
 
 ## Team Organisation - Member Roles and Responsibilities
 
@@ -90,7 +93,7 @@ This does not mean the Scrum Master cannot be assigned stories to complete, but 
 |Hoang Phan|hpha0005@student.monash.edu|0422875000|28769430|Developer|
 |Marc Porciuncula|mpor14@student.monash.edu|0450556900|27944166|Reviewer/Developer|
 |Erica Son|eson0001@student.monash.edu|0408247308|28798929|Product Owner/Developer|
-|Ellen Anastasia|elle0001@student.monash.edu|0404730116|28070259|Designer/Developer|
+|~~Ellen Anastasia~~|~~(elle0001@student.monash.edu)~~|~~0404730116~~|~~28070259~~|~~Designer/Developer~~|
 |Fenghe (Dax) Shen|fshe17@student.monash.edu|0406847122|26983044|Reviewer/Developer|
 |Kenny Ye|kyee0003@student.monash.edu|0408614668|28782151|Scrum Master/Developer|
 
@@ -144,7 +147,6 @@ A feature can be considered to be “done” and ready to ship when the below ch
 
 ### Checklist
 #### When feature is completed in feature branch
-- [ ] Unit tests created and passed, validating all elements that require it
 - [ ] The code compiles and runs
 - [ ] Developer that is responsible has  run a quick sanity check on the implemented feature to make sure that it is working as intended according to the requirements.
 

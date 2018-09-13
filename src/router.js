@@ -56,6 +56,13 @@ export default new Router({
         import(/* webpackChunkName: "folderpage" */ "./views/FolderPage.vue")
     },
     {
+      path: "/filepage",
+      name: "filepage",
+      // this is file page lmao
+      component: () =>
+        import(/* webpackChunkName: "filepage" */ "./views/FilePage.vue")
+    },
+    {
       path: "/*",
       name: "404",
       component: {

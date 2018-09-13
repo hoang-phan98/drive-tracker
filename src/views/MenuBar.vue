@@ -1,43 +1,47 @@
 <template>
-  <div class="menu">
-    <b-navbar toggleable="md" type="dark" variant="info">
-
-      <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
-
-      <b-navbar-brand href="#" class="menu-brand">
-        <img src="../assets/logo.png">
-        Drive Tracker
-      </b-navbar-brand>
-
-      <b-collapse is-nav id="nav_collapse">
-
-        <b-navbar-nav>
-          <b-nav-item href="#">Folders</b-nav-item>
-          <b-nav-item href="#" disabled>Files</b-nav-item>
-        </b-navbar-nav>
-
-        <!-- Right aligned nav items -->
-        <b-navbar-nav class="ml-auto">
-          <b-nav-item-dropdown right>
-            <!-- Using button-content slot -->
-            <template slot="button-content">
-              <em>User</em>
-            </template>
-            <b-dropdown-item href="#">Profile</b-dropdown-item>
-            <b-dropdown-item v-on:click="logout" href="#">Log out</b-dropdown-item>
-          </b-nav-item-dropdown>
-        </b-navbar-nav>
-
-      </b-collapse>
-    </b-navbar>
+  <div class="menu-bar">
+    <div class="search">
+      <MaterialIcon icon="search" size="large" />
+      <input class="search-input" type="text" name="search" v-model="query" />
+    </div>
+    <div class="account">
+      <b-dropdown right variant="link" no-caret class="account-dropdown">
+        <MaterialIcon icon="account_circle" size="large" slot="button-content" />
+        <b-dropdown-item @click="logout">
+          Logout
+        </b-dropdown-item>
+      </b-dropdown>
+      <span v-if="name" class="account-name">
+        {{ name }}
+      </span>
+    </div>
   </div>
 </template>
 
 <script>
+import MaterialIcon from "@/components/MaterialIcon.vue";
 import googleapis from "../googleapis";
 
 export default {
+  components: { MaterialIcon },
+  data: function() {
+    return {
+      query: "",
+      user: null
+    };
+  },
+  mounted() {
+    const auth2 = googleapis.auth2.getAuthInstance();
+    this.user = auth2.currentUser.get();
+    this.subscription = auth2.currentUser.listen(this.handleUserChanged);
+  },
+  beforeDestroy() {
+    this.subscription.remove();
+  },
   methods: {
+    handleUserChanged(user) {
+      this.user = user;
+    },
     logout: function() {
       // Load the googleAuth instance (the user) and sign them out
       const auth2 = googleapis.auth2.getAuthInstance();
@@ -48,13 +52,59 @@ export default {
         this.$router.push("/login");
       });
     }
+  },
+  computed: {
+    name: function() {
+      if (this.user) {
+        return this.user.getBasicProfile().getGivenName();
+      }
+      return null;
+    }
   }
 };
 </script>
 
-<style>
-.menu-brand img {
-  width: 30px;
-  height: 30px;
+<style scoped>
+.menu-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  border-bottom: 3px solid hsla(196, 5%, 25%, 0.1);
+}
+
+.search {
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  border-radius: 1rem;
+  height: 3rem;
+  font-size: 1rem;
+  border: 2px solid hsl(196, 5%, 85%);
+  padding: 0 1rem;
+  margin-left: 1rem;
+  min-width: 34rem;
+}
+
+.account {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+.account-name {
+  font-size: 1.25rem;
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+
+.account-dropdown :global(button) {
+  margin: 0;
+  padding: 0;
+  height: 48px;
+  width: 48px;
+  color: inherit;
 }
 </style>
