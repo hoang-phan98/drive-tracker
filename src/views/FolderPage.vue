@@ -8,26 +8,26 @@
           <span><br></span>
           <div v-for="user in userList" :key="user.id" class="legend-entry">
             <div :style="'background-color:'+getUserColour(user)" class="legend-box"></div><span class="legend-name">{{user}}</span>
-          </div> 
+          </div>
           <!--style= {{getUserColourAttr(user)}}-->
           <!--style= "background-colour:"+{{colourList[index]}}-->
           <!--<div v-for="index in userList.length" :key="index" class="legend-entry">
-            
-            <div  class="legend-box"></div><span class="legend-name">{{userList[index]}}</span> 
+
+            <div  class="legend-box"></div><span class="legend-name">{{userList[index]}}</span>
           </div> -->
         <!-- </div> -->
       </div>
       <div class = "pichart">
-        
+
 
         <GChart
           type="PieChart"
           :data="pieData"
           :options="pieOptions"
         />
-    
+
       </div>
- 
+
       <div class="histogram">
         <GChart
           type="ColumnChart"
@@ -39,9 +39,12 @@
         <b-card no-body>
           <b-tabs card>
             <b-tab title="Day" active>
+              <h1>File Contribution</h1>
               <GChart
+                v-for="fileData in barData"
+                v-bind:key='fileData'
                 type="BarChart"
-                :data="barData"
+                v-bind:data="fileData"
                 :options="barOptions"
               />
             </b-tab>
@@ -64,11 +67,11 @@
               <b-row class = "fileHolder" v-for="file in fileList" :key="file.id">
                 <!-- filename -->
                 <div> {{ file.name }} </div>
-                
+
                 <span><br></span>
               </b-row>
             </b-card>
-          </div>  
+          </div>
 
         </b-card>
       </div>
@@ -109,6 +112,7 @@ export default {
         }
       }
     }
+
     //console.log(Colours);
     this.colourList = Colours.generateColours(this.userList.length);
 
@@ -133,16 +137,19 @@ export default {
         this.barStats.push(data);
       } // NOTE the bar stats will add up to 100 when populated with data (percentaegs)
 
-      this.barData.push(
-        ["Contributers"].concat(this.userList).concat({
-          role: "annotation"
-        })
-      );
       for (let i = 0; i < this.fileList.length; i++) {
-        this.barData.push(
+        let fileData = [];
+        fileData.push(
+          ["Contributers"].concat(this.userList).concat({
+            role: "annotation"
+          })
+        );
+        fileData.push(
           [this.fileList[i].name].concat(this.barStats[i]).concat("")
         );
+        this.barData.push(fileData);
       }
+
       this.barOptions.colors = this.colourList;
     },
     populatePieData() {
@@ -232,11 +239,12 @@ export default {
         isStacked: true
       },
       barData: [],
+      barDatas: [],
+      singularBarData: [],
       barOptions: {
         //width: 1700,
-        height: 400,
-        title: "User contributions",
-        legend: { position: "top", maxLines: 3 },
+        height: 100,
+        legend: { position: "none" },
         bar: { groupWidth: "75%" },
         isStacked: true
       }
