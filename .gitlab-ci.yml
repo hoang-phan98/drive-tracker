@@ -28,6 +28,6 @@ lint:
 deploy:
   stage: deploy
   only:
-    - tags
+    - /^sprint-.+$/
   script:
     - npm run deploy -- --token $NOW_TOKEN
