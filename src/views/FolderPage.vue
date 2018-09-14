@@ -6,9 +6,9 @@
         <div class="legend">
           <h1>Users</h1>
           <span><br></span>
-          <div class="legend-list">
-          <div v-for="user in userList" :key="user.id" class="legend-entry">
-            <div :style="'background-color:'+getUserColour(user)" class="legend-box"></div><span class="legend-name">{{getUserName(user)}}</span>
+          <div class="legend-list" v-if="folder">
+          <div v-for="user in folder.contributors" :key="user.emailAddress" class="legend-entry">
+            <div :style="{backgroundColor:colors[user.emailAddress]}" class="legend-box"></div><span class="legend-name">{{user.displayName}}</span>
           </div> 
           </div>
           <!--style= {{getUserColourAttr(user)}}-->
@@ -118,7 +118,7 @@ export default {
     this.fileList = (await gapi.client.drive.files.list({
       fields: "files(id, name, permissions)",
       //q: starred != true
-      q: "'1S9QJbW_gBXqWoEE4CtBCGoXZNnKOaDnG' in parents" // file id goes here
+      q: `'${this.id}' in parents` // file id goes here
     })).result.files;
 
     for (var i = 0; i < this.fileList.length; i++) {

@@ -2,6 +2,7 @@ import * as a from "awaiting";
 import googleapis from "./googleapis";
 
 const GOOGLE_DRIVE_FOLDER_MIME_TYPE = "application/vnd.google-apps.folder";
+const GOOGLE_DRIVE_FILE_MIME_TYPE = "application/vnd.google-apps.file";
 const USER_FIELDS = ["kind", "displayName", "emailAddress"].join(", ");
 const REVISION_FIELDS = [
   "kind",
@@ -167,7 +168,7 @@ class FolderContributions {
 /**
  * A service for getting folder contribution data, caching results.
  */
-class FolderContributionsService {
+class ContributionsService {
   constructor() {
     this.cache = new Map();
   }
@@ -205,9 +206,38 @@ class FolderContributionsService {
 
     return folder;
   }
+
+  async fetchFileContributionData(id) {
+    // Check the cache first
+    let file;
+    if ((file = this.cache.get(id))) {
+      return file;
+    }
+
+    // Verify the folder actually exists
+    let data1;
+    try {
+      ({ result: data1 } = await googleapis.client.drive.files.get({
+        fileId: id, ///////find the raw data of the file
+        fields: FileContributions.fields
+      }));
+
+      if (data1.mimeType !== GOOGLE_DRIVE_FILE_MIME_TYPE) {
+        throw new Error("The specified resource is not a file.");
+      }
+    } catch (err) {
+      // TODO :)
+      throw err;
+    }
+
+    file = await FileContributions.create(data1);
+    this.cache.set(file.id, file);
+
+    return file;
+  }
 }
 
-export default FolderContributionsService;
+export default ContributionsService;
 
 async function depaginate(fetch, field, options) {
   if (!(options.fields && options.fields.includes("nextPageToken"))) {
@@ -219,7 +249,9 @@ async function depaginate(fetch, field, options) {
   let acc = {};
   do {
     const { result } = await fetch(
-      Object.assign({}, options, { pageToken: acc.nextPageToken })
+      Object.assign({}, options, {
+        pageToken: acc.nextPageToken
+      })
     );
     Object.assign(acc, result, {
       [field]: acc[field] ? acc[field].concat(result[field]) : result[field],
