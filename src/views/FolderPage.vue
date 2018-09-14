@@ -18,14 +18,12 @@
         <!-- </div> -->
       </div>
       <div class = "pichart">
-
-
-        <GChart
-          type="PieChart"
-          :data="pieData"
-          :options="pieOptions"
+        <PieChart
+          v-if="folder"
+          :files="Object.values(folder.files)"
+          :contributors="Object.values(folder.contributors)"
+          :colors="colors"
         />
-
       </div>
 
       <div class="histogram">
@@ -84,6 +82,7 @@ import Vue from "vue";
 import VueGoogleCharts from "vue-google-charts";
 import Colours from "./ColourGeneration.vue";
 import ContributionBars from "../components/ContributionBars.vue";
+import PieChart from "../components/PieChart.vue";
 //import randomColour from "./ColourGeneration.vue";
 
 Vue.use(VueGoogleCharts);
@@ -91,7 +90,8 @@ Vue.use(VueGoogleCharts);
 export default {
   name: "FolderPage",
   components: {
-    ContributionBars
+    ContributionBars,
+    PieChart
   },
   props: {
     id: String
@@ -138,27 +138,10 @@ export default {
     this.folder = folder;
 
     // call generate colours function while passing in the number of users from userList.length
-    this.populatePieData();
   },
   methods: {
     getUserColour(user) {
       return this.colourList[this.userList.indexOf(user)];
-    },
-    populatePieData() {
-      for (let i = 0; i < this.userList.length; i++) {
-        let data = [];
-        data.push(this.userList[i]);
-        data.push(this.pieStats[i]);
-        data.push(this.colourList[i]);
-
-        //console.log([(this.userList[i], this.pieStats[i], this.colourList[i])]);
-        this.pieData.push([
-          this.userList[i],
-          this.pieStats[i]
-          //this.colourList[i]
-        ]);
-        this.pieOptions.colors = this.colourList;
-      }
     }
   },
   data() {
@@ -176,7 +159,6 @@ export default {
         ["Dax", 16, "#FFFF00	"],
         ["Marc", 28, "#808080"]
       ],*/
-      pieStats: [4, 2, 5, 7, 10, 2, 3, 4],
       barStats: [],
       userOptions: {
         //width: 600,
@@ -185,22 +167,6 @@ export default {
         legend: "none",
         bar: { groupWidth: "75%" },
         isStacked: "percent"
-      },
-      pieData: [
-        ["Task", "Hours per Day"]
-        // ["Kenny", 11],
-        // ["Hoang", 2],
-        // ["Erica", 2],
-        // ["Dax", 2],
-        // ["Marc", 7]
-      ],
-      pieOptions: {
-        //width: 600,
-        height: 600,
-        title: "All Time Contribution",
-        pieHole: 0.4,
-        legend: "none"
-        //colors: colourList
       },
       histogramData: [
         [
