@@ -6,8 +6,10 @@
         <div class="legend">
           <h1>Users</h1>
           <span><br></span>
+          <div class="legend-list">
           <div v-for="user in userList" :key="user.id" class="legend-entry">
-            <div :style="'background-color:'+getUserColour(user)" class="legend-box"></div><span class="legend-name">{{user}}</span>
+            <div :style="'background-color:'+getUserColour(user)" class="legend-box"></div><span class="legend-name">{{getUserName(user)}}</span>
+          </div> 
           </div>
           <!--style= {{getUserColourAttr(user)}}-->
           <!--style= "background-colour:"+{{colourList[index]}}-->
@@ -122,9 +124,12 @@ export default {
     for (var i = 0; i < this.fileList.length; i++) {
       for (var j = 0; j < this.fileList[i].permissions.length; j++) {
         if (
-          !this.userList.includes(this.fileList[i].permissions[j].displayName)
+          !this.userList.includes(this.fileList[i].permissions[j].emailAddress)
         ) {
-          this.userList.push(this.fileList[i].permissions[j].displayName);
+          this.userList.push(this.fileList[i].permissions[j].emailAddress);
+          this.userNameList.push(this.fileList[i].permissions[j].displayName);
+          //console.log(this.fileList[i].permissions[j]);
+          //this.usernameList.push(this.fileList[i].permissions[j]);
         }
       }
     }
@@ -141,6 +146,7 @@ export default {
   },
   methods: {
     getUserColour(user) {
+      // user is the user's email
       return this.colourList[this.userList.indexOf(user)];
     }
   },
@@ -149,6 +155,7 @@ export default {
       folder: null,
       colors: {},
       userList: [],
+      userNameList: [],
       fileList: [],
       colourList: [], // need this? make the instance global?
       /*userData: [
@@ -206,7 +213,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .grid-container {
   display: grid;
   grid-gap: 30px;
@@ -262,11 +269,15 @@ export default {
 
   box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);
   border-radius: 25px;
+
   /*width: 100%;*/
   width: 100%;
   height: 100%;
   grid-column: 1 / 2;
   grid-row: 1 / 2;
+}
+.legend-list {
+  overflow-y: scroll;
 }
 .legend-entry {
   display: flex;
