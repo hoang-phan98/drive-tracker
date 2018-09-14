@@ -34,39 +34,18 @@ export default {
       lineData.push(labels);
 
       // loop through the revisions of each file and extract the unique dates
-      var seen = [];
-      var values = [];
+      var values = []; //stores the actual row to be appended lineData
+      values.push(null);
+      for (var i = 0; i < this.files.length; i++) {
+        values.push(0);
+      }
+
       for (var i = 0; i < this.files.length; i++) {
         for (var j = 0; j < this.files[i].revisions.length; j++) {
-          if (seen.includes(this.files[i].revisions[j].modifiedTime)) {
-            // increment the amount of revisions
-            values[i + 1] += 1;
-          } else {
-            // If the date is not the one in values, push the array and start again
-            if (values.length > 0) {
-              lineData.push(values);
-            }
-
-            // Update the seen Array
-            seen.push(this.files[i].revisions[j].modifiesTime);
-
-            // starting the values array again
-            values = [];
-            values.push(this.files[i].revisions[j].modifiedTime);
-            // reset the values array to empty state ready to count
-            for (var k = 0; k < this.files.length; k++) {
-              values.push(0);
-            }
-            // increment the amount of revisions
-            values[i + 1] += 1;
-          }
-
-          // very last revision being counted - push it
-          if (i == this.files.length - 1) {
-            if (values.length > 0) {
-              lineData.push(values);
-            }
-          }
+          values[0] = this.files[i].revisions[j].modifiedTime;
+          values[i+1] += 1;
+          var duplicateObject = JSON.parse(JSON.stringify( values ));
+          lineData.push(duplicateObject);
         }
       }
 
@@ -79,7 +58,8 @@ export default {
           curveType: "function",
           legend: { position: "bottom" },
           interpolateNulls: true,
-          colors: this.contributors.map(user => this.colors[user.emailAddress])
+          colors: this.contributors.map(user => this.colors[user.emailAddress]),
+          height: 400
         }
       };
     }
