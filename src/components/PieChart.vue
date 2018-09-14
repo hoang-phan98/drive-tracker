@@ -2,9 +2,8 @@
   <div>
     <GChart
       type="PieChart"
-      v-bind:key="file.id"
-      v-bind:data="file.data"
-      :options="file.options"
+      :data="data"
+      :options="pieOptions"
     />
   </div>
 </template>
@@ -24,37 +23,30 @@ export default {
   },
   computed: {
     data() {
-      return this.files.map(file => {
-        const labels = [
-          "Contributor",
-          ...this.contributors.map(user => user.displayName),
-          { role: "annotation" }
-        ];
+      var result = [["User", "Contributions"]];
+      for (let user of this.contributors) {
+        const name = user.displayName;
+        const values = this.files.map(file => {
+          return file.contributions.filter(
+            contribution => contribution.user.emailAddress === user.emailAddress
+          ).length;
+        });
 
-        const values = [
-          file.name,
-          ...this.contributors.map(user => {
-            return file.contributions.filter(
-              contribution =>
-                contribution.user.emailAddress === user.emailAddress
-            ).length;
-          }),
-          ""
-        ];
-
-        return {
-          data: [labels, values],
-          options: {
-            height: 600,
-            title: "All Time Contribution",
-            pieHole: 0.4,
-            legend: "none",
-            colors: this.contributors.map(
-              user => this.colors[user.emailAddress]
-            )
-          }
-        };
-      });
+        var total = 0;
+        for (var i = 0; i < values.length; i++) {
+          total = total + values[i];
+        }
+        result.push([name, total]);
+      }
+      return result;
+    },
+    pieOptions() {
+      return {
+        height: 750,
+        title: "All Time Contribution",
+        pieHole: 0.4,
+        legend: "none"
+      };
     }
   }
 };
