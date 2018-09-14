@@ -31,10 +31,11 @@
       </div>
 
       <div class="histogram">
-        <GChart
-          type="LineChart"
-          :data="lineData"
-          :options="lineOptions"
+        <Timeline
+          v-if="folder"
+          :files="Object.values(folder.files)"
+          :contributors="Object.values(folder.contributors)"
+          :colors="colors"
         />
       </div>
       <div class="filecontribution">
@@ -57,6 +58,7 @@ import Vue from "vue";
 import VueGoogleCharts from "vue-google-charts";
 import Colours from "./ColourGeneration.vue";
 import ContributionBars from "../components/ContributionBars.vue";
+import Timeline from "../components/Timeline.vue";
 //import randomColour from "./ColourGeneration.vue";
 
 Vue.use(VueGoogleCharts);
@@ -64,7 +66,8 @@ Vue.use(VueGoogleCharts);
 export default {
   name: "FolderPage",
   components: {
-    ContributionBars
+    ContributionBars,
+    Timeline
   },
   props: {
     id: String
@@ -183,22 +186,6 @@ export default {
         pieHole: 0.4,
         legend: "none"
         //colors: colourList
-      },
-      lineData: [
-        ["Year", "Sales", "Expenses"],
-        ["2004", 1000, 400],
-        ["2005", 1170, 460],
-        ["2006", 660, 1120],
-        ["2007", 1030, 540]
-        //["10/01/2018", 10, 24, 20, ""],
-        //["11/01/2018", 16, 22, 23, ""],
-        //["12/01/2018", 28, 19, 29, ""],
-        //["13/01/2018", 16, 22, 23, ""]
-      ],
-      lineOptions: {
-        title: "Company Performance",
-        curveType: "function",
-        legend: { position: "bottom" }
       },
       barData: [],
       barDatas: [],
