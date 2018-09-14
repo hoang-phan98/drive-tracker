@@ -42,10 +42,11 @@ export default {
     },
     pieOptions() {
       return {
-        height: 750,
+        height: 600,
         title: "All Time Contribution",
         pieHole: 0.4,
-        legend: "none"
+        legend: "none",
+        colors: this.contributors.map(user => this.colors[user.emailAddress])
       };
     }
   }
