@@ -33,23 +33,26 @@ export default {
       }
       lineData.push(labels);
 
-      // loop through the revisions of each file and extract the unique dates
+      // Initialise the value array (for each row) to be [null, 0, 0,0 ...]
+      // Null will be the field for the date, initialised as null
       var values = []; //stores the actual row to be appended lineData
       values.push(null);
-      for (var i = 0; i < this.files.length; i++) {
+      for (var y = 0; y < this.files.length; y++) {
         values.push(0);
       }
 
+      // increments which file contained that revision and then pushes the row
       for (var i = 0; i < this.files.length; i++) {
         for (var j = 0; j < this.files[i].revisions.length; j++) {
           values[0] = this.files[i].revisions[j].modifiedTime;
-          values[i+1] += 1;
-          var duplicateObject = JSON.parse(JSON.stringify( values ));
+          values[i + 1] += 1;
+          var duplicateObject = JSON.parse(JSON.stringify(values));
           lineData.push(duplicateObject);
         }
       }
 
-      console.log(lineData);
+      // If you want to see what the line data looks like uncomment below.
+      // console.log(lineData);
 
       return {
         data: lineData,
