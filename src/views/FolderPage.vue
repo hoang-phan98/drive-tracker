@@ -9,7 +9,7 @@
           <div class="legend-list">
           <div v-for="user in userList" :key="user.id" class="legend-entry">
             <div :style="'background-color:'+getUserColour(user)" class="legend-box"></div><span class="legend-name">{{getUserName(user)}}</span>
-          </div> 
+          </div>
           </div>
           <!--style= {{getUserColourAttr(user)}}-->
           <!--style= "background-colour:"+{{colourList[index]}}-->
@@ -32,48 +32,19 @@
 
       <div class="histogram">
         <GChart
-          type="ColumnChart"
-          :data="histogramData"
-          :options="histogramOptions"
+          type="LineChart"
+          :data="lineData"
+          :options="lineOptions"
         />
       </div>
       <div class="filecontribution">
-        <b-card no-body>
-          <b-tabs card>
-            <h1>Files</h1>
-            <b-tab title="Day" active>
-              <ContributionBars 
-                v-if="folder"
-                :files="Object.values(folder.files)" 
-                :contributors="Object.values(folder.contributors)" 
-                :colors="colors"
-                />
-            </b-tab>
-            <b-tab title="Week">
-              File Contribution bar graph for week goes here
-            </b-tab>
-            <b-tab title="Month">
-              File Contribution bar graph for month goes here
-            </b-tab>
-            <b-tab title="Year">
-              File Contribution bar graph for year goes here
-            </b-tab>
-            <b-tab title="All Time">
-              File Contribution bar graph for alltime goes here
-            </b-tab>
-          </b-tabs>
-          <div>
-            <b-card>
-              <template v-if="folder">
-                <b-row class="fileHolder" v-for="file in Object.values(folder.files)" :key="file.id">
-                  <!-- filename -->
-                  <div> {{ file.name }} </div>
-                  <span><br></span>
-                </b-row>
-              </template>
-            </b-card>
-          </div>
-        </b-card>
+        <h1>Files</h1>
+        <ContributionBars
+          v-if="folder"
+          :files="Object.values(folder.files)"
+          :contributors="Object.values(folder.contributors)"
+          :colors="colors"
+        />
       </div>
 
     </div>
@@ -213,35 +184,21 @@ export default {
         legend: "none"
         //colors: colourList
       },
-      histogramData: [
-        [
-          "Contributers",
-          "Add Files",
-          "Delete Files",
-          "File Revisions",
-          { role: "annotation" }
-        ],
-        ["01/01/2018", 10, 24, 20, ""],
-        ["02/01/2018", 16, 22, 23, ""],
-        ["03/01/2018", 28, 19, 29, ""],
-        ["04/01/2018", 16, 22, 23, ""],
-        ["05/01/2018", 28, 19, 29, ""],
-        ["06/01/2018", 10, 24, 20, ""],
-        ["07/01/2018", 16, 22, 23, ""],
-        ["08/01/2018", 28, 19, 29, ""],
-        ["09/01/2018", 16, 22, 23, ""]
+      lineData: [
+        ["Year", "Sales", "Expenses"],
+        ["2004", 1000, 400],
+        ["2005", 1170, 460],
+        ["2006", 660, 1120],
+        ["2007", 1030, 540]
         //["10/01/2018", 10, 24, 20, ""],
         //["11/01/2018", 16, 22, 23, ""],
         //["12/01/2018", 28, 19, 29, ""],
         //["13/01/2018", 16, 22, 23, ""]
       ],
-      histogramOptions: {
-        //width: 1700,
-        height: 600,
-        title: "File contrution over time",
-        legend: { position: "top", maxLines: 3 },
-        bar: { groupWidth: "75%" },
-        isStacked: true
+      lineOptions: {
+        title: "Company Performance",
+        curveType: "function",
+        legend: { position: "bottom" }
       },
       barData: [],
       barDatas: [],
@@ -254,10 +211,12 @@ export default {
 <style scoped>
 .grid-container {
   display: grid;
-  grid-gap: 30px;
+  grid-gap: 15px;
   grid-template-columns: 1fr 2fr 3fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 2fr 1fr;
   width: 100%;
+  min-height: 0;
+  min-width: 0;
 }
 
 .pichart {
@@ -275,7 +234,7 @@ export default {
   background: rgba(256, 256, 256, 1); /*can be anything, of course*/
   margin: auto;
   padding: 10px;
-  grid-column: 1 / 3;
+  grid-column: 1 / 4;
   grid-row: 2 / 3;
   text-align: center;
   box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);
@@ -288,11 +247,13 @@ export default {
   /* margin: auto; */
   padding: 10px;
   grid-column: 3 / 4;
-  grid-row: 1 / -1;
+  grid-row: 1 / 2;
   text-align: center;
   box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);
   border-radius: 25px;
   width: 100%;
+  max-height: 600px;
+  overflow-y: scroll;
 }
 
 .legend {
