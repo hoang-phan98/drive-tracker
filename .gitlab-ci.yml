@@ -27,6 +27,8 @@ lint:
 
 deploy:
   stage: deploy
+  only:
+    - master
   when: manual
   script:
     - npm run deploy -- --token $NOW_TOKEN
