@@ -44,5 +44,7 @@ export default {
 .content {
   grid-area: content;
   overflow-y: auto;
+  display: grid;
+  grid-template: 1fr / 1fr;
 }
 </style>
