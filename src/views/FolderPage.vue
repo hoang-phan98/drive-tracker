@@ -148,6 +148,9 @@ export default {
     getUserColour(user) {
       // user is the user's email
       return this.colourList[this.userList.indexOf(user)];
+    },
+    getUserName(user) {
+      return this.userNameList[this.userList.indexOf(user)];
     }
   },
   data() {
