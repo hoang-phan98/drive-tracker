@@ -124,7 +124,7 @@ export default {
     },
     getUserName(user) {
       return this.userNameList[this.userList.indexOf(user)];
-    }
+    },
   },
   data() {
     return {

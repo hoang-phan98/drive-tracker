@@ -12,7 +12,8 @@
     <div class="buttons">
       <button class="button"
         v-for="file in data"
-        v-bind:key="fileID">
+        v-bind:key="fileID"
+        v-on:click="filenav(file.fileID, $event)">
         {{ file.fileID }}
       </button>
     </div>
@@ -73,6 +74,12 @@ export default {
         };
       });
     },
+  },
+  methods: {
+    filenav(item) {
+      // navs the the file level view
+      this.$router.push("/file/" + item);
+    }
   }
 };
 </script>
