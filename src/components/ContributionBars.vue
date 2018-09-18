@@ -1,13 +1,16 @@
 <template>
-  <div>
-    <div v-for="file in data">
+  <div class="contributiongrid">
+    <div class="allcharts" >
       <GChart
+        v-for="file in data"
         v-bind:key="file.id"
         type="BarChart"
         v-bind:data="file.data"
         :options="file.options"
       />
-      <button>
+    </div>
+    <div class="buttons">
+      <button class="button" v-for="n in 10">
         hello
       </button>
     </div>
@@ -72,4 +75,41 @@ export default {
 </script>
 
 <style>
+.contributiongrid {
+  display: grid;
+  grid-gap: 30px;
+  grid-template-columns: 4fr 1fr;
+  grid-template-rows: 1fr;
+  width: 100%;
+}
+
+.allcharts {
+  background: rgba(256, 256, 256, 1); /*can be anything, of course*/
+  margin: auto;
+  padding: 10px;
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  /*text-align: center; */
+  box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);
+  border-radius: 25px;
+  width: 100%;
+}
+
+.buttons {
+  background: rgba(256, 256, 256, 1); /*can be anything, of course*/
+  margin: auto;
+  padding: 10px;
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+  /*text-align: center; */
+  box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);
+  border-radius: 25px;
+  width: 100%;
+  height: 100%;
+}
+
+.button {
+  width: 100%;
+}
+
 </style>

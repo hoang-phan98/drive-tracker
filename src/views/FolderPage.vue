@@ -37,21 +37,13 @@
       </div>
 
       <div class="filecontribution">
-        <div class="file-grid-container">
-          <div class="titlebox">
-            <h1>Files</h1>
-          </div>
-          <ContributionBars class="contributionbars"
-            v-if="folder"
-            :files="Object.values(folder.files)"
-            :contributors="Object.values(folder.contributors)"
-            :colors="colors"
-          />
-          <FileNavButtons class="filenavbuttons"
-            :files="Object.values(folder.files)"
-            :contributors="Object.values(folder.contributors)"
-          />
-        </div>
+        <h1>Files</h1>
+        <ContributionBars class="contributionbars"
+          v-if="folder"
+          :files="Object.values(folder.files)"
+          :contributors="Object.values(folder.contributors)"
+          :colors="colors"
+        />
     </div>
 
 
@@ -66,7 +58,6 @@ import VueGoogleCharts from "vue-google-charts";
 import Colours from "./ColourGeneration.vue";
 import ContributionBars from "../components/ContributionBars.vue";
 import PieChart from "../components/PieChart.vue";
-import FileNavButtons from "../components/FileNavButtons.vue";
 //import randomColour from "./ColourGeneration.vue";
 
 Vue.use(VueGoogleCharts);
@@ -75,8 +66,7 @@ export default {
   name: "FolderPage",
   components: {
     ContributionBars,
-    PieChart,
-    FileNavButtons
+    PieChart
   },
   props: {
     id: String
@@ -241,14 +231,6 @@ export default {
   text-align: center;
   box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);
   border-radius: 25px;
-  width: 100%;
-}
-
-.file-grid-container {
-  display: grid;
-  grid-gap: 30px;
-  grid-template-columns: 4fr 1fr;
-  grid-template-rows: 1fr 9fr;
   width: 100%;
 }
 
