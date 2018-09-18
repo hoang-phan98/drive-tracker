@@ -32,11 +32,11 @@ export default {
 
 <style scoped>
 .sidebar {
-  width: 150px;
+  width: 100px;
   background-color: white;
   color: #868e91;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 100px;
   grid-template-rows: auto 1fr auto;
   box-shadow: 2px 0 2px 1px hsla(0, 0%, 50%, 0.3),
     2px 0 10px 5px hsla(0, 0%, 50%, 0.1);
@@ -44,6 +44,7 @@ export default {
 
 .sidebar-menu {
   display: flex;
+  width: 100%;
   flex-direction: column;
 }
 
@@ -59,7 +60,7 @@ export default {
 }
 
 .sidebar-menu-item-label {
-  font-size: 0.875rem;
+  font-size: 0.75rem;
 }
 
 .sidebar-menu-item:hover {
@@ -68,7 +69,7 @@ export default {
 
 .sidebar-footer {
   line-height: 1.3;
-  font-size: 0.75rem;
+  font-size: 0.675rem;
   padding: 1rem;
 }
 
@@ -83,8 +84,10 @@ export default {
 }
 
 .branding-logo {
-  width: 100px;
-  height: 100px;
+  display: block;
+  width: 80px;
+  height: 80px;
+  margin: auto;
 }
 
 .branding-type {
