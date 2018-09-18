@@ -47,8 +47,10 @@
             :contributors="Object.values(folder.contributors)"
             :colors="colors"
           />
-          <div class="filenavbuttons">
-          </div>
+          <FileNavButtons class="filenavbuttons"
+            :files="Object.values(folder.files)"
+            :contributors="Object.values(folder.contributors)"
+          />
         </div>
     </div>
 
@@ -64,6 +66,7 @@ import VueGoogleCharts from "vue-google-charts";
 import Colours from "./ColourGeneration.vue";
 import ContributionBars from "../components/ContributionBars.vue";
 import PieChart from "../components/PieChart.vue";
+import FileNavButtons from "../components/FileNavButtons.vue";
 //import randomColour from "./ColourGeneration.vue";
 
 Vue.use(VueGoogleCharts);
@@ -72,7 +75,8 @@ export default {
   name: "FolderPage",
   components: {
     ContributionBars,
-    PieChart
+    PieChart,
+    FileNavButtons
   },
   props: {
     id: String

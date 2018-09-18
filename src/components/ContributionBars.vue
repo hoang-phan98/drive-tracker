@@ -1,15 +1,16 @@
 <template>
   <div>
-    <GChart
-      v-for="file in data"
-      v-bind:key="file.id"
-      type="BarChart"
-      v-bind:data="file.data"
-      :options="file.options"
-    />
-    <button>
-      hello
-    </button>
+    <div v-for="file in data">
+      <GChart
+        v-bind:key="file.id"
+        type="BarChart"
+        v-bind:data="file.data"
+        :options="file.options"
+      />
+      <button>
+        hello
+      </button>
+    </div>
   </div>
 </template>
 
