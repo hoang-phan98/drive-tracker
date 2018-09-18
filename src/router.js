@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
-import FolderList from "./views/FolderList.vue";
+import Dashboard from "./views/Dashboard.vue";
 import Login from "./views/Login.vue";
 import FolderPage from "./views/FolderPage.vue";
 import FilePage from "./views/FilePage.vue";
@@ -20,7 +20,7 @@ export default new Router({
       path: "/",
       name: "home",
       component: {
-        render: h => h(FolderList),
+        render: h => h(Dashboard),
         async beforeRouteEnter(to, from, next) {
           next((await isSignedIn()) ? undefined : "/login");
         }
