@@ -7,7 +7,7 @@
           <h1>Users</h1>
           <span><br></span>
           <div v-for="user in userList" :key="user.id" class="legend-entry">
-            <div :style="'background-color:'+getUserColour(user)" class="legend-box"></div><span class="legend-name">{{user}}</span>
+            <div :style="{backgroundColor:colors[user.emailAddress]}" class="legend-box"></div><span class="legend-name">{{user.displayName}}</span>
           </div>
           <!--style= {{getUserColourAttr(user)}}-->
           <!--style= "background-colour:"+{{colourList[index]}}-->
@@ -79,13 +79,20 @@ import Colours from "./ColourGeneration.vue";
 Vue.use(VueGoogleCharts);
 
 export default {
-  //name: "FolderPage",
-  //components: {
-  //  Colours //???
-  //},
+  inject: ["contributions"],
   // fileList is an object with the file's id and permissions
   // permissions has the user's id and display name that we can use for the displaying of data
   async mounted() {
+    let file;
+    try {
+      file = await this.contributions.fetchFileContributionData(this.id);
+    } catch (err) {
+      // TODO show the user an error
+      // eslint-disable-next-line
+      console.error(err);
+      return;
+    }
+
     this.fileList = (await gapi.client.drive.files.list({
       fields: "files(id, name, permissions)",
       //q: starred != true
@@ -102,17 +109,26 @@ export default {
       }
     }
 
+    this.userList = file.contributors;
+
     //console.log(Colours);
     this.colourList = Colours.generateColours(this.userList.length);
+
+    Object.values(file.contributors).forEach((user, i) => {
+      this.colors[user.emailAddress] = this.colourList[i];
+    });
 
     // call generate colours function while passing in the number of users from userList.length
     this.populatePieData();
     this.populateBarData();
+
+    this.file = file;
+    // console.log(file);
   },
   methods: {
-    getUserColour(user) {
-      return this.colourList[this.userList.indexOf(user)];
-    },
+    // getUserColour(user) {
+    //   return this.colourList[this.userList.indexOf(user)];
+    // },
     populateBarData() {
       for (let i = 0; i < this.fileList.length; i++) {
         let data = [];
@@ -160,6 +176,8 @@ export default {
   },
   data() {
     return {
+      colors: {},
+      id: "1fJWWUv3TXtDf7XjobY3C5EvftumXfEQjG0vGa7PtoT8",
       userList: [],
       fileList: [],
       fields: [
