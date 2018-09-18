@@ -12,7 +12,7 @@
     <div class="buttons">
       <button class="button"
         v-for="file in data"
-        v-bind:key="fileID"
+        v-bind:key="file.fileIDs"
         v-on:click="filenav(file.fileID, $event)">
         {{ file.fileID }}
       </button>
@@ -73,7 +73,7 @@ export default {
           }
         };
       });
-    },
+    }
   },
   methods: {
     filenav(item) {

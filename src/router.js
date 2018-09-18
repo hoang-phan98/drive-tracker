@@ -3,6 +3,7 @@ import Router from "vue-router";
 import FolderList from "./views/FolderList.vue";
 import Login from "./views/Login.vue";
 import FolderPage from "./views/FolderPage.vue";
+import FilePage from "./views/FilePage.vue";
 import googleapis from "./googleapis";
 
 Vue.use(Router);
@@ -53,9 +54,9 @@ export default new Router({
       name: "file",
       // this is file page lmao
       component: {
-        render(h) {
+        render(z) {
           // Pass on the id of the folder to the component
-          return h(FilePage, { props: { id: this.$route.params.id } });
+          return z(FilePage, { props: { id: this.$route.params.id } });
         },
         async beforeRouteEnter(to, from, next) {
           next((await isSignedIn()) ? undefined : "/login");
