@@ -225,35 +225,17 @@ export default {
 .filecontribution {
   background: rgba(256, 256, 256, 1); /*can be anything, of course*/
   /* margin: auto; */
-  padding: 10px;
   grid-column: 3 / 4;
   grid-row: 1 / -1;
   text-align: center;
-  box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);
-  border-radius: 25px;
   width: 100%;
-}
-
-.titlebox {
-  margin: auto;
-  padding: 10px;
-  grid-column: 1 / 3;
-  grid-row: 1 / 2;
-  text-align: center;
-  box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);
-  border-radius: 25px;
-  width: 100%;
-  height: 100%;
 }
 
 .contributionbars {
   margin: auto;
-  padding: 10px;
   grid-column: 1 / 2;
   grid-row: 2 / 3;
   text-align: center;
-  box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);
-  border-radius: 25px;
   width: 100%;
   height: 100%;
 }
