@@ -7,6 +7,9 @@
       v-bind:data="file.data"
       :options="file.options"
     />
+    <button>
+      hello
+    </button>
   </div>
 </template>
 

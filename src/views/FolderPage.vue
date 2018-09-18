@@ -9,7 +9,7 @@
           <div class="legend-list">
           <div v-for="user in userList" :key="user.id" class="legend-entry">
             <div :style="'background-color:'+getUserColour(user)" class="legend-box"></div><span class="legend-name">{{getUserName(user)}}</span>
-          </div> 
+          </div>
           </div>
           <!--style= {{getUserColourAttr(user)}}-->
           <!--style= "background-colour:"+{{colourList[index]}}-->
@@ -36,42 +36,13 @@
         />
       </div>
       <div class="filecontribution">
-        <b-card no-body>
-          <b-tabs card>
-            <h1>Files</h1>
-            <b-tab title="Day" active>
-              <ContributionBars 
-                v-if="folder"
-                :files="Object.values(folder.files)" 
-                :contributors="Object.values(folder.contributors)" 
-                :colors="colors"
-                />
-            </b-tab>
-            <b-tab title="Week">
-              File Contribution bar graph for week goes here
-            </b-tab>
-            <b-tab title="Month">
-              File Contribution bar graph for month goes here
-            </b-tab>
-            <b-tab title="Year">
-              File Contribution bar graph for year goes here
-            </b-tab>
-            <b-tab title="All Time">
-              File Contribution bar graph for alltime goes here
-            </b-tab>
-          </b-tabs>
-          <div>
-            <b-card>
-              <template v-if="folder">
-                <b-row class="fileHolder" v-for="file in Object.values(folder.files)" :key="file.id">
-                  <!-- filename -->
-                  <div> {{ file.name }} </div>
-                  <span><br></span>
-                </b-row>
-              </template>
-            </b-card>
-          </div>
-        </b-card>
+        <h1>Files</h1>
+        <ContributionBars
+          v-if="folder"
+          :files="Object.values(folder.files)"
+          :contributors="Object.values(folder.contributors)"
+          :colors="colors"
+          />
       </div>
 
     </div>
