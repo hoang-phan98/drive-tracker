@@ -27,9 +27,9 @@ export default {
       const lineData = [];
 
       // loop the the files of the folder in order to get the number of lines\
-      const labels = ["Time"];
-      for (var z = 0; z < this.files.length; z++) {
-        labels.push(this.files[z].name);
+      const labels = ["Contributor"];
+      for (var z = 0; z < this.contributors.length; z++) {
+        labels.push(this.contributors[z].displayName);
       }
       lineData.push(labels);
 
@@ -37,7 +37,7 @@ export default {
       // Null will be the field for the date, initialised as null
       var values = []; //stores the actual row to be appended lineData
       values.push(null);
-      for (var y = 0; y < this.files.length; y++) {
+      for (var y = 0; y < this.contributors.length; y++) {
         values.push(0);
       }
 
@@ -45,7 +45,16 @@ export default {
       for (var i = 0; i < this.files.length; i++) {
         for (var j = 0; j < this.files[i].revisions.length; j++) {
           values[0] = this.files[i].revisions[j].modifiedTime;
-          values[i + 1] += 1;
+
+          // Now to increment the revision for the corresponder contributor
+          for (var h = 0; h < this.contributors.length; h++) {
+            if (
+              this.contributors[h].displayName ===
+              this.files[i].revisions[j].lastModifyingUser.displayName
+            ) {
+              values[h+1] += 1;
+            }
+          }
           var duplicateObject = JSON.parse(JSON.stringify(values));
           lineData.push(duplicateObject);
         }
