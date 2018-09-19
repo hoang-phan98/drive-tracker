@@ -8,7 +8,7 @@
       </div>
     </div>
     <div class="fab-container">
-      <button class="fab">
+      <button class="fab" v-b-modal="'add-tracked-folder'">
         <span class="fab-text">Add folder</span>
         <i class="material-icons fab-icon">
           create_new_folder
@@ -16,13 +16,18 @@
         <i class="material-icons fab-icon fab-icon--shadow" aria-hidden="true">
           create_new_folder
         </i>
-        </button>
-      </div>
+      </button>
     </div>
+    <AddFolderModal id="add-tracked-folder" />
+  </div>
 </template>
 
 <script>
-export default {};
+import AddFolderModal from "./AddFolderModal.vue";
+
+export default {
+  components: { AddFolderModal }
+};
 </script>
 
 <style scoped>
