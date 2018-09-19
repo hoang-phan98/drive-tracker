@@ -8,8 +8,6 @@
         v-bind:data="file.data"
         :options="file.options"
       />
-    </div>
-    <div class="buttons">
       <button class="button"
         v-for="file in data"
         v-bind:key="file.fileIDs"
@@ -17,6 +15,14 @@
         {{ file.fileID }}
       </button>
     </div>
+    <!-- <div class="buttons">
+      <button class="button"
+        v-for="file in data"
+        v-bind:key="file.fileIDs"
+        v-on:click="filenav(file.fileID, $event)">
+        {{ file.fileID }}
+      </button>
+    </div> -->
   </div>
 </template>
 
@@ -42,7 +48,7 @@ export default {
           { role: "annotation" }
         ];
 
-        const values = [
+        var values = [
           file.name,
           ...this.contributors.map(user => {
             return file.contributions.filter(
@@ -53,6 +59,15 @@ export default {
           ""
         ];
 
+        // change data to percentages
+        var sum = 0;
+        for (let i = 1; i < values.length - 1; i++) {
+          sum += values[i];
+        }
+        for (let j = 1; j < values.length - 1; j++) {
+          values[j] = (values[j] / sum) * 100;
+        }
+
         return {
           data: [labels, values],
           fileID: file.id,
@@ -62,10 +77,10 @@ export default {
             bar: { groupWidth: "75%" },
             isStacked: true,
             hAxis: {
-              minValue: 0,
-              viewWindow: {
-                max: file.contributions.length
-              }
+              minValue: 0
+              // viewWindow: {
+              //   max: file.contributions.length
+              // }
             },
             colors: this.contributors.map(
               user => this.colors[user.emailAddress]
@@ -80,6 +95,10 @@ export default {
       // navs the the file level view
       this.$router.push("/file/" + item);
     }
+  },
+  mounted() {
+    // console.log(this.values);
+    // console.log(this.labels);
   }
 };
 </script>
