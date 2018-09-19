@@ -79,6 +79,10 @@ import Colours from "./ColourGeneration.vue";
 Vue.use(VueGoogleCharts);
 
 export default {
+  name: "FilePage",
+  props: {
+    id: String
+  },
   //name: "FolderPage",
   //components: {
   //  Colours //???

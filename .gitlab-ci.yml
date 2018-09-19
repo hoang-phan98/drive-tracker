@@ -1,0 +1,35 @@
+image: node:10
+
+stages:
+  - build
+  - test
+  - deploy
+
+# Cache modules in between jobs
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - node_modules/
+
+build:
+  stage: build
+  artifacts:
+    paths:
+      - dist/
+  script:
+    - npm ci
+    - npm run build
+
+lint:
+  stage: test
+  script:
+    - npm run lint
+
+deploy:
+  stage: deploy
+  only:
+    - master
+  when: manual
+  script:
+    - npm run deploy -- --token $NOW_TOKEN
+    - npm run alias -- --token $NOW_TOKEN

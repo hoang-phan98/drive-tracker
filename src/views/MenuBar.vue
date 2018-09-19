@@ -1,12 +1,12 @@
 <template>
   <div class="menu-bar">
     <div class="search">
-      <MaterialIcon icon="search" size="large" />
+      <MaterialIcon icon="search" />
       <input class="search-input" type="text" name="search" v-model="query" />
     </div>
     <div class="account">
       <b-dropdown right variant="link" no-caret class="account-dropdown">
-        <MaterialIcon icon="account_circle" size="large" slot="button-content" />
+        <MaterialIcon icon="account_circle" slot="button-content" />
         <b-dropdown-item @click="logout">
           Logout
         </b-dropdown-item>
@@ -71,6 +71,7 @@ export default {
   justify-content: space-between;
   padding: 0 2rem;
   border-bottom: 3px solid hsla(196, 5%, 25%, 0.1);
+  height: 3rem;
 }
 
 .search {
@@ -80,7 +81,7 @@ export default {
 
 .search-input {
   border-radius: 1rem;
-  height: 3rem;
+  height: 2rem;
   font-size: 1rem;
   border: 2px solid hsl(196, 5%, 85%);
   padding: 0 1rem;
@@ -95,16 +96,19 @@ export default {
 }
 
 .account-name {
-  font-size: 1.25rem;
+  font-size: 1rem;
   display: inline-block;
-  margin-right: 0.5rem;
+  margin-right: 1ch;
 }
 
 .account-dropdown :global(button) {
   margin: 0;
   padding: 0;
-  height: 48px;
-  width: 48px;
+  height: 36px;
+  width: 36px;
   color: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

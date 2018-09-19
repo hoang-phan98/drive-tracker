@@ -20,14 +20,12 @@
         <!-- </div> -->
       </div>
       <div class = "pichart">
-
-
-        <GChart
-          type="PieChart"
-          :data="pieData"
-          :options="pieOptions"
+        <PieChart
+          v-if="folder"
+          :files="Object.values(folder.files)"
+          :contributors="Object.values(folder.contributors)"
+          :colors="colors"
         />
-
       </div>
 
       <div class="histogram">
@@ -38,15 +36,17 @@
           :colors="colors"
         />
       </div>
+
       <div class="filecontribution">
         <h1>Files</h1>
-        <ContributionBars
+        <ContributionBars class="contributionbars"
           v-if="folder"
           :files="Object.values(folder.files)"
           :contributors="Object.values(folder.contributors)"
           :colors="colors"
         />
-      </div>
+    </div>
+
 
     </div>
   </div>
@@ -58,6 +58,7 @@ import Vue from "vue";
 import VueGoogleCharts from "vue-google-charts";
 import Colours from "./ColourGeneration.vue";
 import ContributionBars from "../components/ContributionBars.vue";
+import PieChart from "../components/PieChart.vue";
 import Timeline from "../components/Timeline.vue";
 //import randomColour from "./ColourGeneration.vue";
 
@@ -68,6 +69,7 @@ export default {
   components: {
     ContributionBars,
     Timeline
+    PieChart
   },
   props: {
     id: String
@@ -117,7 +119,6 @@ export default {
     this.folder = folder;
 
     // call generate colours function while passing in the number of users from userList.length
-    this.populatePieData();
   },
   methods: {
     getUserColour(user) {
@@ -125,24 +126,7 @@ export default {
       return this.colourList[this.userList.indexOf(user)];
     },
     getUserName(user) {
-      // user is the user's email
       return this.userNameList[this.userList.indexOf(user)];
-    },
-    populatePieData() {
-      for (let i = 0; i < this.userList.length; i++) {
-        let data = [];
-        data.push(this.userNameList[i]);
-        data.push(this.pieStats[i]);
-        data.push(this.colourList[i]);
-
-        //console.log([(this.userList[i], this.pieStats[i], this.colourList[i])]);
-        this.pieData.push([
-          this.userNameList[i],
-          this.pieStats[i]
-          //this.colourList[i]
-        ]);
-        this.pieOptions.colors = this.colourList;
-      }
     }
   },
   data() {
@@ -161,7 +145,6 @@ export default {
         ["Dax", 16, "#FFFF00	"],
         ["Marc", 28, "#808080"]
       ],*/
-      pieStats: [4, 2, 5, 7, 10, 2, 3, 4],
       barStats: [],
       userOptions: {
         //width: 600,
@@ -186,6 +169,36 @@ export default {
         pieHole: 0.4,
         legend: "none"
         //colors: colourList
+      },
+      histogramData: [
+        [
+          "Contributers",
+          "Add Files",
+          "Delete Files",
+          "File Revisions",
+          { role: "annotation" }
+        ],
+        ["01/01/2018", 10, 24, 20, ""],
+        ["02/01/2018", 16, 22, 23, ""],
+        ["03/01/2018", 28, 19, 29, ""],
+        ["04/01/2018", 16, 22, 23, ""],
+        ["05/01/2018", 28, 19, 29, ""],
+        ["06/01/2018", 10, 24, 20, ""],
+        ["07/01/2018", 16, 22, 23, ""],
+        ["08/01/2018", 28, 19, 29, ""],
+        ["09/01/2018", 16, 22, 23, ""]
+        //["10/01/2018", 10, 24, 20, ""],
+        //["11/01/2018", 16, 22, 23, ""],
+        //["12/01/2018", 28, 19, 29, ""],
+        //["13/01/2018", 16, 22, 23, ""]
+      ],
+      histogramOptions: {
+        //width: 1700,
+        height: 600,
+        title: "File contrution over time",
+        legend: { position: "top", maxLines: 3 },
+        bar: { groupWidth: "75%" },
+        isStacked: true
       },
       barData: [],
       barDatas: [],
@@ -229,12 +242,30 @@ export default {
   width: 100%;
   height: 100%;
 }
+
 .filecontribution {
   background: rgba(256, 256, 256, 1); /*can be anything, of course*/
   /* margin: auto; */
-  padding: 10px;
   grid-column: 3 / 4;
   grid-row: 1 / 2;
+  text-align: center;
+  width: 100%;
+}
+
+.contributionbars {
+  margin: auto;
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+}
+
+.filenavbuttons {
+  margin: auto;
+  padding: 10px;
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
   text-align: center;
   box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);
   border-radius: 25px;
