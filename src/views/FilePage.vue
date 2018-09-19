@@ -79,7 +79,18 @@ import Colours from "./ColourGeneration.vue";
 Vue.use(VueGoogleCharts);
 
 export default {
+<<<<<<< src/views/FilePage.vue
   inject: ["contributions"],
+=======
+  name: "FilePage",
+  props: {
+    id: String
+  },
+  //name: "FolderPage",
+  //components: {
+  //  Colours //???
+  //},
+>>>>>>> src/views/FilePage.vue
   // fileList is an object with the file's id and permissions
   // permissions has the user's id and display name that we can use for the displaying of data
   async mounted() {

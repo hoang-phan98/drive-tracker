@@ -35,44 +35,17 @@
           :options="histogramOptions"
         />
       </div>
+
       <div class="filecontribution">
-        <b-card no-body>
-          <b-tabs card>
-            <h1>Files</h1>
-            <b-tab title="Day" active>
-              <ContributionBars 
-                v-if="folder"
-                :files="Object.values(folder.files)" 
-                :contributors="Object.values(folder.contributors)" 
-                :colors="colors"
-                />
-            </b-tab>
-            <b-tab title="Week">
-              File Contribution bar graph for week goes here
-            </b-tab>
-            <b-tab title="Month">
-              File Contribution bar graph for month goes here
-            </b-tab>
-            <b-tab title="Year">
-              File Contribution bar graph for year goes here
-            </b-tab>
-            <b-tab title="All Time">
-              File Contribution bar graph for alltime goes here
-            </b-tab>
-          </b-tabs>
-          <div>
-            <b-card>
-              <template v-if="folder">
-                <b-row class="fileHolder" v-for="file in Object.values(folder.files)" :key="file.id">
-                  <!-- filename -->
-                  <div> {{ file.name }} </div>
-                  <span><br></span>
-                </b-row>
-              </template>
-            </b-card>
-          </div>
-        </b-card>
-      </div>
+        <h1>Files</h1>
+        <ContributionBars class="contributionbars"
+          v-if="folder"
+          :files="Object.values(folder.files)"
+          :contributors="Object.values(folder.contributors)"
+          :colors="colors"
+        />
+    </div>
+
 
     </div>
   </div>
@@ -148,6 +121,9 @@ export default {
     getUserColour(user) {
       // user is the user's email
       return this.colourList[this.userList.indexOf(user)];
+    },
+    getUserName(user) {
+      return this.userNameList[this.userList.indexOf(user)];
     }
   },
   data() {
@@ -245,16 +221,35 @@ export default {
   width: 100%;
   height: 100%;
 }
+
 .filecontribution {
   background: rgba(256, 256, 256, 1); /*can be anything, of course*/
   /* margin: auto; */
-  padding: 10px;
   grid-column: 3 / 4;
   grid-row: 1 / -1;
+  text-align: center;
+  width: 100%;
+}
+
+.contributionbars {
+  margin: auto;
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+}
+
+.filenavbuttons {
+  margin: auto;
+  padding: 10px;
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
   text-align: center;
   box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);
   border-radius: 25px;
   width: 100%;
+  height: 100%;
 }
 
 .legend {
