@@ -29,10 +29,11 @@
       </div>
 
       <div class="histogram">
-        <GChart
-          type="ColumnChart"
-          :data="histogramData"
-          :options="histogramOptions"
+        <Timeline
+          v-if="folder"
+          :files="Object.values(folder.files)"
+          :contributors="Object.values(folder.contributors)"
+          :colors="colors"
         />
       </div>
 
@@ -58,6 +59,7 @@ import VueGoogleCharts from "vue-google-charts";
 import Colours from "./ColourGeneration.vue";
 import ContributionBars from "../components/ContributionBars.vue";
 import PieChart from "../components/PieChart.vue";
+import Timeline from "../components/Timeline.vue";
 //import randomColour from "./ColourGeneration.vue";
 
 Vue.use(VueGoogleCharts);
@@ -66,6 +68,7 @@ export default {
   name: "FolderPage",
   components: {
     ContributionBars,
+    Timeline,
     PieChart
   },
   props: {
@@ -150,40 +153,7 @@ export default {
         legend: "none",
         bar: { groupWidth: "75%" },
         isStacked: "percent"
-      },
-      histogramData: [
-        [
-          "Contributers",
-          "Add Files",
-          "Delete Files",
-          "File Revisions",
-          { role: "annotation" }
-        ],
-        ["01/01/2018", 10, 24, 20, ""],
-        ["02/01/2018", 16, 22, 23, ""],
-        ["03/01/2018", 28, 19, 29, ""],
-        ["04/01/2018", 16, 22, 23, ""],
-        ["05/01/2018", 28, 19, 29, ""],
-        ["06/01/2018", 10, 24, 20, ""],
-        ["07/01/2018", 16, 22, 23, ""],
-        ["08/01/2018", 28, 19, 29, ""],
-        ["09/01/2018", 16, 22, 23, ""]
-        //["10/01/2018", 10, 24, 20, ""],
-        //["11/01/2018", 16, 22, 23, ""],
-        //["12/01/2018", 28, 19, 29, ""],
-        //["13/01/2018", 16, 22, 23, ""]
-      ],
-      histogramOptions: {
-        //width: 1700,
-        height: 600,
-        title: "File contrution over time",
-        legend: { position: "top", maxLines: 3 },
-        bar: { groupWidth: "75%" },
-        isStacked: true
-      },
-      barData: [],
-      barDatas: [],
-      singularBarData: []
+      }
     };
   }
 };
@@ -192,10 +162,12 @@ export default {
 <style scoped>
 .grid-container {
   display: grid;
-  grid-gap: 30px;
+  grid-gap: 15px;
   grid-template-columns: 1fr 2fr 3fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 2fr 1fr;
   width: 100%;
+  min-height: 0;
+  min-width: 0;
 }
 
 .pichart {
@@ -213,7 +185,7 @@ export default {
   background: rgba(256, 256, 256, 1); /*can be anything, of course*/
   margin: auto;
   padding: 10px;
-  grid-column: 1 / 3;
+  grid-column: 1 / 4;
   grid-row: 2 / 3;
   text-align: center;
   box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);
@@ -226,7 +198,7 @@ export default {
   background: rgba(256, 256, 256, 1); /*can be anything, of course*/
   /* margin: auto; */
   grid-column: 3 / 4;
-  grid-row: 1 / -1;
+  grid-row: 1 / 2;
   text-align: center;
   width: 100%;
 }
@@ -249,7 +221,8 @@ export default {
   box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);
   border-radius: 25px;
   width: 100%;
-  height: 100%;
+  max-height: 600px;
+  overflow-y: scroll;
 }
 
 .legend {
