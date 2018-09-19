@@ -1,189 +1,159 @@
 <template>
-    <div>
-      <div class="legend">
-        <h2>Users</h2>
-        <div class="user-list">
-        <div v-for="user in userList" :key="user.id" class="legend-entry">
-          <div :style="'background-color:'+getUserColour(user)" class="legend-box"></div><span class="legend-name">{{user}}</span>
-        </div>
-        </div>
-      </div> 
+  <div class="folder-preview-layout" v-if="folder">
+    <div class="content-outer">
+      <div class="content">
+        <section>
+          <h3>
+            <MaterialIcon icon="folder" />
+            {{ folder.name }}
+          </h3>
+        </section>
+        <section class="users">
+          <h4>
+            Contributors
+          </h4>
+          <ul class="user-list">
+            <li v-for="user of users" :key="user.emailAddress" class="user-list-item">
+              <i class="user-list-indicator" :style="{ backgroundColor: colors[user.emailAddress] }"></i>
+              {{ user.displayName }}
+            </li>
+          </ul>
+        </section>
 
-      <div class="chart">
-      <div class="PieChart">
-        <h2>All-time Contribution</h2>
-        <span><br></span>
-        <GChart
-          type="PieChart"
-          :data="pieData"
-          :options="pieOptions"
-        />
+        <section>
+          <PieChart 
+            :files="Object.values(folder.files)" 
+            :contributors="Object.values(folder.contributors)" 
+            :colors="colors"
+            :height="400" />
+        </section>
       </div>
-      </div>
-
-      <div class="info">
-        <h2>Recent History</h2>
-        <div class="user-list">
-        <div v-for="entry in historyList" :key="entry.id" class="history-entry">
-          <div><span>{{entry}}</span>
-        </div>
-        </div>
-      </div>
-      </div>
-
-
-
-      <b-row style="vertical-align: bottom">
-        <b-col class="col2" style="text-align: flex-end">
-          <b-btn class="view-more">View more</b-btn>
-        </b-col>
-      </b-row>
     </div>
+    <div class="bottom-bar">
+      <b-button 
+        variant="outline-primary"
+        :to="'/folder/' + this.id"
+        >
+      More Details
+      </b-button>
+    </div>
+  </div>
 </template>
 
 <script>
-import Vue from "vue";
-//import googleapis from "../googleapis";
-// This is to display the google charts
-import VueGoogleCharts from "vue-google-charts";
-Vue.use(VueGoogleCharts);
-
+import MaterialIcon from "./MaterialIcon.vue";
+import PieChart from "./PieChart.vue";
 import Colours from "../views/ColourGeneration.vue";
 
 export default {
-  name: "FolderList",
-  components: {},
+  components: { MaterialIcon, PieChart },
+  inject: ["contributions"],
+  props: {
+    id: String
+  },
   data() {
     return {
-      userList: ["person1", "person2", "person3", "person4", "Fred", "person5"],
-      historyList: [
-        "person1 made 5 changes",
-        "person2 added 2 new files",
-        "person3 mae 1 change",
-        "Fred did something",
-        "person5 edited this yesterday"
-      ],
-      colourList: [],
-      pieData: [
-        ["Task", "Hours per Day"],
-        ["Kenny", 11],
-        ["Hoang", 2],
-        ["Erica", 2],
-        ["Dax", 2],
-        ["Marc", 7]
-      ],
-      pieOptions: {
-        chartArea: { width: 800, height: 800 },
-        pieHole: 0.4,
-        legend: "none",
-        backgroundColor: { fill: "transparent" },
-
-        colors: this.colourList
-      }
+      // error: null
+      folder: null
     };
   },
-  methods: {
-    getUserColour(user) {
-      return this.colourList[this.userList.indexOf(user)];
+  mounted() {
+    this.fetch();
+  },
+  watch: {
+    id() {
+      this.fetch();
     }
   },
-  async mounted() {
-    //console.log("Hi");
-    this.colourList = Colours.generateColours(this.userList.length);
-    this.pieOptions.colors = this.colourList;
+  methods: {
+    async fetch() {
+      try {
+        this.folder = await this.contributions.fetchFolderContributionData(
+          this.id
+        );
+      } catch (err) {
+        this.error = err.message;
+      }
+    }
+  },
+  computed: {
+    users() {
+      return this.folder && this.folder.contributors;
+    },
+    colors() {
+      const colors = Colours.generateColours(this.users.length);
+      const result = {};
+      Object.values(this.folder.contributors).forEach((user, i) => {
+        result[user.emailAddress] = colors[i];
+      });
+      return result;
+    }
   }
 };
 </script>
 
 <style scoped>
-.pieChart {
-  margin: 10px;
-  background: transparent;
-  margin: auto;
-  padding: 30px;
-  border-radius: 25px;
-  width: 100%;
-  /* height: 300px; */
-  /* height: 400px; */
+.folder-preview-layout {
+  height: 100%;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  max-height: calc(100vh - 3rem);
+  overflow-y: hidden;
 }
 
-.view-more {
-  background-color: coral;
-  align-self: flex-end;
-  vertical-align: bottom;
+.bottom-bar {
+  /* position: absolute; */
+  padding: 0.5rem;
+  /* bottom: 0;
+  left: 0;
+  right: 0; */
+  text-align: right;
+  box-shadow: 0 -2px 2px 1px hsla(0, 0%, 50%, 0.1),
+    0 -2px 10px 5px hsla(0, 0%, 50%, 0.1);
 }
 
-.col {
-  text-align: end;
+.content-outer {
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
-.col2 {
-  text-align: end;
-  vertical-align: bottom;
+.content {
+  padding: 4rem 1rem;
 }
 
-.chart {
-  align-content: flex-start;
-  /* display: flex;
-  flex-wrap: wrap; */
-
-  /* background: rgba(256, 256, 256, 1); can be anything, of course */
-  background: transparent;
-  margin: auto;
-  padding: 20px;
-  /* overflow-y: scroll; */
-  /* box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75); */
-  border-radius: 25px;
-  width: 100%;
-  height: 35%;
-}
-
-.info {
-  align-content: flex-start;
-  /* display: flex;
-  flex-wrap: wrap; */
-
-  /* background: rgba(256, 256, 256, 1); can be anything, of course */
-  background: transparent;
-  margin: auto;
-  padding: 20px;
-  /* overflow-y: scroll; */
-  /* box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75); */
-  border-radius: 25px;
-  width: 100%;
-  height: 23%;
-}
-
-.legend {
-  align-content: flex-start;
-  /* display: flex;
-  flex-wrap: wrap; */
-
-  /* background: rgba(256, 256, 256, 1); can be anything, of course */
-  background: transparent;
-  margin: auto;
-  padding: 20px;
-  /* overflow-y: scroll; */
-  /* box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75); */
-  border-radius: 25px;
-  width: 100%;
-  height: 23%;
-}
-.user-list {
-  overflow-y: scroll;
-  height: 70%;
-}
-.legend-entry {
-  display: flex;
+h3 {
+  font-size: 1.5rem;
+  margin: 0;
+  display: inline-flex;
   align-items: center;
 }
-.legend-box {
-  /*background-color: aqua;*/
+
+h4 {
+  font-size: 1rem;
+}
+
+section {
+  margin-bottom: 1rem;
+}
+
+.users {
+  max-height: 12rem;
+  overflow-y: auto;
+}
+
+.user-list {
+  margin: 0;
+  padding-left: 0.5rem;
+  list-style: none;
+  line-height: 1.5;
+}
+
+.user-list-item {
+}
+
+.user-list-indicator {
+  display: inline-block;
   height: 10px;
   width: 10px;
-  margin-left: 10px;
-}
-.legend-name {
-  margin-left: 20px;
 }
 </style>

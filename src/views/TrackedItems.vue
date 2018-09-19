@@ -15,9 +15,11 @@
           hover
           >
           <template slot="id" slot-scope="data">
-            <b-button variant="outline-primary" size="sm" :to="'/folder/' + data.value">
-              Details
-            </b-button>
+            <div class="actions">
+              <b-button variant="outline-primary" size="sm" :to="'/folder/' + data.value">
+                More Details
+              </b-button>
+            </div>
           </template>
         </b-table>
       </div>
@@ -170,5 +172,9 @@ export default {
   z-index: 1;
   transform: translateY(5%);
   color: rgba(0, 0, 0, 0.2);
+}
+
+.actions {
+  text-align: right;
 }
 </style>
