@@ -68,7 +68,7 @@ export default {
   name: "FolderPage",
   components: {
     ContributionBars,
-    Timeline
+    Timeline,
     PieChart
   },
   props: {
