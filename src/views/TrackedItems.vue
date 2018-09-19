@@ -5,6 +5,21 @@
         <div class="header-section">
           <h3 class="header">Tracked Items</h3>
         </div>
+        <b-alert :show="!!error" variant="danger" dismissible @dismissed="error = null">
+          {{ error }}
+        </b-alert>
+        <b-table
+          :items="folders"
+          :fields="fields"
+          @row-clicked="preview($event)"
+          hover
+          >
+          <template slot="id" slot-scope="data">
+            <b-button variant="outline-primary" size="sm" :to="'/folder/' + data.value">
+              Details
+            </b-button>
+          </template>
+        </b-table>
       </div>
     </div>
     <div class="fab-container">
@@ -18,15 +33,65 @@
         </i>
       </button>
     </div>
-    <AddFolderModal id="add-tracked-folder" />
+    <AddFolderModal id="add-tracked-folder" @add-folder="addFolder($event)" />
   </div>
 </template>
 
 <script>
+import googleapis from "../googleapis";
 import AddFolderModal from "./AddFolderModal.vue";
 
 export default {
-  components: { AddFolderModal }
+  components: { AddFolderModal },
+  inject: ["contributions"],
+  data() {
+    return {
+      folders: [],
+      fields: [
+        {
+          label: "Name",
+          key: "name"
+        },
+        {
+          label: "Owners",
+          key: "owners",
+          formatter: item => item.map(user => user.displayName).join(", ")
+        },
+        {
+          label: "Last Modified By",
+          key: "lastModifyingUser.displayName"
+        },
+        {
+          label: "",
+          key: "id"
+        }
+      ],
+      error: null
+    };
+  },
+  methods: {
+    async addFolder({ id, name }) {
+      if (this.folders.find(folder => folder.id === id)) {
+        return;
+      }
+
+      try {
+        const { result: folder } = await googleapis.client.drive.files.get({
+          fileId: id,
+          fields:
+            "id, name, owners(displayName), lastModifyingUser(displayName)"
+        });
+        this.folders.push(folder);
+      } catch (err) {
+        // eslint-disable-next-line
+        console.error(err);
+        this.error = `There was a problem fetching the folder "${name}".`;
+      }
+    },
+    preview(folder) {
+      this.$emit("preview-folder", folder.id);
+    }
+  }
 };
 </script>
 

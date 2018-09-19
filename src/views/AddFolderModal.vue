@@ -47,6 +47,7 @@ export default {
   props: {
     id: String
   },
+  inject: ["contributions"],
   data() {
     return {
       url: "",

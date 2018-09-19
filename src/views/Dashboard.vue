@@ -1,23 +1,33 @@
 <template>
-  <div class="grid-container">
+  <div class="dashboard-layout">
     <div class="content">
-      <TrackedItems />
+      <TrackedItems @preview-folder="preview = $event"/>
     </div>
     <div class="aside">
+      <FolderPreview v-if="preview" :id="preview" /> 
     </div>
   </div>
 </template>
 
 <script>
 import TrackedItems from "./TrackedItems.vue";
+import FolderPreview from "../components/FolderPreview.vue";
 
 export default {
-  components: { TrackedItems }
+  components: {
+    TrackedItems,
+    FolderPreview
+  },
+  data() {
+    return {
+      preview: null
+    };
+  }
 };
 </script>
 
 <style scoped>
-.grid-container {
+.dashboard-layout {
   width: 100%;
   max-height: 100%;
   padding: 0 1rem;
