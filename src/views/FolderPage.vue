@@ -6,10 +6,10 @@
         <div class="legend">
           <h1>Users</h1>
           <span><br></span>
-          <div class="legend-list" v-if="folder">
-          <div v-for="user in folder.contributors" :key="user.emailAddress" class="legend-entry">
-            <div :style="{backgroundColor:colors[user.emailAddress]}" class="legend-box"></div><span class="legend-name">{{user.displayName}}</span>
-          </div> 
+          <div class="legend-list">
+          <div v-for="user in userList" :key="user.id" class="legend-entry">
+            <div :style="'background-color:'+getUserColour(user)" class="legend-box"></div><span class="legend-name">{{getUserName(user)}}</span>
+          </div>
           </div>
           <!--style= {{getUserColourAttr(user)}}-->
           <!--style= "background-colour:"+{{colourList[index]}}-->
@@ -35,44 +35,17 @@
           :options="histogramOptions"
         />
       </div>
+
       <div class="filecontribution">
-        <b-card no-body>
-          <b-tabs card>
-            <h1>Files</h1>
-            <b-tab title="Day" active>
-              <ContributionBars 
-                v-if="folder"
-                :files="Object.values(folder.files)" 
-                :contributors="Object.values(folder.contributors)" 
-                :colors="colors"
-                />
-            </b-tab>
-            <b-tab title="Week">
-              File Contribution bar graph for week goes here
-            </b-tab>
-            <b-tab title="Month">
-              File Contribution bar graph for month goes here
-            </b-tab>
-            <b-tab title="Year">
-              File Contribution bar graph for year goes here
-            </b-tab>
-            <b-tab title="All Time">
-              File Contribution bar graph for alltime goes here
-            </b-tab>
-          </b-tabs>
-          <div>
-            <b-card>
-              <template v-if="folder">
-                <b-row class="fileHolder" v-for="file in Object.values(folder.files)" :key="file.id">
-                  <!-- filename -->
-                  <div> {{ file.name }} </div>
-                  <span><br></span>
-                </b-row>
-              </template>
-            </b-card>
-          </div>
-        </b-card>
-      </div>
+        <h1>Files</h1>
+        <ContributionBars class="contributionbars"
+          v-if="folder"
+          :files="Object.values(folder.files)"
+          :contributors="Object.values(folder.contributors)"
+          :colors="colors"
+        />
+    </div>
+
 
     </div>
   </div>
@@ -118,7 +91,7 @@ export default {
     this.fileList = (await gapi.client.drive.files.list({
       fields: "files(id, name, permissions)",
       //q: starred != true
-      q: `'${this.id}' in parents` // file id goes here
+      q: "'1S9QJbW_gBXqWoEE4CtBCGoXZNnKOaDnG' in parents" // file id goes here
     })).result.files;
 
     for (var i = 0; i < this.fileList.length; i++) {
@@ -248,16 +221,35 @@ export default {
   width: 100%;
   height: 100%;
 }
+
 .filecontribution {
   background: rgba(256, 256, 256, 1); /*can be anything, of course*/
   /* margin: auto; */
-  padding: 10px;
   grid-column: 3 / 4;
   grid-row: 1 / -1;
+  text-align: center;
+  width: 100%;
+}
+
+.contributionbars {
+  margin: auto;
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+}
+
+.filenavbuttons {
+  margin: auto;
+  padding: 10px;
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
   text-align: center;
   box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);
   border-radius: 25px;
   width: 100%;
+  height: 100%;
 }
 
 .legend {
