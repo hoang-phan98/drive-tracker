@@ -1,12 +1,22 @@
 <template>
-  <div>
-    <GChart
-      v-for="file in data"
-      v-bind:key="file.id"
-      type="BarChart"
-      v-bind:data="file.data"
-      :options="file.options"
-    />
+  <div class="contributiongrid">
+    <div class="allcharts" >
+      <GChart
+        v-for="file in data"
+        v-bind:key="file.id"
+        type="BarChart"
+        v-bind:data="file.data"
+        :options="file.options"
+      />
+    </div>
+    <div class="buttons">
+      <button class="button"
+        v-for="file in data"
+        v-bind:key="file.fileIDs"
+        v-on:click="filenav(file.fileID, $event)">
+        {{ file.fileID }}
+      </button>
+    </div>
   </div>
 </template>
 
@@ -45,6 +55,7 @@ export default {
 
         return {
           data: [labels, values],
+          fileID: file.id,
           options: {
             height: 100,
             legend: { position: "none" },
@@ -63,9 +74,43 @@ export default {
         };
       });
     }
+  },
+  methods: {
+    filenav(item) {
+      // navs the the file level view
+      this.$router.push("/file/" + item);
+    }
   }
 };
 </script>
 
 <style>
+.contributiongrid {
+  display: grid;
+  grid-gap: 30px;
+  grid-template-columns: 4fr 1fr;
+  grid-template-rows: 1fr;
+  width: 100%;
+}
+
+.allcharts {
+  margin: auto;
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  /*text-align: center; */
+  width: 80%;
+}
+
+.buttons {
+  margin: auto;
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+  /*text-align: center; */
+  width: 80%;
+  height: 100%;
+}
+
+.button {
+  width: 100%;
+}
 </style>
