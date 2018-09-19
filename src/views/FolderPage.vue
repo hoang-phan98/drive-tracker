@@ -153,56 +153,7 @@ export default {
         legend: "none",
         bar: { groupWidth: "75%" },
         isStacked: "percent"
-      },
-      pieData: [
-        ["Task", "Hours per Day"]
-        // ["Kenny", 11],
-        // ["Hoang", 2],
-        // ["Erica", 2],
-        // ["Dax", 2],
-        // ["Marc", 7]
-      ],
-      pieOptions: {
-        //width: 600,
-        height: 600,
-        title: "All Time Contribution",
-        pieHole: 0.4,
-        legend: "none"
-        //colors: colourList
-      },
-      histogramData: [
-        [
-          "Contributers",
-          "Add Files",
-          "Delete Files",
-          "File Revisions",
-          { role: "annotation" }
-        ],
-        ["01/01/2018", 10, 24, 20, ""],
-        ["02/01/2018", 16, 22, 23, ""],
-        ["03/01/2018", 28, 19, 29, ""],
-        ["04/01/2018", 16, 22, 23, ""],
-        ["05/01/2018", 28, 19, 29, ""],
-        ["06/01/2018", 10, 24, 20, ""],
-        ["07/01/2018", 16, 22, 23, ""],
-        ["08/01/2018", 28, 19, 29, ""],
-        ["09/01/2018", 16, 22, 23, ""]
-        //["10/01/2018", 10, 24, 20, ""],
-        //["11/01/2018", 16, 22, 23, ""],
-        //["12/01/2018", 28, 19, 29, ""],
-        //["13/01/2018", 16, 22, 23, ""]
-      ],
-      histogramOptions: {
-        //width: 1700,
-        height: 600,
-        title: "File contrution over time",
-        legend: { position: "top", maxLines: 3 },
-        bar: { groupWidth: "75%" },
-        isStacked: true
-      },
-      barData: [],
-      barDatas: [],
-      singularBarData: []
+      }
     };
   }
 };

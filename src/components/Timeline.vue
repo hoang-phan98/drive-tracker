@@ -52,7 +52,7 @@ export default {
               this.contributors[h].displayName ===
               this.files[i].revisions[j].lastModifyingUser.displayName
             ) {
-              values[h+1] += 1;
+              values[h + 1] += 1;
             }
           }
           var duplicateObject = JSON.parse(JSON.stringify(values));
