@@ -79,16 +79,11 @@ import Colours from "./ColourGeneration.vue";
 Vue.use(VueGoogleCharts);
 
 export default {
+  inject: ["contributions"],
   name: "FilePage",
   props: {
     id: String
   },
-  //name: "FolderPage",
-  //components: {
-  //  Colours //???
-  //},
-  // fileList is an object with the file's id and permissions
-  // permissions has the user's id and display name that we can use for the displaying of data
   async mounted() {
     this.fileList = (await gapi.client.drive.files.list({
       fields: "files(id, name, permissions)",
@@ -164,6 +159,7 @@ export default {
   },
   data() {
     return {
+      colors: {},
       userList: [],
       fileList: [],
       fields: [
