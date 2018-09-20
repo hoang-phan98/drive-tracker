@@ -1,5 +1,5 @@
 <template>
-  <div class="folderpage">
+  <div class="filePage">
     <div class="grid-container">
       <!--<div class="legend-holder">-->
 
@@ -33,6 +33,18 @@
           :options="histogramOptions"
         />
       </div>
+
+      <div class="dropdown_time">
+        <b-dropdown>
+          <b-dropdown-item>Day</b-dropdown-item>
+          <b-dropdown-item>Week</b-dropdown-item>
+          <b-dropdown-item>Month</b-dropdown-item>
+          <b-dropdown-item>Year</b-dropdown-item>
+          <b-dropdown-item>All Time</b-dropdown-item>
+
+        </b-dropdown>
+      </div>
+
       <div class="filecontribution">
         <b-card no-body>
           <b-tabs card>
@@ -277,33 +289,34 @@ export default {
 
 <style>
 .grid-container {
+  background: rgba(256, 256, 256, 1);
   display: grid;
-  grid-gap: 30px;
+  grid-gap: 10px;
   grid-template-columns: 1fr 2fr 3fr;
   grid-template-rows: 1fr 1fr;
   width: 100%;
 }
 
 .pichart {
-  background: rgba(256, 256, 256, 1); /*can be anything, of course*/
+  /*background: rgba(256, 256, 256, 1); /*can be anything, of course*/
   margin: auto;
   padding: 10px;
   grid-column: 2 / 3;
   grid-row: 1 / 2;
   /*text-align: center; */
-  box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);
-  border-radius: 25px;
+  /*box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);*/
+  /*border-radius: 25px;*/
   width: 100%;
 }
 .histogram {
   background: rgba(256, 256, 256, 1); /*can be anything, of course*/
   margin: auto;
   padding: 10px;
-  grid-column: 1 / 3;
+  grid-column: 1 / 4;
   grid-row: 2 / 3;
   text-align: center;
-  box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);
-  border-radius: 25px;
+  /*box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);*/
+  /*border-radius: 25px;*/
   width: 100%;
   height: 100%;
 }
@@ -314,8 +327,8 @@ export default {
   grid-column: 3 / 4;
   grid-row: 1 / -1;
   text-align: center;
-  box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);
-  border-radius: 25px;
+  /*box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);*/
+  /*border-radius: 25px;*/
   width: 100%;
 }
 
@@ -329,7 +342,7 @@ export default {
   margin: auto;
   padding: 50px;
 
-  box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);
+  /*box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);*/
   border-radius: 25px;
   /*width: 100%;*/
   width: 100%;
