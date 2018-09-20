@@ -3,7 +3,10 @@
     <div class="grid-container">
       <!--<div class="legend-holder">-->
         <div class="titleBanner">
-          <h1>{{fileName}}</h1>
+          <material-icon icon="insert_drive_file" size="large" />
+          <h1 class="fileName">
+            {{fileName}}
+          </h1>
         </div>
 
         <div class="legend">
@@ -94,6 +97,7 @@ import Vue from "vue";
 import VueGoogleCharts from "vue-google-charts";
 import Colours from "./ColourGeneration.vue";
 import ToggleGroup from "../components/ToggleGroup.vue";
+import MaterialIcon from "@/components/MaterialIcon.vue";
 //import randomColour from "./ColourGeneration.vue";
 
 Vue.use(VueGoogleCharts);
@@ -102,7 +106,8 @@ export default {
   inject: ["contributions"],
   name: "FilePage",
   components: {
-    ToggleGroup
+    ToggleGroup,
+    MaterialIcon
   },
   props: {
     id: String
@@ -318,6 +323,11 @@ export default {
   margin-left: 20px;
   grid-column: 1 / 4;
   grid-row: 1;
+  display: flex;
+}
+
+.fileName {
+  margin-left: 10px;
 }
 
 .pichart {
