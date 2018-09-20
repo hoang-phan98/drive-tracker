@@ -2,9 +2,12 @@
   <div class="filePage">
     <div class="grid-container">
       <!--<div class="legend-holder">-->
+        <div class="titleBanner">
+          <h1>File Name</h1>
+        </div>
 
         <div class="legend">
-          <h1>Users</h1>
+          <h2>Users</h2>
           <span><br></span>
           <div v-for="user in userList" :key="user.id" class="legend-entry">
             <div :style="'background-color:'+getUserColour(user)" class="legend-box"></div><span class="legend-name">{{user}}</span>
@@ -75,6 +78,7 @@
         </b-card>
       </div>
 
+      <div class="divider"/> 
       <div class="divider1"/> 
       <div class="divider2"/>
       
@@ -294,45 +298,57 @@ export default {
 <style>
 .grid-container {
   background: rgba(256, 256, 256, 1);
-  margin: 5px;
-  border-radius: 5px;
+  border-radius: 10px;
   display: grid;
   grid-gap: 0px;
-  grid-template-columns: 1fr 4fr 5fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 0.2fr 1fr 2fr;
+  grid-template-rows: 0.1fr 1fr 1fr;
   width: 100%;
+  box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 0.75);
   justify-content: space-evenly;
+}
+
+.titleBanner {
+  background: rgba(256, 256, 256, 1);
+  padding: 10px;
+  margin-left: 20px;
+  grid-column: 1 / 4;
+  grid-row: 1;
 }
 
 .pichart {
   /*background: rgba(256, 256, 256, 1); /*can be anything, of course*/
   /*margin: auto;*/
-  padding: 10px;
+  /*padding: 10px;*/
   grid-column: 2 / 3;
-  grid-row: 1 / 2;
+  grid-row: 2;
+  width: 100%;
+  height: 100%;
   /*text-align: center; */
   /*box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);*/
   /*border-radius: 25px;*/
   width: 100%;
 }
+
 .histogram {
   background: rgba(256, 256, 256, 1); /*can be anything, of course*/
   margin: auto;
   padding: 10px;
   grid-column: 1 / 4;
-  grid-row: 2;
+  grid-row: 3;
   text-align: center;
   /*box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);*/
   /*border-radius: 25px;*/
   width: 100%;
   height: 100%;
 }
+
 .filecontribution {
   background: rgba(256, 256, 256, 1); /*can be anything, of course*/
   /* margin: auto; */
   padding: 10px;
   grid-column: 3 / 4;
-  grid-row: 1 / 2;
+  grid-row: 2;
   display: table-cell;
   vertical-align: middle;
   text-align: center;
@@ -352,13 +368,14 @@ export default {
   padding: 50px;
 
   /*box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);*/
-  border-radius: 25px;
+  /*border-radius: 25px;*/
   /*width: 100%;*/
   width: 100%;
   height: 100%;
-  grid-column: 1 / 2;
-  grid-row: 1 / 2;
+  grid-column: 1;
+  grid-row: 2;
 }
+
 .legend-entry {
   display: flex;
   align-items: center;
@@ -382,10 +399,19 @@ export default {
   grid-row: -2 / -1;*/
 }
 
+.divider {
+  background: rgb(33, 150, 243); /*can be anything, of course*/
+  grid-column: 1/4;
+  grid-row: 2;
+  height: 2.5px;
+  width: 100%;
+  z-index: 1001;
+}
+
 .divider1 {
   background: rgb(228, 228, 228); /*can be anything, of course*/
   grid-column: 3;
-  grid-row: 1;
+  grid-row: 2;
   height: 100%;
   width: 1.5px;
   z-index: 1000;
@@ -394,7 +420,7 @@ export default {
 .divider2 {
   background: rgb(228, 228, 228); /*can be anything, of course*/
   grid-column: 1 / 4;
-  grid-row: 2 / 3;
+  grid-row: 3;
   height: 1.5px;
   width: 100%;
   z-index: 1000;
