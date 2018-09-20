@@ -32,21 +32,19 @@
           :data="histogramData"
           :options="histogramOptions"
         />
-      </div>
 
-      <div class="dropdown_time">
         <b-dropdown>
           <b-dropdown-item>Day</b-dropdown-item>
           <b-dropdown-item>Week</b-dropdown-item>
           <b-dropdown-item>Month</b-dropdown-item>
           <b-dropdown-item>Year</b-dropdown-item>
           <b-dropdown-item>All Time</b-dropdown-item>
-
         </b-dropdown>
+
       </div>
 
       <div class="filecontribution">
-        <b-card no-body>
+        <b-card no-body class="fcTable">
           <b-tabs card>
             <b-tab title="Day" active>
               <h1>File Revision History</h1>
@@ -77,8 +75,14 @@
         </b-card>
       </div>
 
+      <div class="divider1"/> 
+      <div class="divider2"/>
+      
+
     </div>
+
   </div>
+
 </template>
 
 <script>
@@ -290,16 +294,19 @@ export default {
 <style>
 .grid-container {
   background: rgba(256, 256, 256, 1);
+  margin: 5px;
+  border-radius: 5px;
   display: grid;
-  grid-gap: 10px;
-  grid-template-columns: 1fr 2fr 3fr;
+  grid-gap: 0px;
+  grid-template-columns: 1fr 4fr 5fr;
   grid-template-rows: 1fr 1fr;
   width: 100%;
+  justify-content: space-evenly;
 }
 
 .pichart {
   /*background: rgba(256, 256, 256, 1); /*can be anything, of course*/
-  margin: auto;
+  /*margin: auto;*/
   padding: 10px;
   grid-column: 2 / 3;
   grid-row: 1 / 2;
@@ -313,7 +320,7 @@ export default {
   margin: auto;
   padding: 10px;
   grid-column: 1 / 4;
-  grid-row: 2 / 3;
+  grid-row: 2;
   text-align: center;
   /*box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);*/
   /*border-radius: 25px;*/
@@ -325,7 +332,9 @@ export default {
   /* margin: auto; */
   padding: 10px;
   grid-column: 3 / 4;
-  grid-row: 1 / -1;
+  grid-row: 1 / 2;
+  display: table-cell;
+  vertical-align: middle;
   text-align: center;
   /*box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);*/
   /*border-radius: 25px;*/
@@ -371,5 +380,23 @@ export default {
   margin: 30px;
   /*grid-column: 2 / 3;
   grid-row: -2 / -1;*/
+}
+
+.divider1 {
+  background: rgb(228, 228, 228); /*can be anything, of course*/
+  grid-column: 3;
+  grid-row: 1;
+  height: 100%;
+  width: 1.5px;
+  z-index: 1000;
+}
+
+.divider2 {
+  background: rgb(228, 228, 228); /*can be anything, of course*/
+  grid-column: 1 / 4;
+  grid-row: 2 / 3;
+  height: 1.5px;
+  width: 100%;
+  z-index: 1000;
 }
 </style>
