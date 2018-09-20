@@ -335,7 +335,6 @@ export default {
 }
 
 .toggleGroupPieChart {
-  size: "sm";
 }
 
 .histogram {
