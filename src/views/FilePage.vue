@@ -3,7 +3,7 @@
     <div class="grid-container">
       <!--<div class="legend-holder">-->
         <div class="titleBanner">
-          <h1>File Name</h1>
+          <h1>{{fileName}}</h1>
         </div>
 
         <div class="legend">
@@ -27,6 +27,9 @@
           :options="pieOptions"
         />
 
+        <ToggleGroup class="toggleGroupPieChart">
+        </ToggleGroup>
+
       </div>
 
       <div class="histogram">
@@ -36,15 +39,11 @@
           :options="histogramOptions"
         />
 
-        <b-dropdown>
-          <b-dropdown-item>Day</b-dropdown-item>
-          <b-dropdown-item>Week</b-dropdown-item>
-          <b-dropdown-item>Month</b-dropdown-item>
-          <b-dropdown-item>Year</b-dropdown-item>
-          <b-dropdown-item>All Time</b-dropdown-item>
-        </b-dropdown>
-
+        <ToggleGroup class="toggleGroupHistogram">
+        </ToggleGroup>
       </div>
+
+
 
       <div class="filecontribution">
         <b-card no-body class="fcTable">
@@ -94,6 +93,7 @@ import gapi from "../googleapis.js";
 import Vue from "vue";
 import VueGoogleCharts from "vue-google-charts";
 import Colours from "./ColourGeneration.vue";
+import ToggleGroup from "../components/ToggleGroup.vue";
 //import randomColour from "./ColourGeneration.vue";
 
 Vue.use(VueGoogleCharts);
@@ -101,6 +101,9 @@ Vue.use(VueGoogleCharts);
 export default {
   inject: ["contributions"],
   name: "FilePage",
+  components: {
+    ToggleGroup
+  },
   props: {
     id: String
   },
@@ -179,6 +182,7 @@ export default {
   },
   data() {
     return {
+      fileName: "Name",
       colors: {},
       userList: [],
       fileList: [],
@@ -328,6 +332,10 @@ export default {
   /*box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);*/
   /*border-radius: 25px;*/
   width: 100%;
+}
+
+.toggleGroupPieChart {
+  size: "sm";
 }
 
 .histogram {
