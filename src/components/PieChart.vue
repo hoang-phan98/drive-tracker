@@ -19,7 +19,8 @@ export default {
   props: {
     files: Array,
     colors: Object,
-    contributors: Array
+    contributors: Array,
+    height: Number
   },
   computed: {
     data() {
@@ -42,7 +43,7 @@ export default {
     },
     pieOptions() {
       return {
-        height: 600,
+        height: this.height || 600,
         title: "All Time Contribution",
         pieHole: 0.4,
         legend: "none",

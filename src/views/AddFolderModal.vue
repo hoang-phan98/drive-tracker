@@ -28,19 +28,15 @@
         <b-form-input 
           id="url" :state="state" 
           v-model.trim="url"
-          placeholder="https://drive.google.com/folders/_________________________" 
+          placeholder="https://drive.google.com/folders/" 
           />
       </b-form-group>
     </div>
 
-    <b-row slot="modal-footer">
-      <b-col class="col">
-        <b-button class="button2" @click="cancel()">Cancel</b-button>
-      </b-col>
-      <b-col class="col">
-        <b-button class="button1" @click="submit()" :disabled="!(folder && folder.name)">OK</b-button>
-      </b-col>
-    </b-row>
+    <template slot="modal-footer">
+        <b-button @click="cancel()">Cancel</b-button>
+        <b-button variant="primary" @click="submit()" :disabled="!(folder && folder.name)">Add Folder</b-button>
+    </template>
   </b-modal>
 </template>
 
@@ -51,6 +47,7 @@ export default {
   props: {
     id: String
   },
+  inject: ["contributions"],
   data() {
     return {
       url: "",
@@ -116,20 +113,5 @@ export default {
 <style scoped>
 .form {
   margin-top: 16px;
-}
-
-.button1 {
-  background-color: green;
-  align-self: center;
-  align-content: center;
-  font-size: 8pt;
-  width: 70px;
-}
-
-.button2 {
-  background-color: red;
-  align-self: center;
-  font-size: 8pt;
-  width: 70px;
 }
 </style>
