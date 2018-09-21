@@ -30,9 +30,6 @@
           :options="pieOptions"
         />
 
-        <ToggleGroup class="toggleGroupPieChart">
-        </ToggleGroup>
-
       </div>
 
       <div class="histogram">
@@ -42,8 +39,6 @@
           :options="histogramOptions"
         />
 
-        <ToggleGroup class="toggleGroupHistogram">
-        </ToggleGroup>
       </div>
 
 
@@ -52,7 +47,7 @@
         <b-card no-body class="fcTable">
           <b-tabs card>
             <b-tab title="Day" active>
-              <h1>File Revision History</h1>
+              <h2>File Revision History</h2>
               <b-row>
                 <b-table
                   :items="revisions"
@@ -96,7 +91,6 @@ import gapi from "../googleapis.js";
 import Vue from "vue";
 import VueGoogleCharts from "vue-google-charts";
 import Colours from "./ColourGeneration.vue";
-import ToggleGroup from "../components/ToggleGroup.vue";
 import MaterialIcon from "@/components/MaterialIcon.vue";
 //import randomColour from "./ColourGeneration.vue";
 
@@ -106,7 +100,6 @@ export default {
   inject: ["contributions"],
   name: "FilePage",
   components: {
-    ToggleGroup,
     MaterialIcon
   },
   props: {
@@ -206,7 +199,7 @@ export default {
   },
   data() {
     return {
-      fileName: "Name",
+      fileName: "File Name",
       colors: {},
       userList: [],
       fileList: [],
@@ -272,7 +265,10 @@ export default {
       ],
       pieOptions: {
         //width: 600,
-        height: 600,
+        chartArea: {
+          width: "85%"
+        },
+        height: this.height || 500,
         title: "All Time Contribution",
         pieHole: 0.4,
         legend: "none"
@@ -323,13 +319,13 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .grid-container {
   background: rgba(256, 256, 256, 1);
   border-radius: 10px;
   display: grid;
   grid-gap: 0px;
-  grid-template-columns: 0.2fr 1fr 2fr;
+  grid-template-columns: 0.2fr 1.5fr 2fr;
   grid-template-rows: 0.1fr 1fr 1fr;
   width: 100%;
   box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 0.75);
@@ -360,7 +356,6 @@ export default {
   /*text-align: center; */
   /*box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);*/
   /*border-radius: 25px;*/
-  width: 100%;
 }
 
 .toggleGroupPieChart {

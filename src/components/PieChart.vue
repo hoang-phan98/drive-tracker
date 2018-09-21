@@ -43,7 +43,10 @@ export default {
     },
     pieOptions() {
       return {
-        height: this.height || 600,
+        chartArea: {
+          width: "85%"
+        },
+        height: this.height || 500,
         title: "All Time Contribution",
         pieHole: 0.4,
         legend: "none",

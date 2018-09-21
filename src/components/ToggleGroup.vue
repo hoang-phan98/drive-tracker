@@ -17,8 +17,7 @@ export default {
       myToggle: false,
       buttons: [
         { variant: "outline-primary", caption: "Adds", state: true },
-        { variant: "outline-primary", caption: "Edits", state: false },
-        { variant: "outline-primary", caption: "Deletes", state: false }
+        { variant: "outline-primary", caption: "Edits", state: false }
       ]
     };
   },
