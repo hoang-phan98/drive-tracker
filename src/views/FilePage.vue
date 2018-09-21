@@ -1,10 +1,16 @@
 <template>
-  <div class="folderpage">
+  <div class="filePage">
     <div class="grid-container">
       <!--<div class="legend-holder">-->
+        <div class="titleBanner">
+          <material-icon icon="insert_drive_file" size="large" />
+          <h1 class="fileName">
+            {{fileName}}
+          </h1>
+        </div>
 
         <div class="legend">
-          <h1>Users</h1>
+          <h2>Users</h2>
           <span><br></span>
           <div v-for="user in userList" :key="user.id" class="legend-entry">
             <div :style="'background-color:'+getUserColour(user)" class="legend-box"></div><span class="legend-name">{{user}}</span>
@@ -24,6 +30,9 @@
           :options="pieOptions"
         />
 
+        <ToggleGroup class="toggleGroupPieChart">
+        </ToggleGroup>
+
       </div>
 
       <div class="histogram">
@@ -32,9 +41,15 @@
           :data="histogramData"
           :options="histogramOptions"
         />
+
+        <ToggleGroup class="toggleGroupHistogram">
+        </ToggleGroup>
       </div>
+
+
+
       <div class="filecontribution">
-        <b-card no-body>
+        <b-card no-body class="fcTable">
           <b-tabs card>
             <b-tab title="Day" active>
               <h1>File Revision History</h1>
@@ -65,8 +80,15 @@
         </b-card>
       </div>
 
+      <div class="divider"/> 
+      <div class="divider1"/> 
+      <div class="divider2"/>
+      
+
     </div>
+
   </div>
+
 </template>
 
 <script>
@@ -74,6 +96,8 @@ import gapi from "../googleapis.js";
 import Vue from "vue";
 import VueGoogleCharts from "vue-google-charts";
 import Colours from "./ColourGeneration.vue";
+import ToggleGroup from "../components/ToggleGroup.vue";
+import MaterialIcon from "@/components/MaterialIcon.vue";
 //import randomColour from "./ColourGeneration.vue";
 
 Vue.use(VueGoogleCharts);
@@ -81,6 +105,10 @@ Vue.use(VueGoogleCharts);
 export default {
   inject: ["contributions"],
   name: "FilePage",
+  components: {
+    ToggleGroup,
+    MaterialIcon
+  },
   props: {
     id: String
   },
@@ -159,6 +187,7 @@ export default {
   },
   data() {
     return {
+      fileName: "Name",
       colors: {},
       userList: [],
       fileList: [],
@@ -277,45 +306,71 @@ export default {
 
 <style>
 .grid-container {
+  background: rgba(256, 256, 256, 1);
+  border-radius: 10px;
   display: grid;
-  grid-gap: 30px;
-  grid-template-columns: 1fr 2fr 3fr;
-  grid-template-rows: 1fr 1fr;
+  grid-gap: 0px;
+  grid-template-columns: 0.2fr 1fr 2fr;
+  grid-template-rows: 0.1fr 1fr 1fr;
   width: 100%;
+  box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 0.75);
+  justify-content: space-evenly;
+}
+
+.titleBanner {
+  background: rgba(256, 256, 256, 1);
+  padding: 10px;
+  margin-left: 20px;
+  grid-column: 1 / 4;
+  grid-row: 1;
+  display: flex;
+}
+
+.fileName {
+  margin-left: 10px;
 }
 
 .pichart {
-  background: rgba(256, 256, 256, 1); /*can be anything, of course*/
-  margin: auto;
-  padding: 10px;
+  /*background: rgba(256, 256, 256, 1); /*can be anything, of course*/
+  /*margin: auto;*/
+  /*padding: 10px;*/
   grid-column: 2 / 3;
-  grid-row: 1 / 2;
+  grid-row: 2;
+  width: 100%;
+  height: 100%;
   /*text-align: center; */
-  box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);
-  border-radius: 25px;
+  /*box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);*/
+  /*border-radius: 25px;*/
   width: 100%;
 }
+
+.toggleGroupPieChart {
+}
+
 .histogram {
   background: rgba(256, 256, 256, 1); /*can be anything, of course*/
   margin: auto;
   padding: 10px;
-  grid-column: 1 / 3;
-  grid-row: 2 / 3;
+  grid-column: 1 / 4;
+  grid-row: 3;
   text-align: center;
-  box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);
-  border-radius: 25px;
+  /*box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);*/
+  /*border-radius: 25px;*/
   width: 100%;
   height: 100%;
 }
+
 .filecontribution {
   background: rgba(256, 256, 256, 1); /*can be anything, of course*/
   /* margin: auto; */
   padding: 10px;
   grid-column: 3 / 4;
-  grid-row: 1 / -1;
+  grid-row: 2;
+  display: table-cell;
+  vertical-align: middle;
   text-align: center;
-  box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);
-  border-radius: 25px;
+  /*box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);*/
+  /*border-radius: 25px;*/
   width: 100%;
 }
 
@@ -329,14 +384,15 @@ export default {
   margin: auto;
   padding: 50px;
 
-  box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);
-  border-radius: 25px;
+  /*box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);*/
+  /*border-radius: 25px;*/
   /*width: 100%;*/
   width: 100%;
   height: 100%;
-  grid-column: 1 / 2;
-  grid-row: 1 / 2;
+  grid-column: 1;
+  grid-row: 2;
 }
+
 .legend-entry {
   display: flex;
   align-items: center;
@@ -358,5 +414,32 @@ export default {
   margin: 30px;
   /*grid-column: 2 / 3;
   grid-row: -2 / -1;*/
+}
+
+.divider {
+  background: rgb(33, 150, 243); /*can be anything, of course*/
+  grid-column: 1/4;
+  grid-row: 2;
+  height: 2.5px;
+  width: 100%;
+  z-index: 1001;
+}
+
+.divider1 {
+  background: rgb(228, 228, 228); /*can be anything, of course*/
+  grid-column: 3;
+  grid-row: 2;
+  height: 100%;
+  width: 1.5px;
+  z-index: 1000;
+}
+
+.divider2 {
+  background: rgb(228, 228, 228); /*can be anything, of course*/
+  grid-column: 1 / 4;
+  grid-row: 3;
+  height: 1.5px;
+  width: 100%;
+  z-index: 1000;
 }
 </style>
