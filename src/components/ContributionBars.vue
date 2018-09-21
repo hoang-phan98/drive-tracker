@@ -1,19 +1,23 @@
 <template>
   <div class="contributiongrid">
-    <div class="allcharts" >
-      <GChart
-        v-for="file in data"
+    <div class="files">
+      <div v-for="file in data"
         v-bind:key="file.id"
-        type="BarChart"
-        v-bind:data="file.data"
-        :options="file.options"
-      />
-      <button class="button"
-        v-for="file in data"
-        v-bind:key="file.fileIDs"
-        v-on:click="filenav(file.fileID, $event)">
-        {{ file.fileID }}
-      </button>
+        class="file">
+      <div class="file-chart">
+        <GChart
+          type="BarChart"
+          v-bind:data="file.data"
+          :options="file.options"
+        />
+        </div>
+        <div class="file-actions">
+          <b-button variant="outline-primary" size="sm"
+            v-on:click="filenav(file.fileID, $event)">
+            More Details
+          </b-button>
+        </div>
+      </div>
     </div>
     <!-- <div class="buttons">
       <button class="button"
@@ -105,11 +109,27 @@ export default {
 
 <style>
 .contributiongrid {
-  display: grid;
+  padding: 1rem;
+  /* display: grid;
   grid-gap: 30px;
   grid-template-columns: 4fr 1fr;
   grid-template-rows: 1fr;
-  width: 100%;
+  width: 100%; */
+}
+
+.file {
+  display: flex;
+  max-width: 100%;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.file-chart {
+  flex-grow: 1;
+}
+
+.file-actions {
+  flex-grow: 0;
 }
 
 .allcharts {
