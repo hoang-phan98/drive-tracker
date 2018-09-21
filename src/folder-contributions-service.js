@@ -2,7 +2,6 @@ import * as a from "awaiting";
 import googleapis from "./googleapis";
 
 const GOOGLE_DRIVE_FOLDER_MIME_TYPE = "application/vnd.google-apps.folder";
-const GOOGLE_DRIVE_FILE_MIME_TYPE = "application/vnd.google-apps.document";
 const USER_FIELDS = ["kind", "displayName", "emailAddress"].join(", ");
 const REVISION_FIELDS = [
   "kind",
@@ -222,7 +221,7 @@ class FolderContributionsService {
         fields: FileContributions.fields
       }));
 
-      if (data1.mimeType !== GOOGLE_DRIVE_FILE_MIME_TYPE) {
+      if (data1.mimeType === GOOGLE_DRIVE_FOLDER_MIME_TYPE) {
         throw new Error("The specified resource is not a file.");
       }
     } catch (err) {
@@ -249,7 +248,9 @@ async function depaginate(fetch, field, options) {
   let acc = {};
   do {
     const { result } = await fetch(
-      Object.assign({}, options, { pageToken: acc.nextPageToken })
+      Object.assign({}, options, {
+        pageToken: acc.nextPageToken
+      })
     );
     Object.assign(acc, result, {
       [field]: acc[field] ? acc[field].concat(result[field]) : result[field],
