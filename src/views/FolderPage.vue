@@ -1,25 +1,17 @@
 <template>
   <div class="folderpage">
     <div class="grid-container">
-      <!--<div class="legend-holder">-->
-
-        <div class="legend">
-          <h1>Users</h1>
-          <span><br></span>
-          <div class="legend-list">
-          <div v-for="user in userList" :key="user.id" class="legend-entry">
-            <div :style="'background-color:'+getUserColour(user)" class="legend-box"></div><span class="legend-name">{{getUserName(user)}}</span>
+      <div class="legend">
+        <h1>Users</h1>
+        <span><br></span>
+        <div v-if="folder" class="legend-list">
+          <div v-for="user in Object.values(folder.contributors)" :key="user.id" class="legend-entry">
+            <div :style="'background-color:'+colors[user.emailAddress]" class="legend-box"></div>
+            <span class="legend-name">{{user.displayName}}</span>
           </div>
-          </div>
-          <!--style= {{getUserColourAttr(user)}}-->
-          <!--style= "background-colour:"+{{colourList[index]}}-->
-          <!--<div v-for="index in userList.length" :key="index" class="legend-entry">
-
-            <div  class="legend-box"></div><span class="legend-name">{{userList[index]}}</span>
-          </div> -->
-        <!-- </div> -->
+        </div>
       </div>
-      <div class = "pichart">
+      <div class="pichart">
         <PieChart
           v-if="folder"
           :files="Object.values(folder.files)"
@@ -27,7 +19,6 @@
           :colors="colors"
         />
       </div>
-
       <div class="histogram">
         <Timeline
           v-if="folder"
@@ -36,7 +27,6 @@
           :colors="colors"
         />
       </div>
-
       <div class="filecontribution">
         <h1>Files</h1>
         <ContributionBars class="contributionbars"
@@ -45,22 +35,18 @@
           :contributors="Object.values(folder.contributors)"
           :colors="colors"
         />
-    </div>
-
-
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import gapi from "../googleapis.js";
 import Vue from "vue";
 import VueGoogleCharts from "vue-google-charts";
 import Colours from "./ColourGeneration.vue";
 import ContributionBars from "../components/ContributionBars.vue";
 import PieChart from "../components/PieChart.vue";
 import Timeline from "../components/Timeline.vue";
-//import randomColour from "./ColourGeneration.vue";
 
 Vue.use(VueGoogleCharts);
 
@@ -75,11 +61,6 @@ export default {
     id: String
   },
   inject: ["contributions"],
-  //components: {
-  //  Colours //???
-  //},
-  // fileList is an object with the file's id and permissions
-  // permissions has the user's id and display name that we can use for the displaying of data
   async mounted() {
     let folder;
     try {
@@ -91,69 +72,20 @@ export default {
       return;
     }
 
-    this.fileList = (await gapi.client.drive.files.list({
-      fields: "files(id, name, permissions)",
-      //q: starred != true
-      q: "'1S9QJbW_gBXqWoEE4CtBCGoXZNnKOaDnG' in parents" // file id goes here
-    })).result.files;
-
-    for (var i = 0; i < this.fileList.length; i++) {
-      for (var j = 0; j < this.fileList[i].permissions.length; j++) {
-        if (
-          !this.userList.includes(this.fileList[i].permissions[j].emailAddress)
-        ) {
-          this.userList.push(this.fileList[i].permissions[j].emailAddress);
-          this.userNameList.push(this.fileList[i].permissions[j].displayName);
-          //console.log(this.fileList[i].permissions[j]);
-          //this.usernameList.push(this.fileList[i].permissions[j]);
-        }
-      }
-    }
-
-    //console.log(Colours);
-    this.colourList = Colours.generateColours(this.userList.length);
+    // Generate and assign colors
+    const colorList = Colours.generateColours(
+      Object.keys(folder.contributors).length
+    );
     Object.values(folder.contributors).forEach((user, i) => {
-      this.colors[user.emailAddress] = this.colourList[i];
+      this.colors[user.emailAddress] = colorList[i];
     });
 
     this.folder = folder;
-
-    // call generate colours function while passing in the number of users from userList.length
-  },
-  methods: {
-    getUserColour(user) {
-      // user is the user's email
-      return this.colourList[this.userList.indexOf(user)];
-    },
-    getUserName(user) {
-      return this.userNameList[this.userList.indexOf(user)];
-    }
   },
   data() {
     return {
       folder: null,
-      colors: {},
-      userList: [],
-      userNameList: [],
-      fileList: [],
-      colourList: [], // need this? make the instance global?
-      /*userData: [
-        ["Contributers", "Colour", { role: "style" }],
-        ["Kenny", 10, "#FF0000"],
-        ["Hoang", 16, "#00FF00	"],
-        ["Erica", 28, "#0000FF	"],
-        ["Dax", 16, "#FFFF00	"],
-        ["Marc", 28, "#808080"]
-      ],*/
-      barStats: [],
-      userOptions: {
-        //width: 600,
-        //height: 500,
-        title: "Contributers",
-        legend: "none",
-        bar: { groupWidth: "75%" },
-        isStacked: "percent"
-      }
+      colors: {}
     };
   }
 };
