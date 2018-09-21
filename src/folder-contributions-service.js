@@ -2,7 +2,7 @@ import * as a from "awaiting";
 import googleapis from "./googleapis";
 
 const GOOGLE_DRIVE_FOLDER_MIME_TYPE = "application/vnd.google-apps.folder";
-//const GOOGLE_DRIVE_FILE_MIME_TYPE = "application/vnd.google-apps.file";
+const GOOGLE_DRIVE_FILE_MIME_TYPE = "application/vnd.google-apps.document";
 const USER_FIELDS = ["kind", "displayName", "emailAddress"].join(", ");
 const REVISION_FIELDS = [
   "kind",
@@ -216,19 +216,19 @@ class FolderContributionsService {
 
     // Verify the folder actually exists
     let data1;
-    // try {
-    ({ result: data1 } = await googleapis.client.drive.files.get({
-      fileId: id, ///////find the raw data of the file
-      fields: FileContributions.fields
-    }));
+    try {
+      ({ result: data1 } = await googleapis.client.drive.files.get({
+        fileId: id, ///////find the raw data of the file
+        fields: FileContributions.fields
+      }));
 
-    // if (data1.mimeType !== GOOGLE_DRIVE_FILE_MIME_TYPE) {
-    //   throw new Error("The specified resource is not a file.");
-    //   // }
-    // } catch (err) {
-    //   // TODO :)
-    //   throw err;
-    // }
+      if (data1.mimeType !== GOOGLE_DRIVE_FILE_MIME_TYPE) {
+        throw new Error("The specified resource is not a file.");
+      }
+    } catch (err) {
+      // TODO :)
+      throw err;
+    }
 
     file = await FileContributions.create(data1);
     this.cache.set(file.id, file);
