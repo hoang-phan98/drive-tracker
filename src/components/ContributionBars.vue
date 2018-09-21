@@ -76,9 +76,9 @@ export default {
           data: [labels, values],
           fileID: file.id,
           options: {
-            height: 100,
+            height: 60,
             legend: { position: "none" },
-            bar: { groupWidth: "75%" },
+            bar: { groupWidth: "50%" },
             isStacked: true,
             hAxis: {
               minValue: 0
