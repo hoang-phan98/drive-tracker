@@ -205,6 +205,35 @@ class FolderContributionsService {
 
     return folder;
   }
+
+  async fetchFileContributionData(id) {
+    // Check the cache first
+    let file;
+    if ((file = this.cache.get(id))) {
+      return file;
+    }
+
+    // Verify the folder actually exists
+    let data1;
+    try {
+      ({ result: data1 } = await googleapis.client.drive.files.get({
+        fileId: id, ///////find the raw data of the file
+        fields: FileContributions.fields
+      }));
+
+      if (data1.mimeType === GOOGLE_DRIVE_FOLDER_MIME_TYPE) {
+        throw new Error("The specified resource is not a file.");
+      }
+    } catch (err) {
+      // TODO :)
+      throw err;
+    }
+
+    file = await FileContributions.create(data1);
+    this.cache.set(file.id, file);
+
+    return file;
+  }
 }
 
 export default FolderContributionsService;
@@ -219,7 +248,9 @@ async function depaginate(fetch, field, options) {
   let acc = {};
   do {
     const { result } = await fetch(
-      Object.assign({}, options, { pageToken: acc.nextPageToken })
+      Object.assign({}, options, {
+        pageToken: acc.nextPageToken
+      })
     );
     Object.assign(acc, result, {
       [field]: acc[field] ? acc[field].concat(result[field]) : result[field],
