@@ -3,6 +3,72 @@ Client Review
 
 This document contains instructions for the client to review the project at each checkpoint.
 
+# Checkpoint 2 (Sprint 4) Fri 21st September
+
+The last commit of this sprint can be found under the `checkpoint-2` or `sprint-4` tag.
+
+The following features are new in this release:
+- Refreshed Dashboard/Home page
+  - Folder contribution stats preview
+    - Contributor list
+    - All time contribution Pie Chart
+- Refreshed menu bar
+- Folder contribution page
+  - Contributor list
+  - All time contribution pie chart
+  - All time contribution stacked bar charts for child files
+- File contribution page
+  - Dummy UI
+
+## Setup
+
+Begin by following the instructions in the root `README.md` for 'How to view the project'. You have the option of visiting the live deployment online or running the web server locally.
+
+Ensure you are using an up to date browser. We recommend the latest Google Chrome Browser.
+
+## Refreshed Dashboard/Home page
+
+- Ensure you are logged in
+- Visit the home page, you should be taken to it immediately after logging in, otherwise you can press the 'Tracked Folders' button in the sidebar
+- Observe the cleaner layout and preview pane on the right. There is also a new 'Add Folder' button in the shape of a folder with a '+' in it.
+
+### Folder contribution stats preview
+
+- Add at least one folder to your list of tracked items by pressing the 'Add Folder' button and following the instructions.
+- Click on the row of the folder you wish to preview (don't press the 'View More' button, just anywhere in the row.)
+- The pane on the right should be populated.
+- Observe the contributor list and the colours associated with each contributor.
+- Observe the all time contributions pie chart.
+
+## Refreshed Menu Bar
+
+- Ensure you are logged in.
+- This can be seen from any logged in page.
+- Observe the new sidebar and refreshed menu bar.
+- The 'Tracked Folders' button can be pressed at any time to return to the Dashboard/Home page
+- The current user's given name appears in the top right next to the account icon.
+- Click the account icon to reveal to the logout button.
+
+## Folder Contribution Page
+
+- Ensure you are logged in and have added at least one folder to the tracked items list.
+- Click the 'More Details' button on the right side of the row of the folder of interest, or open the preview for the folder of interest and press the 'More Details' button in the preview pane.
+- You should be taken to the folder contributions page.
+- Observe the contributor list and the colors associated with each contributor on the left.
+- Observe the all time contributions pie chart on the left.
+- Observe the file list/all time file contribution stacked bar charts on the right.
+- Observe the all time contributions by user timeline below.
+
+## File Contribution Page
+
+- Ensure you are on a folder contribution page that has at least one child file.
+- Select the 'More Details' button next to the file of interest.
+- You should be taken to the file contributions page. This is just filled with dummy data for now.
+- Observe the contributor list on the left.
+- Observe the all time contributions bar chart on the left.
+- Observe the revisions list on the right.
+- Observe the all time contributions by user timeline below.
+
 # Checkpoint 1 (Sprint 2) Fri 7th September
 
 The last commit of this sprint can be found under the `checkpoint-1` or `sprint-2` tag.
