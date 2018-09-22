@@ -1,5 +1,5 @@
 <template>
-  <div class="filePage">
+  <div v-if="rendered" class="filePage">
     <div class="grid-container">
       <!--<div class="legend-holder">-->
         <div class="titleBanner">
@@ -75,15 +75,16 @@
         </b-card>
       </div>
 
-      <div class="divider"/> 
-      <div class="divider1"/> 
+      <div class="divider"/>
+      <div class="divider1"/>
       <div class="divider2"/>
-      
+
 
     </div>
 
   </div>
-
+  <LoadingScreen v-else>
+  </LoadingScreen>
 </template>
 
 <script>
@@ -92,6 +93,7 @@ import Vue from "vue";
 import VueGoogleCharts from "vue-google-charts";
 import Colours from "./ColourGeneration.vue";
 import MaterialIcon from "@/components/MaterialIcon.vue";
+import LoadingScreen from "../components/LoadingScreen.vue";
 //import randomColour from "./ColourGeneration.vue";
 
 Vue.use(VueGoogleCharts);
@@ -100,10 +102,12 @@ export default {
   inject: ["contributions"],
   name: "FilePage",
   components: {
-    MaterialIcon
+    MaterialIcon,
+    LoadingScreen
   },
   props: {
-    id: String
+    id: String,
+    rendered: false
   },
   async mounted() {
     let file;
@@ -147,6 +151,9 @@ export default {
 
     this.file = file;
     // console.log(file);
+    this.$nextTick(function() {
+      this.rendered = true;
+    });
   },
   methods: {
     // getUserColour(user) {
