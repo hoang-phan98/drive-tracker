@@ -1,4 +1,4 @@
-Retrospective - Sprint 3
+Retrospective - Sprint 4
 ---
 | Name | Done Well | Needs Improvements |
 | :------------- | :------------- |
