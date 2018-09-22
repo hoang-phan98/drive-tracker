@@ -56,8 +56,7 @@
       <div class="divider2"/>
     </div>
   </div>
-  <LoadingScreen v-else>
-  </LoadingScreen>
+  <LoadingScreen v-else />
 </template>
 
 <script>

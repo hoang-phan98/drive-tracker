@@ -83,8 +83,7 @@
     </div>
 
   </div>
-  <LoadingScreen v-else>
-  </LoadingScreen>
+  <LoadingScreen v-else />
 </template>
 
 <script>
