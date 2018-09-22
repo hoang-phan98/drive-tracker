@@ -1,5 +1,5 @@
 <template>
-  <div class="folder-preview-layout" v-if="folder">
+  <div class="folder-preview-layout" v-if="rendered">
     <div class="content-outer">
       <div class="content">
         <section>
@@ -21,16 +21,16 @@
         </section>
 
         <section>
-          <PieChart 
-            :files="Object.values(folder.files)" 
-            :contributors="Object.values(folder.contributors)" 
+          <PieChart
+            :files="Object.values(folder.files)"
+            :contributors="Object.values(folder.contributors)"
             :colors="colors"
             :height="400" />
         </section>
       </div>
     </div>
     <div class="bottom-bar">
-      <b-button 
+      <b-button
         variant="outline-primary"
         :to="'/folder/' + this.id"
         >
@@ -38,18 +38,21 @@
       </b-button>
     </div>
   </div>
+  <LoadingScreen v-else />
 </template>
 
 <script>
 import MaterialIcon from "./MaterialIcon.vue";
 import PieChart from "./PieChart.vue";
 import Colours from "../views/ColourGeneration.vue";
+import LoadingScreen from "../components/LoadingScreen.vue";
 
 export default {
-  components: { MaterialIcon, PieChart },
+  components: { MaterialIcon, PieChart, LoadingScreen },
   inject: ["contributions"],
   props: {
-    id: String
+    id: String,
+    rendered: false
   },
   data() {
     return {
@@ -59,6 +62,10 @@ export default {
   },
   mounted() {
     this.fetch();
+    
+    this.$nextTick(function() {
+      this.rendered = true;
+    });
   },
   watch: {
     id() {
