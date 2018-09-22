@@ -60,6 +60,7 @@ Weekly Sprint Planning/Estimations are also done through Facebook Messenger alth
 - When a story is deemed complete by a developer, they are to request a pull request.
 - A pull request can only be merged by one of the designated reviewers.
 - A developer is NEVER to review/accept their own pull requests.
+- A developer must attach the Trello URL(the system currently being used to track stories and bugs) in the merge request message of a branch for trackability of stories.
 
 #### Quality Assurance
 - Before a pull request can be made, the program must compile and run.
