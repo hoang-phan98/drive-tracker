@@ -62,7 +62,7 @@ export default {
   },
   mounted() {
     this.fetch();
-    
+
     this.$nextTick(function() {
       this.rendered = true;
     });
