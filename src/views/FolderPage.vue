@@ -1,5 +1,5 @@
 <template>
-  <div class="folderpage">
+  <div v-if="folder" class="folderpage">
     <div class="grid-container">
       <!--<div class="legend-holder">-->
 
@@ -51,11 +51,13 @@
         />
       </div>
 
-      <div class="divider"/> 
-      <div class="divider1"/> 
-      <div class="divider2"/> 
+      <div class="divider"/>
+      <div class="divider1"/>
+      <div class="divider2"/>
     </div>
   </div>
+  <LoadingScreen v-else>
+  </LoadingScreen>
 </template>
 
 <script>
@@ -67,6 +69,7 @@ import PieChart from "../components/PieChart.vue";
 import Timeline from "../components/Timeline.vue";
 import ToggleGroup from "../components/ToggleGroup.vue";
 import MaterialIcon from "@/components/MaterialIcon.vue";
+import LoadingScreen from "../components/LoadingScreen.vue";
 //import randomColour from "./ColourGeneration.vue";
 
 Vue.use(VueGoogleCharts);
@@ -78,7 +81,8 @@ export default {
     Timeline,
     PieChart,
     ToggleGroup,
-    MaterialIcon
+    MaterialIcon,
+    LoadingScreen
   },
   props: {
     id: String
