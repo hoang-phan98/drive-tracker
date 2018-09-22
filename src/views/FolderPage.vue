@@ -1,5 +1,5 @@
 <template>
-  <div v-if="folder" class="folderpage">
+  <div v-if="rendered" class="folderpage">
     <div class="grid-container">
       <!--<div class="legend-holder">-->
 
@@ -85,7 +85,8 @@ export default {
     LoadingScreen
   },
   props: {
-    id: String
+    id: String,
+    rendered: false
   },
   inject: ["contributions"],
   async mounted() {
@@ -108,6 +109,10 @@ export default {
     });
 
     this.folder = folder;
+
+    this.$nextTick(function() {
+      this.rendered = true;
+    });
   },
   data() {
     return {
