@@ -8,18 +8,16 @@
 </template>
 
 <script>
-import { Container, Row, Column, ProgressWrapper, ProgressBar, Preloader } from 'mdbvue';
+import { Container, Row, Column, ProgressWrapper, ProgressBar } from "mdbvue";
 
 export default {
-  name: 'ProgressBarsProPage',
+  name: "ProgressBarsProPage",
   components: {
     Container,
-    Preloader,
     Row,
     Column,
     ProgressWrapper,
-    ProgressBar,
-    Preloader
+    ProgressBar
   }
 };
 </script>
