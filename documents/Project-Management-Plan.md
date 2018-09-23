@@ -33,7 +33,7 @@ Our version of SCRUM includes the following:
 - Product Backlog: all future stories (features to be implemented) are stored in this artefact.
 - Sprint Backlog: stories that are planned to be done in the current sprint are put in this artefact.
 - Sprint: A period of 7 days where certain amount of pre-determined stories are to be completed.
-- Daily Standups: A 15 minute meeting every day online to allow each team member to briefly state the current status of what they are working on and if anything/anyone is blocking them.
+- Standups Messages: A message that will be posted in the team chat that details work that has been done recently, if there are any blockers, and any issues or additional points regarding anything related to the current status of the project. These messages should be as frequent as required, but are not needed if none of the aforementioned points are applicable.
 - Weekly Sprint Planning/Estimations: Every Friday, stories from the product backlog are assessed by priority and difficulty to determine which stories will be part of the next sprint starting Monday.
 - Client Meetings: During the tutorial on Friday 1:00pm - 4:00pm the current build will be shown to the client and clarifications and extensions to  the project can be made.
 
@@ -47,7 +47,7 @@ The Product Backlog and Sprint Backlog are to be located on a ‘Story Board’ 
 The bugs are to be located on a separate “Bug board” on Trello
 (https://trello.com/b/J0o1YzaP/bug-board)
 
-Daily Standups are done through Facebook Messenger and the contents of these standups will NOT be formally recorded (Invite link is to be provided by Scrum Master)
+Standups messages are done through Facebook Messenger and the contents of these standups will NOT be formally recorded (Invite link is to be provided by Scrum Master)
 
 Weekly Sprint Planning/Estimations are also done through Facebook Messenger although the contents of these sessions will be directly reflected in the Product Backlog and Sprint Backlog.
 
@@ -60,6 +60,7 @@ Weekly Sprint Planning/Estimations are also done through Facebook Messenger alth
 - When a story is deemed complete by a developer, they are to request a pull request.
 - A pull request can only be merged by one of the designated reviewers.
 - A developer is NEVER to review/accept their own pull requests.
+- A developer must attach the Trello URL(the system currently being used to track stories and bugs) in the merge request message of a branch for trackability of stories.
 
 #### Quality Assurance
 - Before a pull request can be made, the program must compile and run.
@@ -102,7 +103,7 @@ All team members are required to follow the above specified procedures under the
 ### Responsibilities
 #### Scrum Master
 - Organising/taking note of meetings
-  - Daily Standups
+  - Standup messages
   - Weekly Sprint Planning/Estimations
   - Client Meetings
 - Decision making within the team
@@ -137,7 +138,7 @@ Every story/task to be done in each sprint, as well as the person working on eac
 ### Progress Tracking
 All coding tasks will be managed via a shared GitLab repository. Team members will work on separate branches, and any completed work is to be merged into the master branch. This allows everyone to work independently while minimising any risk due to conflicting codes.
 
-In order to keep track of the team’s progress, a burndown chart will be utilised. This chart will show the number of stories yet to be completed plotted against the number of days remaining in the sprint. Any concern regarding the progress of the sprint can be discussed during the Daily Standups.
+In order to keep track of the team’s progress, a burndown chart will be utilised. This chart will show the number of stories yet to be completed plotted against the number of days remaining in the sprint. Any concern regarding the progress of the sprint can be expressed during the Standup messages.
 
 ### Expectations and Task Allocation
 Team members are expected to dedicate 2-3 hours each week on the project. Each team member will have a chance to nominate what they would like to work on at the start of each sprint. The Scrum Master will ensure that everybody is heard and given a fair go, and to mediate in any instances of dispute. This will ensure that the team stays on track while working together towards a common goal.
