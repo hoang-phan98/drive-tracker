@@ -4,6 +4,9 @@
       <div v-for="subFolder in data.subFolderData"
         v-bind:key="subFolder.id"
         class="file">
+      <div class="file-name">
+        <div>{{subFolder.folderName}}</div>
+      </div> 
       <div class="file-chart">
         <GChart
           type="BarChart"
@@ -18,10 +21,14 @@
           </b-button>
         </div>
       </div>
-      
+    </div>
+    <div class="files">
       <div v-for="file in data.fileData"
         v-bind:key="file.id"
         class="file">
+      <div class="file-name">
+        <div>{{file.fileName}}</div>
+      </div>
       <div class="file-chart">
         <GChart
           type="BarChart"
@@ -72,7 +79,7 @@ export default {
         ];
 
         var values = [
-          file.name,
+          "",
           ...this.contributors.map(user => {
             return file.contributions.filter(
               contribution =>
@@ -94,7 +101,7 @@ export default {
         return {
           data: [labels, values],
           fileID: file.id,
-          //          folderID: folder.id,
+          fileName: file.name,
           options: {
             height: 60,
             legend: { position: "none" },
@@ -139,7 +146,7 @@ export default {
           result.push(total);
         }
 
-        var values = [subFolder.name].concat(result).concat([""]);
+        var values = [""].concat(result).concat([""]);
         // change data to percentages
         var sum = 0;
         for (let i = 1; i < values.length - 1; i++) {
@@ -152,6 +159,7 @@ export default {
         return {
           data: [labels, values],
           folderID: subFolder.id,
+          folderName: subFolder.name,
           options: {
             height: 60,
             legend: { position: "none" },
@@ -206,13 +214,23 @@ export default {
   max-width: 100%;
   flex-wrap: nowrap;
   align-items: center;
+  grid-template-columns: 1fr 3fr 1fr;
+}
+
+.file-name {
+  grid-column: 1 / 2;
+  flex-grow: 0;
+  width: fit-content;
+  width: 100px;
 }
 
 .file-chart {
+  grid-column: 2 / 3;
   flex-grow: 1;
 }
 
 .file-actions {
+  grid-column: 3 / 4;
   flex-grow: 0;
 }
 
