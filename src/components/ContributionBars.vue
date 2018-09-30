@@ -4,6 +4,9 @@
       <div v-for="subFolder in data.subFolderData"
         v-bind:key="subFolder.id"
         class="file">
+      <div class="file-icon">
+        <MaterialIcon icon="folder" />
+      </div>
       <div class="file-name">
         <div>{{subFolder.folderName}}</div>
       </div> 
@@ -26,6 +29,9 @@
       <div v-for="file in data.fileData"
         v-bind:key="file.id"
         class="file">
+      <div class="file-icon">
+        <MaterialIcon icon="insert_drive_file" />
+      </div>
       <div class="file-name">
         <div>{{file.fileName}}</div>
       </div>
@@ -58,10 +64,12 @@
 <script>
 import Vue from "vue";
 import VueGoogleCharts from "vue-google-charts";
+import MaterialIcon from "./MaterialIcon.vue";
 
 Vue.use(VueGoogleCharts);
 
 export default {
+  components: { MaterialIcon },
   name: "ContributionBars",
   props: {
     files: Array,
