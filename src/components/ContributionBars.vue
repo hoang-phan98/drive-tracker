@@ -228,8 +228,7 @@ export default {
 .file-name {
   grid-column: 1 / 2;
   flex-grow: 0;
-  width: fit-content;
-  width: 100px;
+  width: 130px;
 }
 
 .file-chart {
