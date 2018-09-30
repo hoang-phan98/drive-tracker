@@ -108,6 +108,7 @@ class FolderContributions {
   constructor(data) {
     this.data = data;
     this.files = {};
+    this.subFolders = {};
     this.contributors = {};
   }
 
@@ -147,9 +148,21 @@ class FolderContributions {
       file => file.mimeType !== GOOGLE_DRIVE_FOLDER_MIME_TYPE
     );
 
-    await a.map(data2, 4, async data3 => {
-      const file = await FileContributions.create(data3);
+    // subfolders
+    const data3 = data1.files.filter(
+      file => file.mimeType === GOOGLE_DRIVE_FOLDER_MIME_TYPE
+    );
+
+    // populating files object of folderContributions.create result
+    await a.map(data2, 4, async data4 => {
+      const file = await FileContributions.create(data4);
       this.files[file.id] = file;
+    });
+
+    // populating subFolders object
+    await a.map(data3, 4, async data5 => {
+      const subFolder = await FolderContributions.create(data5);
+      this.subFolders[subFolder.id] = subFolder;
     });
   }
 
@@ -158,6 +171,15 @@ class FolderContributions {
       for (const contributor of Object.values(file.contributors)) {
         if (!this.contributors[contributor.emailAddress]) {
           this.contributors[contributor.emailAddress] = contributor;
+        }
+      }
+    }
+    for (const subFolder of Object.values(this.subFolders)) {
+      for (const file of Object.values(subFolder.files)) {
+        for (const contributor of Object.values(file.contributors)) {
+          if (!this.contributors[contributor.emailAddress]) {
+            this.contributors[contributor.emailAddress] = contributor;
+          }
         }
       }
     }
@@ -222,7 +244,7 @@ class FolderContributionsService {
       }));
 
       if (data1.mimeType === GOOGLE_DRIVE_FOLDER_MIME_TYPE) {
-        throw new Error("The specified resource is not a file.");
+        //throw new Error("The specified resource is not a file.");
       }
     } catch (err) {
       // TODO :)

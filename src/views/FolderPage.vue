@@ -46,6 +46,7 @@
         <ContributionBars class="contributionbars"
           v-if="folder"
           :files="Object.values(folder.files)"
+          :subFolders="Object.values(folder.subFolders)"
           :contributors="Object.values(folder.contributors)"
           :colors="colors"
         />

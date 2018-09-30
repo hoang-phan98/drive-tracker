@@ -14,7 +14,7 @@
   "dependencies": {
     "awaiting": "^3.0.0",
     "bootstrap-vue": "^2.0.0-rc.11",
-    "mdbvue": "^4.6.0",
+    "mdbvue": "^4.7.0",
     "serve": "^10.0.0",
     "vue": "^2.5.17",
     "vue-google-charts": "^0.3.1",
