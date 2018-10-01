@@ -28,15 +28,11 @@ export default {
       var result = [["User", "Contributions"]];
       for (let user of this.contributors) {
         const name = user.displayName;
-        const values = this.contributions.filter(
+        const value = this.contributions.filter(
           contribution => contribution.user.emailAddress === user.emailAddress
         ).length;
 
-        var total = 0;
-        for (var i = 0; i < values.length; i++) {
-          total = total + values[i];
-        }
-        result.push([name, total]);
+        result.push([name, value]);
       }
       return result;
     },
