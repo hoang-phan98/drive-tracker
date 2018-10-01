@@ -109,6 +109,7 @@ class FolderContributions {
     this.data = data;
     this.files = {};
     this.subFolders = {};
+    this.allFiles = {};
     this.contributors = {};
   }
 
@@ -157,6 +158,7 @@ class FolderContributions {
     await a.map(data2, 4, async data4 => {
       const file = await FileContributions.create(data4);
       this.files[file.id] = file;
+      this.allFiles[file.id] = file;
     });
 
     // populating subFolders object
