@@ -1,7 +1,25 @@
 <template>
   <div class="contributiongrid">
     <div class="files">
-      <div v-for="file in data"
+      <div v-for="subFolder in data.subFolderData"
+        v-bind:key="subFolder.id"
+        class="file">
+      <div class="file-chart">
+        <GChart
+          type="BarChart"
+          v-bind:data="subFolder.data"
+          :options="subFolder.options"
+        />
+        </div>
+        <div class="file-actions">
+          <b-button variant="outline-primary" size="sm"
+            v-on:click="foldernav(subFolder.folderID, $event)">
+            More Details
+          </b-button>
+        </div>
+      </div>
+      
+      <div v-for="file in data.fileData"
         v-bind:key="file.id"
         class="file">
       <div class="file-chart">
@@ -40,12 +58,13 @@ export default {
   name: "ContributionBars",
   props: {
     files: Array,
+    subFolders: Array,
     colors: Object,
     contributors: Array
   },
   computed: {
     data() {
-      return this.files.map(file => {
+      let fileData = this.files.map(file => {
         const labels = [
           "Contributor",
           ...this.contributors.map(user => user.displayName),
@@ -75,6 +94,7 @@ export default {
         return {
           data: [labels, values],
           fileID: file.id,
+          //          folderID: folder.id,
           options: {
             height: 60,
             legend: { position: "none" },
@@ -92,12 +112,76 @@ export default {
           }
         };
       });
+      ///
+
+      let subFolderData = this.subFolders.map(subFolder => {
+        var subFiles = Object.values(subFolder.files);
+
+        const labels = [
+          "Contributor",
+          ...this.contributors.map(user => user.displayName),
+          { role: "annotation" }
+        ];
+
+        var result = [];
+        for (let user of this.contributors) {
+          const vals = subFiles.map(subFile => {
+            return subFile.contributions.filter(
+              contribution =>
+                contribution.user.emailAddress === user.emailAddress
+            ).length;
+          });
+
+          var total = 0;
+          for (var i = 0; i < vals.length; i++) {
+            total = total + vals[i];
+          }
+          result.push(total);
+        }
+
+        var values = [subFolder.name].concat(result).concat([""]);
+        // change data to percentages
+        var sum = 0;
+        for (let i = 1; i < values.length - 1; i++) {
+          sum += values[i];
+        }
+        for (let j = 1; j < values.length - 1; j++) {
+          values[j] = (values[j] / sum) * 100;
+        }
+
+        return {
+          data: [labels, values],
+          folderID: subFolder.id,
+          options: {
+            height: 60,
+            legend: { position: "none" },
+            bar: { groupWidth: "50%" },
+            isStacked: true,
+            hAxis: {
+              minValue: 0
+              // viewWindow: {
+              //   max: file.contributions.length
+              // }
+            },
+            colors: this.contributors.map(
+              user => this.colors[user.emailAddress]
+            )
+          }
+        };
+      });
+      ///
+
+      return { fileData: fileData, subFolderData: subFolderData };
     }
   },
   methods: {
     filenav(item) {
       // navs the the file level view
       this.$router.push("/file/" + item);
+    },
+    foldernav(item) {
+      // navs the the folder page
+      this.$router.push("/folder/" + item);
     }
   },
   mounted() {
