@@ -35,10 +35,12 @@
       </div>
 
       <div class="histogram">
-        <GChart
-          type="LineChart"
-          :data="histogramData"
-          :options="histogramOptions"
+        <TimelineFile
+          v-if="file"
+          :revisions ="Object.values(file.revisions)"
+          :contributions="Object.values(file.contributions)"
+          :contributors="Object.values(file.contributors)"
+          :colors="colors"
         />
 
       </div>
@@ -96,6 +98,7 @@ import Colours from "./ColourGeneration.vue";
 import MaterialIcon from "@/components/MaterialIcon.vue";
 import LoadingScreen from "../components/LoadingScreen.vue";
 import PieChartFile from "../components/PieChartFile.vue";
+import TimelineFile from "../components/TimelineFile.vue";
 //import randomColour from "./ColourGeneration.vue";
 
 Vue.use(VueGoogleCharts);
@@ -106,7 +109,8 @@ export default {
   components: {
     MaterialIcon,
     LoadingScreen,
-    PieChartFile
+    PieChartFile,
+    TimelineFile
   },
   props: {
     id: String,
