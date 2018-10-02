@@ -17,17 +17,26 @@
 import Layout from "@/views/Layout.vue";
 import SpaceBackground from "@/components/SpaceBackground.vue";
 import FolderContributionsService from "./folder-contributions-service.js";
-//import Colours from "@/components/ColourGeneration.vue";
+import UserStorageService from "./user-storage-service.js";
 
 export default {
   data() {
-    return { contributions: new FolderContributionsService() };
+    return {
+      contributions: new FolderContributionsService(),
+      storage: new UserStorageService()
+    };
   },
+  // Provide makes the folder contribution service and user storage service
+  // available to descendant components
   provide() {
     const context = {};
     Object.defineProperty(context, "contributions", {
       enumerable: true,
       get: () => this.contributions
+    });
+    Object.defineProperty(context, "storage", {
+      enumerable: true,
+      get: () => this.storage
     });
     return context;
   },
