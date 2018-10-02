@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import * as a from "awaiting";
 import googleapis from "../googleapis";
 import AddFolderModal from "./AddFolderModal.vue";
 
@@ -85,6 +86,24 @@ export default {
 
     // Load tracked items into the component
     this.folders = trackedItems;
+
+    // The details of the folders might have changed since they were saved to
+    // storage, refetch them all
+    a.map(this.folders, 6, async folder => {
+      try {
+        const newFolder = await this.fetchFolder(folder.id);
+
+        // Replace the old folder record with the new one
+        this.folders.splice(
+          this.folders.findIndex(f => f.id === folder.id),
+          1,
+          newFolder
+        );
+      } catch (err) {
+        // eslint-disable-next-line
+        console.error(err);
+      }
+    });
   },
   methods: {
     async addFolder({ id, name }) {
@@ -93,22 +112,29 @@ export default {
       }
 
       try {
-        const { result: folder } = await googleapis.client.drive.files.get({
-          fileId: id,
-          fields:
-            "id, name, owners(displayName), lastModifyingUser(displayName)"
-        });
+        const folder = await this.fetchFolder(id);
         this.folders.push(folder);
-        // Every time we add a folder, make sure it's persisted to storage
-        this.storage.update({ trackedItems: this.folders });
       } catch (err) {
         // eslint-disable-next-line
         console.error(err);
         this.error = `There was a problem fetching the folder "${name}".`;
       }
     },
+    async fetchFolder(id) {
+      const { result: folder } = await googleapis.client.drive.files.get({
+        fileId: id,
+        fields: "id, name, owners(displayName), lastModifyingUser(displayName)"
+      });
+      return folder;
+    },
     preview(folder) {
       this.$emit("preview-folder", folder.id);
+    }
+  },
+  watch: {
+    folders() {
+      // Every time we change the folders, make sure it's persisted to storage
+      this.storage.update({ trackedItems: this.folders });
     }
   }
 };
