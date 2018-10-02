@@ -45,7 +45,7 @@ import AddFolderModal from "./AddFolderModal.vue";
 
 export default {
   components: { AddFolderModal },
-  inject: ["contributions"],
+  inject: ["contributions", "storage"],
   data() {
     return {
       folders: [],
@@ -71,6 +71,21 @@ export default {
       error: null
     };
   },
+  mounted() {
+    // Load tracked items
+    this.storage.load();
+
+    // If this is the user's first login, they won't have a trackedItems entry
+    // in their persistent storage
+    let { trackedItems } = this.storage.get();
+    if (!trackedItems) {
+      trackedItems = [];
+      this.storage.update({ trackedItems });
+    }
+
+    // Load tracked items into the component
+    this.folders = trackedItems;
+  },
   methods: {
     async addFolder({ id, name }) {
       if (this.folders.find(folder => folder.id === id)) {
@@ -84,6 +99,8 @@ export default {
             "id, name, owners(displayName), lastModifyingUser(displayName)"
         });
         this.folders.push(folder);
+        // Every time we add a folder, make sure it's persisted to storage
+        this.storage.update({ trackedItems: this.folders });
       } catch (err) {
         // eslint-disable-next-line
         console.error(err);
