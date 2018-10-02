@@ -85,8 +85,7 @@ export default {
     LoadingScreen
   },
   props: {
-    id: String,
-    rendered: false
+    id: String
   },
   inject: ["contributions"],
   async mounted() {
@@ -117,7 +116,8 @@ export default {
   data() {
     return {
       folder: null,
-      colors: {}
+      colors: {},
+      rendered: false
     };
   }
 };

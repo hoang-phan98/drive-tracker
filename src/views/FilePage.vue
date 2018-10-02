@@ -105,8 +105,7 @@ export default {
     LoadingScreen
   },
   props: {
-    id: String,
-    rendered: false
+    id: String
   },
   async mounted() {
     let file;
@@ -205,6 +204,7 @@ export default {
   },
   data() {
     return {
+      rendered: false,
       fileName: "File Name",
       colors: {},
       userList: [],

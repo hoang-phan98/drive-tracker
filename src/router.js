@@ -42,7 +42,10 @@ export default new Router({
       component: {
         render(h) {
           // Pass on the id of the folder to the component
-          return h(FolderPage, { props: { id: this.$route.params.id } });
+          return h(FolderPage, {
+            props: { id: this.$route.params.id },
+            key: this.$route.params.id
+          });
         },
         async beforeRouteEnter(to, from, next) {
           next((await isSignedIn()) ? undefined : "/login");
@@ -54,9 +57,12 @@ export default new Router({
       name: "file",
       // this is file page lmao
       component: {
-        render(z) {
+        render(h) {
           // Pass on the id of the folder to the component
-          return z(FilePage, { props: { id: this.$route.params.id } });
+          return h(FilePage, {
+            props: { id: this.$route.params.id },
+            key: this.$route.params.id
+          });
         },
         async beforeRouteEnter(to, from, next) {
           next((await isSignedIn()) ? undefined : "/login");
