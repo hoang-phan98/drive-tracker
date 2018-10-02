@@ -1,7 +1,7 @@
 <template>
   <div class="LoadingScreen">
     <img src="../assets/cactus.gif" class="Cactus">'
-    <progress-wrapper class="Loading" height="30">
+    <progress-wrapper class="Loading" :height="30">
         <progress-bar :value="100" striped animated> <strong>Loading...</strong> </progress-bar>
     </progress-wrapper>
   </div>
