@@ -2,7 +2,7 @@
   <div>
     <!-- toggle buttons used to filter adds/edits/delelets data (or combinations of them) on graphs -->
     <b-button-group>
-      <b-button v-for="btn in buttons" :pressed.sync="btn.state" :variant="btn.variant" :key="btn.variant">
+      <b-button v-for="btn in buttons" :pressed.sync="btn.state" :variant="btn.variant" :key="btn.caption">
         {{ btn.caption }}
       </b-button>
     </b-button-group>
