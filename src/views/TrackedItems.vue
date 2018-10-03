@@ -25,7 +25,7 @@
       </div>
     </div>
     <div class="fab-container">
-      <button class="fab" v-b-modal="'add-tracked-folder'">
+      <button class="fab" @click="addFolderModal = true">
         <span class="fab-text">Add folder</span>
         <i class="material-icons fab-icon">
           create_new_folder
@@ -35,20 +35,21 @@
         </i>
       </button>
     </div>
-    <AddFolderModal id="add-tracked-folder" @add-folder="addFolder($event)" />
+    <GooglePicker :open="addFolderModal" @close="addFolderModal = false" @picked="addFolder($event)" />
   </div>
 </template>
 
 <script>
 import * as a from "awaiting";
 import googleapis from "../googleapis";
-import AddFolderModal from "./AddFolderModal.vue";
+import GooglePicker from "../components/GooglePicker.vue";
 
 export default {
-  components: { AddFolderModal },
+  components: { GooglePicker },
   inject: ["contributions", "storage"],
   data() {
     return {
+      addFolderModal: false,
       folders: [],
       fields: [
         {
