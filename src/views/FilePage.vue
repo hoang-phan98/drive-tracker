@@ -24,19 +24,23 @@
         <!-- </div> -->
       </div>
       <div class = "pichart">
-        <GChart
-          type="PieChart"
-          :data="pieData"
-          :options="pieOptions"
+        <PieChartFile
+          v-if="file"
+          :revisions ="Object.values(file.revisions)"
+          :contributions="Object.values(file.contributions)"
+          :contributors="Object.values(file.contributors)"
+          :colors="colors"
         />
 
       </div>
 
       <div class="histogram">
-        <GChart
-          type="LineChart"
-          :data="histogramData"
-          :options="histogramOptions"
+        <TimelineFile
+          v-if="file"
+          :revisions ="Object.values(file.revisions)"
+          :contributions="Object.values(file.contributions)"
+          :contributors="Object.values(file.contributors)"
+          :colors="colors"
         />
 
       </div>
@@ -93,6 +97,8 @@ import VueGoogleCharts from "vue-google-charts";
 import Colours from "./ColourGeneration.vue";
 import MaterialIcon from "@/components/MaterialIcon.vue";
 import LoadingScreen from "../components/LoadingScreen.vue";
+import PieChartFile from "../components/PieChartFile.vue";
+import TimelineFile from "../components/TimelineFile.vue";
 //import randomColour from "./ColourGeneration.vue";
 
 Vue.use(VueGoogleCharts);
@@ -102,7 +108,9 @@ export default {
   name: "FilePage",
   components: {
     MaterialIcon,
-    LoadingScreen
+    LoadingScreen,
+    PieChartFile,
+    TimelineFile
   },
   props: {
     id: String
@@ -144,7 +152,6 @@ export default {
     });
 
     // call generate colours function while passing in the number of users from userList.length
-    this.populatePieData();
     this.populateBarData();
 
     this.file = file;
@@ -184,22 +191,6 @@ export default {
       }
 
       this.barOptions.colors = this.colourList;
-    },
-    populatePieData() {
-      for (let i = 0; i < this.userList.length; i++) {
-        let data = [];
-        data.push(this.userList[i]);
-        data.push(this.pieStats[i]);
-        data.push(this.colourList[i]);
-
-        //console.log([(this.userList[i], this.pieStats[i], this.colourList[i])]);
-        this.pieData.push([
-          this.userList[i],
-          this.pieStats[i]
-          //this.colourList[i]
-        ]);
-        this.pieOptions.colors = this.colourList;
-      }
     }
   },
   data() {
@@ -251,7 +242,6 @@ export default {
         ["Dax", 16, "#FFFF00	"],
         ["Marc", 28, "#808080"]
       ],*/
-      pieStats: [4, 2, 5, 7, 10, 2, 3, 4],
       barStats: [],
       userOptions: {
         //width: 600,
@@ -260,25 +250,6 @@ export default {
         legend: "none",
         bar: { groupWidth: "75%" },
         isStacked: "percent"
-      },
-      pieData: [
-        ["Task", "Hours per Day"]
-        // ["Kenny", 11],
-        // ["Hoang", 2],
-        // ["Erica", 2],
-        // ["Dax", 2],
-        // ["Marc", 7]
-      ],
-      pieOptions: {
-        //width: 600,
-        chartArea: {
-          width: "85%"
-        },
-        height: this.height || 500,
-        title: "All Time Contribution",
-        pieHole: 0.4,
-        legend: "none"
-        //colors: colourList
       },
       histogramData: [
         [
