@@ -3,12 +3,13 @@
     <div class="grid-container">
       <!--<div class="legend-holder">-->
 
-        <div class="titleBanner">
-          <h1 class="fileName">
-          <material-icon icon="folder_open" size="large" />
-            <router-link to="/">Home</router-link> > {{folder && folder.name}}
-          </h1>
-        </div>
+      <div class="titleBanner">
+        <h1 class="fileName">
+        <material-icon icon="folder_open" size="large" />
+          <router-link to="/">Home</router-link> > {{folder && folder.name}}
+        </h1>
+      </div>
+
       <div class="legend">
         <h1>Users</h1>
         <span><br></span>
@@ -19,6 +20,7 @@
           </div>
         </div>
       </div>
+
       <div class="pichart">
         <PieChart
           v-if="folder"
@@ -26,10 +28,12 @@
           :contributors="Object.values(folder.contributors)"
           :colors="colors"
         />
-
-      <ToggleGroup class="toggleGroupPieChart">
-      </ToggleGroup>
+        <div class="filters">
+          <ToggleGroup class="toggleGroupPieChart"></ToggleGroup>
+          <TimeDropdown class="dropdownPieChart"></TimeDropdown>
+        </div>
       </div>
+
       <div class="histogram">
         <Timeline
           v-if="folder"
@@ -37,10 +41,10 @@
           :contributors="Object.values(folder.contributors)"
           :colors="colors"
         />
-
-      <ToggleGroup class="toggleGroupHistogram">
-      </ToggleGroup>
+        <ToggleGroup class="toggleGroupHistogram">
+        </ToggleGroup>
       </div>
+
       <div class="filecontribution">
         <h1 class="fileListTitle"> Files </h1>
         <ContributionBars class="contributionbars"
@@ -70,6 +74,7 @@ import Timeline from "../components/Timeline.vue";
 import ToggleGroup from "../components/ToggleGroup.vue";
 import MaterialIcon from "@/components/MaterialIcon.vue";
 import LoadingScreen from "../components/LoadingScreen.vue";
+import TimeDropdown from "../components/TimeDropdown.vue";
 //import randomColour from "./ColourGeneration.vue";
 
 Vue.use(VueGoogleCharts);
@@ -82,7 +87,8 @@ export default {
     PieChart,
     ToggleGroup,
     MaterialIcon,
-    LoadingScreen
+    LoadingScreen,
+    TimeDropdown
   },
   props: {
     id: String
@@ -160,6 +166,18 @@ export default {
   /*border-radius: 25px;*/
   width: 100%;
   height: 100%;
+}
+
+.toggleGroupPieChart {
+  margin: 0.5em;
+  margin-left: 15%;
+  display: inline-flex;
+}
+
+.dropdownPieChart {
+  margin-right: 15%;
+  display: inline-flex;
+  float: right;
 }
 
 .histogram {

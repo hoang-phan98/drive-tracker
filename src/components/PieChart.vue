@@ -43,13 +43,13 @@ export default {
     },
     pieOptions() {
       return {
-        chartArea: {
-          width: "85%"
-        },
-        height: this.height || 500,
+        height: this.height || 600,
         title: "All Time Contribution",
         pieHole: 0.4,
         legend: "none",
+        chartArea: {
+          height: "80%"
+        },
         colors: this.contributors.map(user => this.colors[user.emailAddress])
       };
     }
