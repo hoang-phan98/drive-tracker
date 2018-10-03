@@ -1,6 +1,7 @@
 <template>
     <div>
-        <b-dropdown id="time-dropdown" text="Time" class="m-2">
+        <img class="calendarIcon" src="../assets/calendar.png" />
+        <b-dropdown id="timeDropdown" text="Time" variant="outline-secondary" class="m-2">
             <b-dropdown-item-button>Day</b-dropdown-item-button>
             <b-dropdown-item-button>Week</b-dropdown-item-button>
             <b-dropdown-item-button>Month</b-dropdown-item-button>
@@ -16,3 +17,16 @@ export default {
   name: "TimeDropdown"
 };
 </script>
+
+<style>
+.calendarIcon {
+  display: inline;
+  width: 50px;
+  height: 50px;
+}
+
+.timeDropdown {
+  margin-left: 5px;
+  display: inline;
+}
+</style>

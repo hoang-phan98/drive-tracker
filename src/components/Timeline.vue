@@ -1,5 +1,10 @@
 <template>
   <div>
+    <div>
+      <h2 class="title">Revision Timeline</h2>
+      <h4 class="timeSpan">1/1/2018 - 31/12/2018</h4>
+
+    </div>
     <GChart
       type="LineChart"
       :data="helloworld.data"
@@ -66,7 +71,6 @@ export default {
       return {
         data: lineData,
         options: {
-          title: "Revisions Timeline",
           curveType: "function",
           legend: { position: "bottom" },
           interpolateNulls: true,

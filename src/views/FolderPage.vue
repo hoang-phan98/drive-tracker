@@ -172,12 +172,12 @@ export default {
 
 .toggleGroupPieChart {
   margin: 0.5em;
-  margin-left: 15%;
+  margin-left: 5%;
   display: inline-flex;
 }
 
 .dropdownPieChart {
-  margin-right: 15%;
+  margin-right: 5%;
   display: inline-flex;
   float: right;
 }
@@ -185,7 +185,7 @@ export default {
 .histogram {
   background: rgba(256, 256, 256, 1); /*can be anything, of course*/
   margin: auto;
-  padding: 10px;
+  padding: 20px;
   grid-column: 1 / 4;
   grid-row: 3;
   text-align: center;
@@ -195,14 +195,17 @@ export default {
   height: 100%;
 }
 
-.toggleGroupHistogram {
+.filtersHistogram {
   margin-top: 30px;
-  display: inline-flex;
+}
+
+.toggleGroupHistogram {
+  display: inline;
 }
 
 .dropdownHistogram {
-  margin-left: 50px;
-  display: inline-flex;
+  margin-left: 10%;
+  display: inline;
 }
 
 .filecontribution {
