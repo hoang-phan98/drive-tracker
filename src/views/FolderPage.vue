@@ -11,7 +11,7 @@
       </div>
 
       <div class="legend">
-        <h1>Users</h1>
+        <h2>Users</h2>
         <span><br></span>
         <div v-if="folder" class="legend-list">
           <div v-for="user in Object.values(folder.contributors)" :key="user.id" class="legend-entry">
@@ -28,7 +28,7 @@
           :contributors="Object.values(folder.contributors)"
           :colors="colors"
         />
-        <div class="filters">
+        <div class="filtersPieChart">
           <ToggleGroup class="toggleGroupPieChart"></ToggleGroup>
           <TimeDropdown class="dropdownPieChart"></TimeDropdown>
         </div>
@@ -41,12 +41,14 @@
           :contributors="Object.values(folder.contributors)"
           :colors="colors"
         />
-        <ToggleGroup class="toggleGroupHistogram">
-        </ToggleGroup>
+        <div class="filtersHistogram">
+          <ToggleGroup class="toggleGroupHistogram"></ToggleGroup>
+          <TimeDropdown class="dropdownHistogram"></TimeDropdown>
+        </div>
       </div>
 
       <div class="filecontribution">
-        <h1 class="fileListTitle"> Files </h1>
+        <h2 class="fileListTitle"> Files </h2>
         <ContributionBars class="contributionbars"
           v-if="folder"
           :files="Object.values(folder.files)"
@@ -158,7 +160,7 @@ export default {
 .pichart {
   background: rgba(256, 256, 256, 1); /*can be anything, of course*/
   margin: auto;
-  padding: 10px;
+  padding: 40px;
   grid-column: 2 / 3;
   grid-row: 2;
   /*text-align: center; */
@@ -195,6 +197,12 @@ export default {
 
 .toggleGroupHistogram {
   margin-top: 30px;
+  display: inline-flex;
+}
+
+.dropdownHistogram {
+  margin-left: 50px;
+  display: inline-flex;
 }
 
 .filecontribution {
@@ -202,14 +210,10 @@ export default {
   /* margin: auto; */
   grid-column: 3 / 4;
   grid-row: 2;
-  text-align: center;
   height: 600px;
   width: 100%;
   overflow-y: scroll;
-}
-
-.fileListTitle {
-  margin-top: 50px;
+  padding: 40px;
 }
 
 .contributionbars {
@@ -242,7 +246,7 @@ export default {
   background: rgba(256, 256, 256, 1); /*can be anything, of course*/
 
   margin: auto;
-  padding: 50px;
+  padding: 40px;
 
   /*box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);*/
   /*border-radius: 25px;*/

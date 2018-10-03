@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div>
+      <h2 class="pieTitle">Contributions</h2>
+    </div>
     <GChart
       type="PieChart"
       :data="data"
@@ -44,11 +47,11 @@ export default {
     pieOptions() {
       return {
         height: this.height || 600,
-        title: "All Time Contribution",
         pieHole: 0.4,
         legend: "none",
         chartArea: {
-          height: "80%"
+          height: "80%",
+          width: "70%"
         },
         colors: this.contributors.map(user => this.colors[user.emailAddress])
       };
@@ -57,5 +60,5 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 </style>
