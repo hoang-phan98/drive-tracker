@@ -25,7 +25,8 @@ export default {
   props: {
     files: Array,
     colors: Object,
-    contributors: Array
+    contributors: Array,
+    dateRange: String
   },
   computed: {
     helloworld() {
@@ -39,70 +40,17 @@ export default {
       }
       lineData.push(labels);
 
-      // Initialise the value array (for each row) to be [null, 0, 0,0 ...]
-      // Null will be the field for the date, initialised as null
-      var values = []; //stores the actual row to be appended lineData
-      values.push(null);
-      for (var y = 0; y < this.contributors.length; y++) {
-        values.push(0);
-      }
+      // Get all raw revisions
+      var rawRevisions = this.getRawRevisions();
 
-      /*// increments which file contained that revision and then pushes the row
-      for (var i = 0; i < this.files.length; i++) {
-        for (var j = 0; j < this.files[i].revisions.length; j++) {
-          var dateString = this.files[i].revisions[j].modifiedTime;
-          //values[0] = dateFormat(dateString, "dd/mm");
-          values[0] = dateString;
-          console.log(typeof(dateString));
-          // Now to increment the revision for the corresponder contributor
-          for (var h = 0; h < this.contributors.length; h++) {
-            if (
-              this.contributors[h].displayName ===
-              this.files[i].revisions[j].lastModifyingUser.displayName
-            ) {
-              values[h + 1] += 1;
-            }
-          }
-          var duplicateObject = JSON.parse(JSON.stringify(values));
-          lineData.push(values);
-        }
-      }*/
+      // Count raw revisions of individual contributor and parse them as chart entry format
+      var entries = this.parseRevisionsToEntries(rawRevisions);
 
-      // Get all revisions first
-      var totalRevisions = [];
-      for (var f = 0; f < this.files.length; f++) {
-        var file = this.files[f];
+      entries = this.filterEntriesByDate(entries, "Month");
 
-        for (var r = 0; r < file.revisions.length; r++) {
-          var revision = file.revisions[r];
-          totalRevisions.push(revision);
-        }
-      }
-
-      // Sort all revisions by date
-      totalRevisions.sort(function(a, b) {
-        return new Date(a.modifiedTime) - new Date(b.modifiedTime);
-      });
-
-      // Increment revision count to corresponding user
-      for (var tr = 0; tr < totalRevisions.length; tr++) {
-        for (var c = 0; c < this.contributors.length; c++) {
-          if (
-            this.contributors[c].displayName ===
-            totalRevisions[tr].lastModifyingUser.displayName
-          ) {
-            var dateString = dateFormat(
-              totalRevisions[tr].modifiedTime,
-              "dd/mm"
-            );
-            values[0] = dateString;
-            values[c + 1] += 1;
-          }
-        }
-
-        // Add entry of that date to chart
-        var parse = JSON.parse(JSON.stringify(values));
-        lineData.push(parse);
+      // Add those entries to chart
+      for (var e = 0; e < entries.length; e++) {
+        lineData.push(entries[e]);
       }
 
       // If you want to see what the line data looks like uncomment below.
@@ -118,6 +66,198 @@ export default {
           height: 400
         }
       };
+    }
+  },
+  methods: {
+    getRawRevisions: function() {
+      // Get all raw revisions first
+      var rawRevisions = [];
+      for (var f = 0; f < this.files.length; f++) {
+        var file = this.files[f];
+
+        for (var r = 0; r < file.revisions.length; r++) {
+          var revision = file.revisions[r];
+          rawRevisions.push(revision);
+        }
+      }
+
+      // Sort all raw revisions by date
+      rawRevisions.sort(function(a, b) {
+        return new Date(a.modifiedTime) - new Date(b.modifiedTime);
+      });
+
+      return rawRevisions;
+    },
+    parseRevisionsToEntries: function(revisions) {
+      var entries = [];
+
+      // Initialise the value array (for each row) to be [null, 0, 0,0 ...]
+      // Null will be the field for the date, initialised as null
+      var values = []; //stores the actual row to be appended lineData
+      values.push(null);
+      for (var y = 0; y < this.contributors.length; y++) {
+        values.push(0);
+      }
+
+      // If raw revisions are empty (no revision during the selected period), push empty data
+      if (revisions.length == 0) {
+        //TODO: refine
+        entries.push([dateFormat(new Date()), 0, 0, 0, 0, 0, 0]);
+      }
+
+      // Count revisions of individual contributor and parse them as chart entry format
+      for (var r = 0; r < revisions.length; r++) {
+        for (var c = 0; c < this.contributors.length; c++) {
+          if (
+            this.contributors[c].displayName ===
+            revisions[r].lastModifyingUser.displayName
+          ) {
+            var dateString = dateFormat(
+              revisions[r].modifiedTime,
+              "isoDateTime"
+            );
+            values[0] = dateString;
+            values[c + 1] += 1;
+          }
+        }
+
+        // Add those entries to chart
+        var parse = JSON.parse(JSON.stringify(values));
+        entries.push(parse);
+      }
+
+      return entries;
+    },
+    filterEntriesByDate(revisions, selectedDateRange) {
+      // This method will expand revision entries to fill all dates
+      var entries = this.getEmptyEntries(selectedDateRange);
+      for (var e = 0; e < entries.length; e++) {
+        // Copy entries across dates to keep integrity of the timeline (until new revision is found)
+        if (e > 0) {
+          for (var i = 1; i < entries[e].length; i++) {
+            entries[e][i] = entries[e - 1][i];
+          }
+        }
+
+        for (var r = 0; r < revisions.length; r++) {
+          var revision = revisions[r];
+          var revisionDate = this.trimDate(
+            new Date(revision[0]),
+            selectedDateRange
+          );
+          var dateString = dateFormat(revisionDate, "isoDateTime");
+
+          if (dateString === entries[e][0]) {
+            entries[e] = revision;
+          }
+        }
+      }
+      //console.log(entries);
+      return entries;
+    },
+    trimDate: function(date, selectedDateRange) {
+      // Trim miliseconds, minutes etc so that different revisions on the same date won't be counted separately
+      date.setMilliseconds(0);
+      date.setSeconds(0);
+      date.setMinutes(0);
+
+      switch (selectedDateRange) {
+        case "Day":
+          break;
+        case "Week":
+          date.setHours(0);
+          break;
+        case "Month":
+          date.setHours(0);
+          break;
+        case "Year":
+          date.setHours(0);
+          date.setDate(1);
+          break;
+        default:
+          break;
+      }
+
+      return date;
+    },
+    getEmptyEntries: function(selectedDateRange) {
+      var emptyEntries = [];
+
+      // Entry skeleton
+      var singleEntry = [];
+      singleEntry.push(null);
+      for (var y = 0; y < this.contributors.length; y++) {
+        singleEntry.push(0);
+      }
+
+      // Current date
+      var lastDate = new Date();
+      lastDate = this.trimDate(lastDate, selectedDateRange);
+
+      // First date with which timeline starts
+      var firstDate = new Date(lastDate);
+      var date;
+      var dateString;
+      switch (selectedDateRange) {
+        case "Day":
+          firstDate.setDate(firstDate.getDate() - 1); // 24 hours prior to current date
+
+          // Push 24 entries (each represent an hour)
+          for (var h = 0; h <= 24; h++) {
+            date = new Date(firstDate).setHours(firstDate.getHours() + h);
+            dateString = dateFormat(date, "isoDateTime");
+            singleEntry[0] = dateString;
+            emptyEntries.push(JSON.parse(JSON.stringify(singleEntry)));
+          }
+          break;
+
+        case "Week":
+          firstDate.setHours(0);
+          firstDate.setDate(firstDate.getDate() - 7); // 7 days prior
+
+          // Push 7 entries (each represent a day)
+          for (var d = 0; d <= 7; d++) {
+            date = new Date(firstDate).setDate(firstDate.getDate() + d);
+            dateString = dateFormat(date, "isoDateTime");
+            singleEntry[0] = dateString;
+            emptyEntries.push(JSON.parse(JSON.stringify(singleEntry)));
+          }
+          break;
+
+        case "Month":
+          firstDate.setHours(0);
+          firstDate.setMonth(lastDate.getMonth() - 1); // 1 month prior
+
+          // Push 30 entries (each represent a day)
+          for (var dm = 0; dm <= 30; dm++) {
+            date = new Date(firstDate).setDate(firstDate.getDate() + dm);
+            dateString = dateFormat(date, "isoDateTime");
+            singleEntry[0] = dateString;
+            emptyEntries.push(JSON.parse(JSON.stringify(singleEntry)));
+          }
+
+          break;
+
+        case "Year":
+          firstDate.setHours(0);
+          firstDate.setDate(1);
+          firstDate.setFullYear(lastDate.getFullYear() - 1); // 1 year prior
+
+          // Push 12 entries (each represent a month)
+          for (var m = 0; m <= 12; m++) {
+            date = new Date(firstDate).setMonth(firstDate.getMonth() + m);
+            dateString = dateFormat(date, "isoDateTime");
+            singleEntry[0] = dateString;
+            emptyEntries.push(JSON.parse(JSON.stringify(singleEntry)));
+          }
+
+          break;
+
+        default:
+          break;
+      }
+
+      return emptyEntries;
     }
   }
 };

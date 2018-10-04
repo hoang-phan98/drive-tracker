@@ -1,7 +1,7 @@
 <template>
     <div>
         <img class="calendarIcon" src="../assets/calendar.png" />
-        <b-dropdown id="timeDropdown" text="Time" variant="outline-secondary" class="m-2">
+        <b-dropdown id="timeDropdown" v-bind:text="selectedDate" variant="outline-secondary" class="m-2">
             <b-dropdown-item-button>Day</b-dropdown-item-button>
             <b-dropdown-item-button>Week</b-dropdown-item-button>
             <b-dropdown-item-button>Month</b-dropdown-item-button>
@@ -14,7 +14,12 @@
 
 <script>
 export default {
-  name: "TimeDropdown"
+  name: "TimeDropdown",
+  data() {
+    return {
+      selectedDate: "All Time"
+    };
+  }
 };
 </script>
 
