@@ -131,6 +131,7 @@ export default {
     filterEntriesByDate(revisions, selectedDateRange) {
       // This method will expand revision entries to fill all dates
       var entries = this.getEmptyEntries(selectedDateRange);
+
       for (var e = 0; e < entries.length; e++) {
         // Copy entries across dates to keep integrity of the timeline (until new revision is found)
         if (e > 0) {
@@ -152,7 +153,13 @@ export default {
           }
         }
       }
+
       //console.log(entries);
+      if (entries.length == 0) entries = revisions;
+
+      // Format date lables
+      this.formatLabels(entries, selectedDateRange);
+
       return entries;
     },
     trimDate: function(date, selectedDateRange) {
@@ -174,6 +181,9 @@ export default {
           date.setHours(0);
           date.setDate(1);
           break;
+        case "All Time":
+          date.setHours(0);
+          break;
         default:
           break;
       }
@@ -190,11 +200,11 @@ export default {
         singleEntry.push(0);
       }
 
-      // Current date
+      // Last date at which timeline ends
       var lastDate = new Date();
       lastDate = this.trimDate(lastDate, selectedDateRange);
 
-      // First date with which timeline starts
+      // First date at which timeline starts
       var firstDate = new Date(lastDate);
       var date;
       var dateString;
@@ -258,6 +268,29 @@ export default {
       }
 
       return emptyEntries;
+    },
+    formatLabels: function(entries, selectedDateRange) {
+      for (var i = 0; i < entries.length; i++) {
+        switch (selectedDateRange) {
+          case "Day":
+            entries[i][0] = dateFormat(new Date(entries[i][0]), "HH:MM");
+            break;
+          case "Week":
+            entries[i][0] = dateFormat(new Date(entries[i][0]), "dd/mm");
+            break;
+          case "Month":
+            entries[i][0] = dateFormat(new Date(entries[i][0]), "dd/mm");
+            break;
+          case "Year":
+            entries[i][0] = dateFormat(new Date(entries[i][0]), "mmm-yyyy");
+            break;
+          case "All Time":
+            entries[i][0] = dateFormat(new Date(entries[i][0]), "dd/mm/yy");
+            break;
+          default:
+            break;
+        }
+      }
     }
   }
 };
