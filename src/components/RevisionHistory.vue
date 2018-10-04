@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="revisionTable">
     <b-table
-      :items="helloworld.options"
+      :items="helloworld.items"
       :fields="helloworld.fields"
       striped hover
       >
@@ -17,29 +17,20 @@ export default {
   },
   computed: {
     helloworld() {
+      console.log(this.revisions);
+      const items = [];
+
+      for (var i = 0; i < this.revisions.length; i++) {
+        var builder = {
+          "Revision ID": this.revisions[i].id,
+          "Modified Time": this.revisions[i].modifiedTime,
+          "Last Modifying User": this.revisions[i].lastModifyingUser.displayName
+        };
+        items.push(builder);
+      }
       return {
-        fields: ["Revision", "Something1", "Something2"],
-        options: [
-          {
-            Revision: true,
-            age: 40,
-            Something1: "Dickerson",
-            Something2: "Macdonald"
-          },
-          {
-            Revision: false,
-            age: 21,
-            Something1: "Larsen",
-            Something2: "Shaw"
-          },
-          {
-            Revision: false,
-            age: 89,
-            Something1: "Geneva",
-            Something2: "Wilson"
-          },
-          { Revision: true, age: 38, Something1: "Jami", Something2: "Carney" }
-        ]
+        fields: ["Revision ID", "Modified Time", "Last Modifying User"],
+        items: items
       };
     }
   }
