@@ -2,7 +2,7 @@
   <div v-if="rendered" class="folderpage">
     <div class="grid-container">
       <!--<div class="legend-holder">-->
-
+    
       <div class="titleBanner">
         <h1 class="fileName">
         <material-icon icon="folder_open" size="large" />
@@ -171,7 +171,6 @@ export default {
 }
 
 .toggleGroupPieChart {
-  margin: 0.5em;
   margin-left: 5%;
   display: inline-flex;
 }

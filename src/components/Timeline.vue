@@ -10,6 +10,7 @@
       :data="helloworld.data"
       :options="helloworld.options"
     />
+
   </div>
 </template>
 
@@ -17,6 +18,7 @@
 import Vue from "vue";
 import VueGoogleCharts from "vue-google-charts";
 import dateFormat from "dateformat";
+import TimeDropdown from "./TimeDropdown.vue";
 
 Vue.use(VueGoogleCharts);
 
@@ -27,6 +29,9 @@ export default {
     colors: Object,
     contributors: Array,
     dateRange: String
+  },
+  components: {
+    TimeDropdown
   },
   computed: {
     helloworld() {
