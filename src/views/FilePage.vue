@@ -48,35 +48,10 @@
 
 
       <div class="filecontribution">
-        <b-card no-body class="fcTable">
-          <b-tabs card>
-            <b-tab title="Day" active>
-              <h2>File Revision History</h2>
-              <b-row>
-                <b-table
-                  :items="revisions"
-                  :fields="fields"
-                  @row-clicked="open($event)"
-                  hover
-                  >
-                </b-table>
-              </b-row>
-            </b-tab>
-            <b-tab title="Week">
-              File Contribution bar graph for week goes here
-            </b-tab>
-            <b-tab title="Month">
-              File Contribution bar graph for month goes here
-            </b-tab>
-            <b-tab title="Year">
-              File Contribution bar graph for year goes here
-            </b-tab>
-            <b-tab title="All Time">
-              File Contribution bar graph for alltime goes here
-            </b-tab>
-          </b-tabs>
-
-        </b-card>
+        <RevisionHistory
+          v-if="file"
+          :revisions ="Object.values(file.revisions)"
+        />
       </div>
 
       <div class="divider"/>
@@ -99,6 +74,7 @@ import MaterialIcon from "@/components/MaterialIcon.vue";
 import LoadingScreen from "../components/LoadingScreen.vue";
 import PieChartFile from "../components/PieChartFile.vue";
 import TimelineFile from "../components/TimelineFile.vue";
+import RevisionHistory from "../components/RevisionHistory.vue";
 //import randomColour from "./ColourGeneration.vue";
 
 Vue.use(VueGoogleCharts);
@@ -110,7 +86,8 @@ export default {
     MaterialIcon,
     LoadingScreen,
     PieChartFile,
-    TimelineFile
+    TimelineFile,
+    RevisionHistory
   },
   props: {
     id: String
