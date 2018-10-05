@@ -41,7 +41,7 @@ export default {
   components: {
     TimeDropdown
   },
-
+  watch: {},
   computed: {
     helloworld() {
       // This is the data that needs to be passed into the GChart
@@ -200,7 +200,7 @@ export default {
       if (entries.length == 0) entries = revisions;
 
       // Format date lables
-      for (var n = 0; n < entries.length; i++) {
+      for (var n = 0; n < entries.length; n++) {
         entries[n][0] = this.formatDates(entries[n][0], selectedDateRange);
       }
       return entries;
