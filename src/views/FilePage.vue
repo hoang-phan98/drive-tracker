@@ -105,7 +105,9 @@ export default {
     this.userList = file.contributors;
     this.fileName = file.name;
 
-    this.colourList = Colours.generateColours(this.userList.length);
+    this.colourList = Colours.generateColours(
+      Object.keys(this.userList).length
+    );
 
     Object.values(file.contributors).forEach((user, i) => {
       this.colors[user.emailAddress] = this.colourList[i];
