@@ -8,7 +8,7 @@
           </h1>
         </div>
       <div class="legend">
-        <h1>Users</h1>
+        <h2>Users</h2>
         <span><br></span>
         <div v-if="folder" class="legend-list">
           <div v-for="user in Object.values(folder.contributors)" :key="user.id" class="legend-entry">
@@ -17,6 +17,7 @@
           </div>
         </div>
       </div>
+
       <div class="pichart">
         <PieChart
           v-if="folder"
@@ -24,10 +25,8 @@
           :contributors="Object.values(folder.contributors)"
           :colors="colors"
         />
-
-      <ToggleGroup class="toggleGroupPieChart">
-      </ToggleGroup>
       </div>
+
       <div class="histogram">
         <Timeline
           v-if="folder"
@@ -35,12 +34,10 @@
           :contributors="Object.values(folder.contributors)"
           :colors="colors"
         />
-
-      <ToggleGroup class="toggleGroupHistogram">
-      </ToggleGroup>
       </div>
+
       <div class="filecontribution">
-        <h1 class="fileListTitle"> Files </h1>
+        <h2 class="fileListTitle"> Files </h2>
         <ContributionBars class="contributionbars"
           v-if="folder"
           :files="Object.values(folder.files)"
@@ -65,9 +62,9 @@ import Colours from "./ColourGeneration.vue";
 import ContributionBars from "../components/ContributionBars.vue";
 import PieChart from "../components/PieChart.vue";
 import Timeline from "../components/Timeline.vue";
-import ToggleGroup from "../components/ToggleGroup.vue";
 import MaterialIcon from "@/components/MaterialIcon.vue";
 import LoadingScreen from "../components/LoadingScreen.vue";
+import TimeDropdown from "../components/TimeDropdown.vue";
 //import randomColour from "./ColourGeneration.vue";
 
 Vue.use(VueGoogleCharts);
@@ -78,9 +75,9 @@ export default {
     ContributionBars,
     Timeline,
     PieChart,
-    ToggleGroup,
     MaterialIcon,
-    LoadingScreen
+    LoadingScreen,
+    TimeDropdown
   },
   props: {
     id: String
@@ -150,17 +147,23 @@ export default {
 .pichart {
   background: rgba(256, 256, 256, 1); /*can be anything, of course*/
   margin: auto;
-  padding: 10px;
+  padding: 40px;
   grid-column: 2 / 3;
   grid-row: 2;
   width: 100%;
   height: 100%;
 }
 
+.dropdownPieChart {
+  margin-right: 5%;
+  display: inline-flex;
+  float: right;
+}
+
 .histogram {
   background: rgba(256, 256, 256, 1); /*can be anything, of course*/
   margin: auto;
-  padding: 10px;
+  padding: 20px;
   grid-column: 1 / 4;
   grid-row: 3;
   text-align: center;
@@ -170,8 +173,13 @@ export default {
   height: 100%;
 }
 
-.toggleGroupHistogram {
+.filtersHistogram {
   margin-top: 30px;
+}
+
+.dropdownHistogram {
+  margin-left: 10%;
+  display: inline;
 }
 
 .filecontribution {
@@ -179,14 +187,10 @@ export default {
   /* margin: auto; */
   grid-column: 3 / 4;
   grid-row: 2;
-  text-align: center;
   height: 600px;
   width: 100%;
   overflow-y: scroll;
-}
-
-.fileListTitle {
-  margin-top: 50px;
+  padding: 40px;
 }
 
 .contributionbars {
@@ -216,7 +220,7 @@ export default {
   background: rgba(256, 256, 256, 1); /*can be anything, of course*/
 
   margin: auto;
-  padding: 50px;
+  padding: 40px;
 
   width: 100%;
   height: 100%;
