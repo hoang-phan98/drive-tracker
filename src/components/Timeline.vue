@@ -2,7 +2,7 @@
   <div>
     <div>
       <h2 class="title">Revision Timeline</h2>
-      <h4 class="timeSpan">1/1/2018 - 31/12/2018</h4>
+      <h4 class="timeSpanLabel">{{startDate}} - {{endDate}}</h4>
 
     </div>
     <GChart
@@ -10,6 +10,7 @@
       :data="helloworld.data"
       :options="helloworld.options"
     />
+    <TimeDropdown v-model="selectedDateRange"></TimeDropdown>
 
   </div>
 </template>
@@ -30,9 +31,17 @@ export default {
     contributors: Array,
     dateRange: String
   },
+  data() {
+    return {
+      selectedDateRange: "at",
+      startDate: "",
+      endDate: ""
+    };
+  },
   components: {
     TimeDropdown
   },
+
   computed: {
     helloworld() {
       // This is the data that needs to be passed into the GChart
@@ -45,13 +54,17 @@ export default {
       }
       lineData.push(labels);
 
+      // get selected date range
+      var dateRange = this.getDateRange(this.selectedDateRange);
+
       // Get all raw revisions
       var rawRevisions = this.getRawRevisions();
 
-      // Count raw revisions of individual contributor and parse them as chart entry format
+      // Count raw revisions of individual contributor and parse them as chart entries
       var entries = this.parseRevisionsToEntries(rawRevisions);
 
-      entries = this.filterEntriesByDate(entries, "Month");
+      // Filter etries by selected date range
+      entries = this.filterEntriesByDate(entries, dateRange);
 
       // Add those entries to chart
       for (var e = 0; e < entries.length; e++) {
@@ -74,6 +87,28 @@ export default {
     }
   },
   methods: {
+    getDateRange: function(dateRangeValue) {
+      var dateRange;
+      switch (dateRangeValue) {
+        case "d":
+          dateRange = "Day";
+          break;
+        case "w":
+          dateRange = "Week";
+          break;
+        case "m":
+          dateRange = "Month";
+          break;
+        case "y":
+          dateRange = "Year";
+          break;
+        case "at":
+          dateRange = "All Time";
+          break;
+      }
+
+      return dateRange;
+    },
     getRawRevisions: function() {
       // Get all raw revisions first
       var rawRevisions = [];
@@ -137,6 +172,9 @@ export default {
       // This method will expand revision entries to fill all dates
       var entries = this.getEmptyEntries(selectedDateRange);
 
+      if (entries.length == 0)
+        this.startDate = dateFormat(revisions[0][0], "dd/mm/yyyy");
+
       for (var e = 0; e < entries.length; e++) {
         // Copy entries across dates to keep integrity of the timeline (until new revision is found)
         if (e > 0) {
@@ -159,12 +197,12 @@ export default {
         }
       }
 
-      //console.log(entries);
       if (entries.length == 0) entries = revisions;
 
       // Format date lables
-      this.formatLabels(entries, selectedDateRange);
-
+      for (var n = 0; n < entries.length; i++) {
+        entries[n][0] = this.formatDates(entries[n][0], selectedDateRange);
+      }
       return entries;
     },
     trimDate: function(date, selectedDateRange) {
@@ -211,6 +249,7 @@ export default {
 
       // First date at which timeline starts
       var firstDate = new Date(lastDate);
+
       var date;
       var dateString;
       switch (selectedDateRange) {
@@ -271,7 +310,8 @@ export default {
         default:
           break;
       }
-
+      this.startDate = dateFormat(firstDate, "dd/mm/yyyy");
+      this.endDate = dateFormat(new Date(), "dd/mm/yyyy");
       return emptyEntries;
     },
     formatLabels: function(entries, selectedDateRange) {
@@ -296,6 +336,31 @@ export default {
             break;
         }
       }
+    },
+    formatDates: function(date, selectedDateRange) {
+      var formatted;
+      switch (selectedDateRange) {
+        case "Day":
+          formatted = dateFormat(date, "HH:MM");
+          break;
+        case "Week":
+          formatted = dateFormat(date, "dd/mm");
+          break;
+        case "Month":
+          formatted = dateFormat(date, "dd/mm");
+          break;
+        case "Year":
+          formatted = dateFormat(date, "mmm-yyyy");
+          break;
+        case "All Time":
+          formatted = dateFormat(date, "dd/mm/yy");
+          break;
+        default:
+          formatted = date;
+          break;
+      }
+
+      return formatted;
     }
   }
 };

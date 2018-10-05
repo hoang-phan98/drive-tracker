@@ -1,12 +1,12 @@
 <template>
-    <div>
+    <div class="container">
         <img class="calendarIcon" src="../assets/calendar.png" />
         <div class="timeDropdown">
           <b-form-select
             class="timeDropdown" 
-            v-model="selectedDate"
+            :value="value"
             :options="options"
-            @input="click"
+            @input="click($event)"
             >
           </b-form-select>
         </div>
@@ -16,25 +16,33 @@
 <script>
 export default {
   name: "TimeDropdown",
+  props: {
+    value: String
+  },
   data() {
     return {
-      selectedDate: "e",
       options: [
-        { value: "a", text: "Day" },
-        { value: "b", text: "Week" },
-        { value: "c", text: "Month" },
-        { value: "d", text: "Year" },
-        { value: "e", text: "All Time" }
+        { value: "d", text: "Day" },
+        { value: "w", text: "Week" },
+        { value: "m", text: "Month" },
+        { value: "y", text: "Year" },
+        { value: "at", text: "All Time" }
       ]
     };
   },
   methods: {
-    click: function() {}
+    click: function(e) {
+      this.$emit("input", e);
+    }
   }
 };
 </script>
 
 <style>
+.container {
+  margin-top: 15px;
+}
+
 .calendarIcon {
   display: inline-flex;
   width: 50px;

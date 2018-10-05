@@ -33,7 +33,7 @@ export default {
     onSignInError(/* error */) {
       // `error` contains any error occurred.
       // eslint-disable-next-line
-      console.log("Error has occured during signin", error);
+      //console.log("Error has occured during signin", error);
     }
   }
 };

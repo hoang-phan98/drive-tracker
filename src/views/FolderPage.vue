@@ -28,10 +28,6 @@
           :contributors="Object.values(folder.contributors)"
           :colors="colors"
         />
-        <div class="filtersPieChart">
-          <ToggleGroup class="toggleGroupPieChart"></ToggleGroup>
-          <TimeDropdown class="dropdownPieChart"></TimeDropdown>
-        </div>
       </div>
 
       <div class="histogram">
@@ -41,10 +37,6 @@
           :contributors="Object.values(folder.contributors)"
           :colors="colors"
         />
-        <div class="filtersHistogram">
-          <ToggleGroup class="toggleGroupHistogram"></ToggleGroup>
-          <TimeDropdown class="dropdownHistogram"></TimeDropdown>
-        </div>
       </div>
 
       <div class="filecontribution">
@@ -73,7 +65,6 @@ import Colours from "./ColourGeneration.vue";
 import ContributionBars from "../components/ContributionBars.vue";
 import PieChart from "../components/PieChart.vue";
 import Timeline from "../components/Timeline.vue";
-import ToggleGroup from "../components/ToggleGroup.vue";
 import MaterialIcon from "@/components/MaterialIcon.vue";
 import LoadingScreen from "../components/LoadingScreen.vue";
 import TimeDropdown from "../components/TimeDropdown.vue";
@@ -87,7 +78,6 @@ export default {
     ContributionBars,
     Timeline,
     PieChart,
-    ToggleGroup,
     MaterialIcon,
     LoadingScreen,
     TimeDropdown
@@ -170,11 +160,6 @@ export default {
   height: 100%;
 }
 
-.toggleGroupPieChart {
-  margin-left: 5%;
-  display: inline-flex;
-}
-
 .dropdownPieChart {
   margin-right: 5%;
   display: inline-flex;
@@ -196,10 +181,6 @@ export default {
 
 .filtersHistogram {
   margin-top: 30px;
-}
-
-.toggleGroupHistogram {
-  display: inline;
 }
 
 .dropdownHistogram {
