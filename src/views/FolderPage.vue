@@ -1,8 +1,6 @@
 <template>
   <div v-if="rendered" class="folderpage">
     <div class="grid-container">
-      <!--<div class="legend-holder">-->
-
         <div class="titleBanner">
           <h1 class="fileName">
           <material-icon icon="folder_open" size="large" />
@@ -155,9 +153,6 @@ export default {
   padding: 10px;
   grid-column: 2 / 3;
   grid-row: 2;
-  /*text-align: center; */
-  /*box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);*/
-  /*border-radius: 25px;*/
   width: 100%;
   height: 100%;
 }
@@ -218,18 +213,11 @@ export default {
 
 .legend {
   align-content: flex-start;
-  /* display: flex;
-  flex-wrap: wrap; */
-
   background: rgba(256, 256, 256, 1); /*can be anything, of course*/
 
   margin: auto;
   padding: 50px;
 
-  /*box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);*/
-  /*border-radius: 25px;*/
-
-  /*width: 100%;*/
   width: 100%;
   height: 100%;
   grid-column: 1;
@@ -243,7 +231,6 @@ export default {
   align-items: center;
 }
 .legend-box {
-  /*background-color: aqua;*/
   height: 10px;
   width: 10px;
   margin-left: 10px;
@@ -257,8 +244,6 @@ export default {
   padding: 10px;
   align-self: flex-start;
   margin: 30px;
-  /*grid-column: 2 / 3;
-  grid-row: -2 / -1;*/
 }
 
 .divider {
