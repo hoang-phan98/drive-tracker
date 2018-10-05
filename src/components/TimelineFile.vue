@@ -68,7 +68,6 @@ export default {
         data: lineData,
         options: {
           title: "Revisions Timeline",
-          curveType: "function",
           legend: { position: "bottom" },
           interpolateNulls: true,
           colors: this.contributors.map(user => this.colors[user.emailAddress]),
