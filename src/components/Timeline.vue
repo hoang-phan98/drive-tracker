@@ -77,7 +77,6 @@ export default {
       return {
         data: lineData,
         options: {
-          curveType: "function",
           legend: { position: "bottom" },
           interpolateNulls: true,
           colors: this.contributors.map(user => this.colors[user.emailAddress]),
