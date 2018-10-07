@@ -4,7 +4,7 @@
         <div class="titleBanner">
           <h1 class="fileName">
           <material-icon icon="folder_open" size="large" />
-            <router-link to="/">Home</router-link> > {{folder && folder.name}}
+            <router-link to="/"> Home</router-link> > {{folder && folder.name}}
           </h1>
         </div>
       <div class="legend">
