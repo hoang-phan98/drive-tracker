@@ -44,6 +44,7 @@ export default {
       return colourList;
     }
     let n = numUsers - colourList.length; // number of colours we have to generate at random
+
     while (n > 0) {
       let col = this.randomColour();
       while (colourList.includes(col)) {
