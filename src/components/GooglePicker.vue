@@ -32,12 +32,13 @@ export default {
       const auth2 = googleapis.auth2.getAuthInstance();
       const { access_token } = auth2.currentUser.get().getAuthResponse(true);
 
-      const view = new google.picker.DocsView(google.picker.ViewId.FOLDERS)
+      const view = new google.picker.DocsView(google.picker.ViewId.DOCS)
         .setMode(google.picker.DocsViewMode.LIST)
+        .setIncludeFolders(true)
         .setSelectFolderEnabled(true);
 
       this.picker = new google.picker.PickerBuilder()
-        .setTitle("Select a folder")
+        .setTitle("Select a file/folder")
         .setOAuthToken(access_token)
         .setCallback(this.handlePickerResult)
         .addView(view)
