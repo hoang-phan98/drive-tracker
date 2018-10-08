@@ -51,25 +51,34 @@ export default {
   components: { MaterialIcon, PieChart, LoadingScreen },
   inject: ["contributions"],
   props: {
-    id: String,
-    rendered: false
+    id: String
   },
   data() {
     return {
       // error: null
-      folder: null
+      folder: null,
+      rendered: false
     };
   },
-  mounted() {
-    this.fetch();
-
-    this.$nextTick(function() {
-      this.rendered = true;
-    });
+  async mounted() {
+    try {
+      await this.fetch();
+    } finally {
+      this.$nextTick(function() {
+        this.rendered = true;
+      });
+    }
   },
   watch: {
-    id() {
-      this.fetch();
+    async id() {
+      try {
+        this.rendered = false;
+        await this.fetch();
+      } finally {
+        this.$nextTick(function() {
+          this.rendered = true;
+        });
+      }
     }
   },
   methods: {
@@ -80,6 +89,7 @@ export default {
         );
       } catch (err) {
         this.error = err.message;
+        throw err;
       }
     }
   },
