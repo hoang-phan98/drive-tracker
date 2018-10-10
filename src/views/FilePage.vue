@@ -221,6 +221,8 @@ export default {
   vertical-align: middle;
   text-align: center;
   width: 100%;
+  height: 600px;
+  overflow-y: scroll;
 }
 
 .legend {
