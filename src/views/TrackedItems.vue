@@ -9,14 +9,14 @@
           {{ error }}
         </b-alert>
         <b-table
-          :items="folders"
+          :items="items"
           :fields="fields"
           @row-clicked="preview($event)"
           hover
           >
           <template slot="id" slot-scope="data">
             <div class="actions">
-              <b-button variant="outline-primary" size="sm" :to="'/folder/' + data.value">
+              <b-button variant="outline-primary" size="sm" :to="links[data.value]">
                 More Details
               </b-button>
             </div>
@@ -25,7 +25,7 @@
       </div>
     </div>
     <div class="fab-container">
-      <button class="fab" @click="addFolderModal = true">
+      <button class="fab" @click="addItemModal = true">
         <span class="fab-text">Add folder</span>
         <i class="material-icons fab-icon">
           create_new_folder
@@ -35,7 +35,7 @@
         </i>
       </button>
     </div>
-    <GooglePicker :open="addFolderModal" @close="addFolderModal = false" @picked="addFolder($event)" />
+    <GooglePicker :open="addItemModal" @close="addItemModal = false" @picked="addItem($event)" />
   </div>
 </template>
 
@@ -49,8 +49,8 @@ export default {
   inject: ["contributions", "storage"],
   data() {
     return {
-      addFolderModal: false,
-      folders: [],
+      addItemModal: false,
+      items: [],
       fields: [
         {
           label: "Name",
@@ -86,19 +86,19 @@ export default {
     }
 
     // Load tracked items into the component
-    this.folders = trackedItems;
+    this.items = trackedItems;
 
     // The details of the folders might have changed since they were saved to
     // storage, refetch them all
-    a.map(this.folders, 6, async folder => {
+    a.map(this.items, 6, async folder => {
       try {
-        const newFolder = await this.fetchFolder(folder.id);
+        const newItem = await this.fetchItem(folder.id);
 
         // Replace the old folder record with the new one
-        this.folders.splice(
-          this.folders.findIndex(f => f.id === folder.id),
+        this.items.splice(
+          this.items.findIndex(f => f.id === folder.id),
           1,
-          newFolder
+          newItem
         );
       } catch (err) {
         // eslint-disable-next-line
@@ -107,35 +107,53 @@ export default {
     });
   },
   methods: {
-    async addFolder({ id, name }) {
-      if (this.folders.find(folder => folder.id === id)) {
+    async addItem({ id, name }) {
+      if (this.items.find(folder => folder.id === id)) {
         return;
       }
 
       try {
-        const folder = await this.fetchFolder(id);
-        this.folders.push(folder);
+        const item = await this.fetchItem(id);
+        this.items.push(item);
       } catch (err) {
         // eslint-disable-next-line
         console.error(err);
-        this.error = `There was a problem fetching the folder "${name}".`;
+        this.error = `There was a problem fetching the item "${name}".`;
       }
     },
-    async fetchFolder(id) {
-      const { result: folder } = await googleapis.client.drive.files.get({
+    async fetchItem(id) {
+      const { result: item } = await googleapis.client.drive.files.get({
         fileId: id,
-        fields: "id, name, owners(displayName), lastModifyingUser(displayName)"
+        fields:
+          "id, name, kind, mimeType, owners(displayName), lastModifyingUser(displayName)"
       });
-      return folder;
+      return item;
     },
-    preview(folder) {
-      this.$emit("preview-folder", folder.id);
+    preview(item) {
+      this.$emit(
+        "preview-folder",
+        item.mimeType === "application/vnd.google-apps.folder" ? item.id : null
+      );
+    }
+  },
+  computed: {
+    links() {
+      const result = {};
+      for (const item of this.items) {
+        const prefix =
+          item.mimeType === "application/vnd.google-apps.folder"
+            ? "/folder"
+            : "/file";
+
+        result[item.id] = prefix + "/" + item.id;
+      }
+      return result;
     }
   },
   watch: {
-    folders() {
+    items() {
       // Every time we change the folders, make sure it's persisted to storage
-      this.storage.update({ trackedItems: this.folders });
+      this.storage.update({ trackedItems: this.items });
     }
   }
 };
