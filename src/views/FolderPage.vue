@@ -154,12 +154,6 @@ export default {
   height: 100%;
 }
 
-.dropdownPieChart {
-  margin-right: 5%;
-  display: inline-flex;
-  float: right;
-}
-
 .histogram {
   background: rgba(256, 256, 256, 1); /*can be anything, of course*/
   margin: auto;
@@ -171,15 +165,6 @@ export default {
   /*border-radius: 25px;*/
   width: 100%;
   height: 100%;
-}
-
-.filtersHistogram {
-  margin-top: 30px;
-}
-
-.dropdownHistogram {
-  margin-left: 10%;
-  display: inline;
 }
 
 .filecontribution {

@@ -35,17 +35,14 @@
       </div>
 
       <div class="histogram">
-        <TimelineFile
+        <Timeline
           v-if="file"
-          :revisions ="Object.values(file.revisions)"
+          :files="files"
           :contributions="Object.values(file.contributions)"
           :contributors="Object.values(file.contributors)"
           :colors="colors"
         />
-
       </div>
-
-
 
       <div class="filecontribution">
         <RevisionHistory
@@ -53,6 +50,8 @@
           :revisions ="Object.values(file.revisions)"
         />
       </div>
+
+      <Timeline></Timeline>
 
       <div class="divider"/>
       <div class="divider1"/>
@@ -71,8 +70,10 @@ import VueGoogleCharts from "vue-google-charts";
 import Colours from "./ColourGeneration.vue";
 import MaterialIcon from "@/components/MaterialIcon.vue";
 import LoadingScreen from "../components/LoadingScreen.vue";
+import PieChart from "../components/PieChart.vue";
 import PieChartFile from "../components/PieChartFile.vue";
 import TimelineFile from "../components/TimelineFile.vue";
+import Timeline from "../components/Timeline.vue";
 import RevisionHistory from "../components/RevisionHistory.vue";
 //import randomColour from "./ColourGeneration.vue";
 
@@ -84,7 +85,9 @@ export default {
   components: {
     MaterialIcon,
     LoadingScreen,
+    PieChart,
     PieChartFile,
+    Timeline,
     TimelineFile,
     RevisionHistory
   },
@@ -113,7 +116,11 @@ export default {
       this.colors[user.emailAddress] = this.colourList[i];
     });
 
+    const files = [];
+    files.push(file);
     this.file = file;
+    this.files = files;
+
     this.$nextTick(function() {
       this.rendered = true;
     });
@@ -121,6 +128,8 @@ export default {
   methods: {},
   data() {
     return {
+      file: null,
+      files: null,
       rendered: false,
       fileName: "File Name",
       colors: {},
@@ -130,34 +139,6 @@ export default {
         { key: "revID", sortable: true, label: "Revision ID" },
         { key: "user", sortable: true, label: "User" },
         { key: "date", sortable: true, label: "Date" }
-      ],
-      // some random hard coded data for revisions. I made it up and it has no merit
-      revisions: [
-        {
-          revID: "34252323",
-          user: "Kenny",
-          date: "34/23/3249"
-        },
-        {
-          revID: "34252323",
-          user: "Kenny",
-          date: "34/23/3249"
-        },
-        {
-          revID: "34252323",
-          user: "Kenny",
-          date: "34/23/3249"
-        },
-        {
-          revID: "34252323",
-          user: "Kenny",
-          date: "34/23/3249"
-        },
-        {
-          revID: "34252323",
-          user: "Kenny",
-          date: "34/23/3249"
-        }
       ],
       colourList: []
     };
@@ -172,7 +153,7 @@ export default {
   display: grid;
   grid-gap: 0px;
   grid-template-columns: 0.2fr 1.5fr 2fr;
-  grid-template-rows: 0.1fr 1fr 1fr;
+  grid-template-rows: 0.1fr 1fr 1fr 1fr;
   width: 100%;
   box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 0.75);
   justify-content: space-evenly;
@@ -198,16 +179,15 @@ export default {
   height: 100%;
 }
 
-.toggleGroupPieChart {
-}
-
 .histogram {
   background: rgba(256, 256, 256, 1); /*can be anything, of course*/
   margin: auto;
-  padding: 10px;
+  padding: 20px;
   grid-column: 1 / 4;
   grid-row: 3;
   text-align: center;
+  /*box-shadow: 0px 0px 46px -5px rgba(0, 0, 0, 0.75);*/
+  /*border-radius: 25px;*/
   width: 100%;
   height: 100%;
 }
