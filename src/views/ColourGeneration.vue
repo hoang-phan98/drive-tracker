@@ -9,15 +9,19 @@
 export default {
   name: "Colours",
   defaultColours: [
-    "#FF0000",
-    "#FF8C00",
-    "#FFCC00",
-    "#90EE90",
-    "#AFEEEE",
-    "#00BFFF",
-    "#6A5ACD",
-    "#8A2BE2",
-    "#FF69B4"
+    "#5680E9",
+    "#84CEEB",
+    "#5AB9EA",
+    "#C1C8E4",
+    "#8860D0",
+    "#E7E3D4",
+    "#F78888",
+    "#9E5A63",
+    "#97AABD",
+    "#BC2231",
+    "#D76E2F",
+    "#D5EBA9",
+    "#E4C865"
   ],
   data() {
     return {
