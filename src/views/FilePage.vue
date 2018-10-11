@@ -23,11 +23,11 @@
           </div> -->
         <!-- </div> -->
       </div>
+
       <div class = "pichart">
-        <PieChartFile
+        <PieChart
           v-if="file"
-          :revisions ="Object.values(file.revisions)"
-          :contributions="Object.values(file.contributions)"
+          :files="files"
           :contributors="Object.values(file.contributors)"
           :colors="colors"
         />
@@ -173,6 +173,9 @@ export default {
 }
 
 .pichart {
+  background: rgba(256, 256, 256, 1); /*can be anything, of course*/
+  margin: auto;
+  padding: 40px;
   grid-column: 2 / 3;
   grid-row: 2;
   width: 100%;
@@ -210,7 +213,7 @@ export default {
   background: rgba(256, 256, 256, 1); /*can be anything, of course*/
 
   margin: auto;
-  padding: 50px;
+  padding: 40px;
 
   width: 100%;
   height: 100%;

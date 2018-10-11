@@ -46,12 +46,12 @@ export default {
     },
     pieOptions() {
       return {
-        height: this.height || 600,
+        height: this.height || 400,
         pieHole: 0.4,
         legend: "none",
         chartArea: {
-          height: "80%",
-          width: "70%"
+          height: "90%",
+          width: "80%"
         },
         colors: this.contributors.map(user => this.colors[user.emailAddress])
       };
