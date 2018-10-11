@@ -11,11 +11,13 @@
         <b-table
           :items="folders"
           :fields="fields"
-          @row-clicked="preview($event)"
           hover
           >
           <template slot="id" slot-scope="data">
             <div class="actions">
+              <b-button variant="outline-primary" size="sm" :pressed="False" @click="preview(data.value)">
+                Show Preview
+              </b-button>
               <b-button variant="outline-primary" size="sm" :to="'/folder/' + data.value">
                 More Details
               </b-button>
@@ -129,7 +131,7 @@ export default {
       return folder;
     },
     preview(folder) {
-      this.$emit("preview-folder", folder.id);
+      this.$emit("preview-folder", folder);
     }
   },
   watch: {
