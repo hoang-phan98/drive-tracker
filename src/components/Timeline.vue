@@ -7,8 +7,8 @@
     </div>
     <GChart
       type="LineChart"
-      :data="helloworld.data"
-      :options="helloworld.options"
+      :data="chart.data"
+      :options="chart.options"
     />
     <TimeDropdown v-model="selectedDateRange"></TimeDropdown>
 
@@ -43,15 +43,13 @@ export default {
   },
   watch: {},
   computed: {
-    helloworld() {
+    chart() {
       // This is the data that needs to be passed into the GChart
       const lineData = [];
 
       // loop the the files of the folder in order to get the number of lines\
       const labels = ["Time"];
-      for (var z = 0; z < this.contributors.length; z++) {
-        labels.push(this.contributors[z].displayName);
-      }
+      labels.push(...Object.values(this.contributors).map(c => c.displayName));
       lineData.push(labels);
 
       // get selected date range
@@ -66,6 +64,8 @@ export default {
       // Filter etries by selected date range
       entries = this.filterEntriesByDate(entries, dateRange);
 
+      entries = this.foldEntries(entries);
+
       // Add those entries to chart
       for (var e = 0; e < entries.length; e++) {
         lineData.push(entries[e]);
@@ -77,7 +77,6 @@ export default {
       return {
         data: lineData,
         options: {
-          curveType: "function",
           legend: { position: "bottom" },
           interpolateNulls: true,
           colors: this.contributors.map(user => this.colors[user.emailAddress]),
@@ -111,22 +110,16 @@ export default {
     },
     getRawRevisions: function() {
       // Get all raw revisions first
-      var rawRevisions = [];
-      for (var f = 0; f < this.files.length; f++) {
-        var file = this.files[f];
-
-        for (var r = 0; r < file.revisions.length; r++) {
-          var revision = file.revisions[r];
-          rawRevisions.push(revision);
-        }
-      }
+      const revisions = this.files
+        .map(file => file.revisions)
+        .reduce((a, b) => a.concat(b), []);
 
       // Sort all raw revisions by date
-      rawRevisions.sort(function(a, b) {
-        return new Date(a.modifiedTime) - new Date(b.modifiedTime);
-      });
+      revisions.sort(
+        (a, b) => new Date(a.modifiedTime) - new Date(b.modifiedTime)
+      );
 
-      return rawRevisions;
+      return revisions;
     },
     parseRevisionsToEntries: function(revisions) {
       var entries = [];
@@ -178,7 +171,7 @@ export default {
       for (var e = 0; e < entries.length; e++) {
         // Copy entries across dates to keep integrity of the timeline (until new revision is found)
         if (e > 0) {
-          for (var i = 1; i < entries[e].length; i++) {
+          for (let i = 1; i < entries[e].length; i++) {
             entries[e][i] = entries[e - 1][i];
           }
         }
@@ -197,9 +190,20 @@ export default {
         }
       }
 
+      // Find the first non empty entry
+      for (let i = 0; i < entries.length; i++) {
+        if (!entries[i].slice(1).every(n => n === 0)) {
+          // Propagate backwards
+          for (let j = i - 1; j > -1; j--) {
+            entries[j] = [entries[j][0], ...entries[j + 1].slice(1)];
+          }
+          break;
+        }
+      }
+
       if (entries.length == 0) entries = revisions;
 
-      // Format date lables
+      // Format date labels
       for (var n = 0; n < entries.length; n++) {
         entries[n][0] = this.formatDates(entries[n][0], selectedDateRange);
       }
@@ -361,6 +365,25 @@ export default {
       }
 
       return formatted;
+    },
+    foldEntries(entries) {
+      const result = [];
+
+      for (const [i, entry] of entries.entries()) {
+        if (i === 0) {
+          result.push(entry.slice());
+          continue;
+        }
+
+        const prev = result[result.length - 1];
+        if (entry[0] === prev[0]) {
+          result.splice(result.length - 1, 1, entry);
+        } else {
+          result.push(entry.slice());
+        }
+      }
+
+      return result;
     }
   }
 };

@@ -17,7 +17,6 @@ export default {
   },
   computed: {
     helloworld() {
-      console.log(this.revisions);
       const items = [];
 
       for (var i = 0; i < this.revisions.length; i++) {
@@ -39,8 +38,6 @@ export default {
         if (min.toString().length == 1) {
           min = "0" + min;
         }
-
-        console.log(typeof hour);
 
         var builder = {
           "Revision ID": this.revisions[i].id,
