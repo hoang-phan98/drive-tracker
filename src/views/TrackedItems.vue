@@ -14,6 +14,15 @@
           @row-clicked="preview($event)"
           hover
           >
+          <template slot="mimeType" slot-scope="data">
+            <div v-if="data.value=='application/vnd.google-apps.folder'">
+              <MaterialIcon icon="folder" />
+            </div>
+            <div v-if="data.value!='application/vnd.google-apps.folder'">
+              <MaterialIcon icon="insert_drive_file" />
+            </div>
+          </template>
+
           <template slot="id" slot-scope="data">
             <div class="actions">
               <b-button variant="outline-primary" size="sm" :to="links[data.value]">
@@ -43,15 +52,20 @@
 import * as a from "awaiting";
 import googleapis from "../googleapis";
 import GooglePicker from "../components/GooglePicker.vue";
+import MaterialIcon from "@/components/MaterialIcon.vue";
 
 export default {
-  components: { GooglePicker },
+  components: { GooglePicker, MaterialIcon },
   inject: ["contributions", "storage"],
   data() {
     return {
       addItemModal: false,
       items: [],
       fields: [
+        {
+          label: "",
+          key: "mimeType"
+        },
         {
           label: "Name",
           key: "name"
