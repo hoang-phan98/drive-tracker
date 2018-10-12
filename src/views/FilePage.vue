@@ -51,8 +51,6 @@
         />
       </div>
 
-      <Timeline></Timeline>
-
       <div class="divider"/>
       <div class="divider1"/>
       <div class="divider2"/>
@@ -72,7 +70,6 @@ import MaterialIcon from "@/components/MaterialIcon.vue";
 import LoadingScreen from "../components/LoadingScreen.vue";
 import PieChart from "../components/PieChart.vue";
 import PieChartFile from "../components/PieChartFile.vue";
-import TimelineFile from "../components/TimelineFile.vue";
 import Timeline from "../components/Timeline.vue";
 import RevisionHistory from "../components/RevisionHistory.vue";
 //import randomColour from "./ColourGeneration.vue";
@@ -88,7 +85,6 @@ export default {
     PieChart,
     PieChartFile,
     Timeline,
-    TimelineFile,
     RevisionHistory
   },
   props: {
