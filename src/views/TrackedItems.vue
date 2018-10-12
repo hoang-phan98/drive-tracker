@@ -24,7 +24,13 @@
 
           <template slot="id" slot-scope="data">
             <div class="actions">
-              <b-button variant="outline-primary" size="sm" :pressed="False" @click="preview(data.value)">
+              <b-button 
+                class="mr-2"
+                variant="outline-primary" 
+                size="sm" 
+                :pressed="False" 
+                v-if="data.item.mimeType=='application/vnd.google-apps.folder'"
+                @click="preview(data.item)">
                 Show Preview
               </b-button>
               <b-button variant="outline-primary" size="sm" :to="'/folder/' + data.value">
